@@ -23,6 +23,23 @@ public class Request {
         self.body = body
     }
     
+    public func request() -> (request: URLRequest?, error: Error?) {
+        let url = URL(string: self.urlWithParameters())
+        if let url = url {
+            var request = URLRequest(url: url)
+            if let headers = headers {
+                for headerKey in headers.keys {
+                    request.addValue(headers[headerKey]!, forHTTPHeaderField: headerKey)
+                }
+            }
+            request.httpMethod = method.rawValue
+            request.httpBody = body
+            return(request, nil)
+        } else {
+            return(nil, "Unable to create URL")
+        }
+    }
+    
     func urlWithParameters() -> String {
         var retrievedURL = url
         if let parameters = parameters {
