@@ -23,4 +23,23 @@ public class Request {
         self.body = body
     }
     
+    func urlWithParameters() -> String {
+        var retrievedURL = url
+        if let parameters = parameters {
+            if parameters.count > 0 {
+                retrievedURL.append("?")
+                parameters.keys.forEach {
+                    guard let value = parameters[$0] else {
+                        return
+                    }
+                    let escapedValue = value.addingPercentEncoding(withAllowedCharacters: CharacterSet.URLQueryAllowedCharacterSet())
+                    if let escapedValue = escapedValue {
+                        retrievedURL.append("\($0)=\(escapedValue)&")
+                    }
+                }
+                retrievedURL.removeLast()
+            }
+        }
+        return retrievedURL
+    }
 }
