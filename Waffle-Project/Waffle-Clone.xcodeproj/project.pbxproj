@@ -12,6 +12,7 @@
 		8A70602422E607BB0069F4EE /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70602322E607BB0069F4EE /* Request.swift */; };
 		8A70602622E6082D0069F4EE /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70602522E6082D0069F4EE /* RequestMethod.swift */; };
 		8A70602822E6084C0069F4EE /* RequestHeaderFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70602722E6084C0069F4EE /* RequestHeaderFields.swift */; };
+		8A70602A22E60D7D0069F4EE /* CharacterSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70602922E60D7D0069F4EE /* CharacterSet.swift */; };
 		8ABD12CB22E06ED900C62BB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABD12CA22E06ED900C62BB1 /* AppDelegate.swift */; };
 		8ABD12CD22E06ED900C62BB1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABD12CC22E06ED900C62BB1 /* ViewController.swift */; };
 		8ABD12D022E06ED900C62BB1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8ABD12CE22E06ED900C62BB1 /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 		8A70602322E607BB0069F4EE /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		8A70602522E6082D0069F4EE /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
 		8A70602722E6084C0069F4EE /* RequestHeaderFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHeaderFields.swift; sourceTree = "<group>"; };
+		8A70602922E60D7D0069F4EE /* CharacterSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSet.swift; sourceTree = "<group>"; };
 		8ABD12C722E06ED900C62BB1 /* Waffle-Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Waffle-Clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ABD12CA22E06ED900C62BB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8ABD12CC22E06ED900C62BB1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				8A70602122E606B90069F4EE /* URLSession.swift */,
+				8A70602922E60D7D0069F4EE /* CharacterSet.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				8A70602222E606B90069F4EE /* URLSession.swift in Sources */,
 				8A70602822E6084C0069F4EE /* RequestHeaderFields.swift in Sources */,
 				8A70602622E6082D0069F4EE /* RequestMethod.swift in Sources */,
+				8A70602A22E60D7D0069F4EE /* CharacterSet.swift in Sources */,
 				8ABD12CB22E06ED900C62BB1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
