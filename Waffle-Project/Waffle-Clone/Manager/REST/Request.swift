@@ -23,8 +23,14 @@ public class Request {
         self.body = body
     }
     
-    public func request() -> (request: URLRequest?, error: Error?) {
-        let url = URL(string: self.urlWithParameters())
+    /// Adds parameters to URL, then creates a URLRequest from URL.
+    /// Adds headers, httpMethod, and httpBody to URLRequest.
+    ///
+    /// - Parameter path: String URL
+    /// - Returns: URLRequest with parameters, headers, httpMethod, and body
+    public func request(path: String? = nil) -> (request: URLRequest?, error: Error?) {
+        let url = URL(string: path ?? self.append(url: self.url, with: self.parameters))
+        
         if let url = url {
             var request = URLRequest(url: url)
             if let headers = headers {
@@ -40,22 +46,22 @@ public class Request {
         }
     }
     
-    func urlWithParameters() -> String {
-        var retrievedURL = url
-        if let parameters = parameters {
-            if parameters.count > 0 {
-                retrievedURL.append("?")
-                parameters.keys.forEach {
-                    guard let value = parameters[$0] else {
-                        return
-                    }
-                    let escapedValue = value.addingPercentEncoding(withAllowedCharacters: CharacterSet.URLQueryAllowedCharacterSet())
-                    if let escapedValue = escapedValue {
-                        retrievedURL.append("\($0)=\(escapedValue)&")
-                    }
+
+    private func append(url retrievedURL: String, with parameters: [String : String]?) -> String {
+        var retrievedURL = retrievedURL
+        if let parameters = parameters,
+            parameters.count > 0 {
+            retrievedURL.append("?")
+            parameters.keys.forEach {
+                guard let value = parameters[$0] else {
+                    return
                 }
-                retrievedURL.removeLast()
+                let escapedValue = value.addingPercentEncoding(withAllowedCharacters: CharacterSet.URLQueryAllowedCharacterSet())
+                if let escapedValue = escapedValue {
+                    retrievedURL.append("\($0)=\(escapedValue)&")
+                }
             }
+            retrievedURL.removeLast()
         }
         return retrievedURL
     }

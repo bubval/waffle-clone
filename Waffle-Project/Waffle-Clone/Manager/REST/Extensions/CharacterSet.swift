@@ -10,11 +10,15 @@ import Foundation
 
 extension CharacterSet {
     
-    static func URLQueryAllowedCharacterSet() -> CharacterSet {
-        let delimitersToEncode = ":#[]@"
-        let subDelimitersToEncode = "!$&'()*+,;="
+    /// Removes delimiters from specified Charset. A delimiter is a character used to separate boundaries of independent regions
+    ///
+    /// - Parameters:
+    ///   - delimiters: delimiters on the top level of formatting
+    ///   - subdelimiters: delimiters on sub-levels of formatting
+    /// - Returns: CharacterSet without encoding delimiters
+    static func URLQueryAllowedCharacterSet(delimiters: String = ":#[]@", subdelimiters: String = "!$&'()*+,;=") -> CharacterSet {
         var allowedCharacterSet = CharacterSet.urlQueryAllowed
-        allowedCharacterSet.remove(charactersIn: delimitersToEncode + subDelimitersToEncode)
+        allowedCharacterSet.remove(charactersIn: delimiters + subdelimiters)
         return allowedCharacterSet
     }
 }
