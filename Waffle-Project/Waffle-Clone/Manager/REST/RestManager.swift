@@ -96,4 +96,41 @@ open class RestManager {
             return (nil, nil, buildRequest.error)
         }
     }
+    
+    /// Replaces all the current representations of the target resource with the uploaded content.
+    ///
+    /// - Parameters:
+    ///   - url: HTTP address
+    ///   - parameters: URL query items specified in [name : value] pairs
+    ///   - headers: HTTP metadata
+    ///   - body: data bytes transmitted in an HTTP transaction message
+    ///   - completion: Data, URLResponse, Error
+    public func put(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping RestManagerCompletion) {
+        let request = Request(url: url, method: .PUT, parameters: parameters, headers: headers, body: body)
+        let buildRequest = request.request()
+        if let urlRequest = buildRequest.request {
+            let task = session.dataTask(with: urlRequest, completionHandler: completion)
+            task.resume()
+        } else {
+            completion(nil, nil, buildRequest.error)
+        }
+    }
+    
+    /// Replaces all the current representations of the target resource with the uploaded content.
+    ///
+    /// - Parameters:
+    ///   - url: HTTP address
+    ///   - parameters: URL query items specified in [name : value] pairs
+    ///   - headers: HTTP metadata
+    ///   - body: data bytes transmitted in an HTTP transaction message
+    /// - Returns: Data, URLResponse, Error
+    public func put(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?) -> RestManagerResult {
+        let request = Request(url: url, method: .PUT, parameters: parameters, headers: headers, body: body)
+        let buildRequest = request.request()
+        if let urlRequest = buildRequest.request {
+            return session.synchronousDataTask(request: urlRequest)
+        } else {
+            return (nil, nil, buildRequest.error)
+        }
+    }
 }
