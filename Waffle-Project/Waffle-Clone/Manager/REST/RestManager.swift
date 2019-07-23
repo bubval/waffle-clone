@@ -9,7 +9,7 @@
 import Foundation
 
 public typealias RestManagerCompletion = (Data?, URLResponse?, Error?) -> Swift.Void
-public typealias RestManagerResult = SynchronousDataTaskResult
+public typealias RestManagerResult = DataTaskResult
 
 open class RestManager {
     
@@ -52,7 +52,7 @@ open class RestManager {
         let request = Request(url: url, method: .GET, parameters: parameters, headers: headers, body: nil)
         let buildRequest = request.request()
         if let urlRequest = buildRequest.request {
-            return session.synchronousDataTask(request: urlRequest)
+            return session.dataTask(request: urlRequest)
         } else {
             return (nil, nil, buildRequest.error)
         }
@@ -89,7 +89,7 @@ open class RestManager {
         let request = Request(url: url, method: .POST, parameters: parameters, headers: headers, body: body)
         let buildRequest = request.request()
         if let urlRequest = buildRequest.request {
-            return session.synchronousDataTask(request: urlRequest)
+            return session.dataTask(request: urlRequest)
         } else {
             return (nil, nil, buildRequest.error)
         }
@@ -126,7 +126,7 @@ open class RestManager {
         let request = Request(url: url, method: .PUT, parameters: parameters, headers: headers, body: body)
         let buildRequest = request.request()
         if let urlRequest = buildRequest.request {
-            return session.synchronousDataTask(request: urlRequest)
+            return session.dataTask(request: urlRequest)
         } else {
             return (nil, nil, buildRequest.error)
         }
@@ -150,7 +150,7 @@ open class RestManager {
             completion(nil, nil, buildRequest.error)
         }
     }
-
+    
     /// Removes all current representation of the target resource given by URL.
     ///
     /// - Parameters:
@@ -163,7 +163,7 @@ open class RestManager {
         let request = Request(url: url, method: .DELETE, parameters: parameters, headers: headers, body: body)
         let buildRequest = request.request()
         if let urlRequest = buildRequest.request {
-            return session.synchronousDataTask(request: urlRequest)
+            return session.dataTask(request: urlRequest)
         } else {
             return (nil, nil, buildRequest.error)
         }

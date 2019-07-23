@@ -29,7 +29,7 @@ public class Request {
     /// - Parameter path: String URL
     /// - Returns: URLRequest with parameters, headers, httpMethod, and body
     public func request(path: String? = nil) -> (request: URLRequest?, error: Error?) {
-        let url = URL(string: path ?? self.append(url: self.url, with: self.parameters))
+        let url = URL(string: path ?? self.construct(url: self.url, with: self.parameters))
         
         if let url = url {
             var request = URLRequest(url: url)
@@ -46,8 +46,7 @@ public class Request {
         }
     }
     
-
-    private func append(url retrievedURL: String, with parameters: [String : String]?) -> String {
+    private func construct(url retrievedURL: String, with parameters: [String : String]?) -> String {
         var retrievedURL = retrievedURL
         if let parameters = parameters,
             parameters.count > 0 {
