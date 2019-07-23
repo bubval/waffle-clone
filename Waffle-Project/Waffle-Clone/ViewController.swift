@@ -9,14 +9,55 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    let manager = RestManager()
+    let manager = test()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(data)
-        // Do any additional setup after loading the view.
+        
+        manager.get(owner: "Bubval", repo: "Contacts"){ (response, error) in
+            if let response = response {
+                print(response)
+            } else {
+                print(error ?? "error")
+            }
+        }
     }
-
-
 }
 
+// Just written for the purposes of testing
+
+public class test: RestManager {
+    
+    public func get(owner: String, repo: String, completion: @escaping(RepositoryResponse?, Error?) -> Void) {
+        let decoder = JSONDecoder()
+        self.get(url: "https://api.github.com/repos/\(owner)/\(repo)") { (data, _, error) in
+            if let data = data {
+                do {
+                    let model = try decoder.decode(RepositoryResponse.self, from: data)
+                    completion(model, error)
+                } catch {
+                    completion(nil, error)
+                }
+            } else {
+                completion(nil, error)
+            }
+        }
+    }
+}
+
+// MARK: - Model
+public struct RepositoryResponse: Codable {
+    let id: Int
+    let fullName: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case fullName = "full_name"
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decode(Int.self, forKey: .id)
+        fullName = try values.decode(String.self, forKey: .fullName)
+    }
+}
