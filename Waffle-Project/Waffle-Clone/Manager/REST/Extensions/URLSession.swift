@@ -18,21 +18,12 @@ extension URLSession {
         var response: URLResponse?
         var error: Error?
         
-        let semaphore = DispatchSemaphore(value: 0)
-        
         let dataTask = self.dataTask(with: request) { (requestData, requestResponse, requestError) in
             data = requestData
             response = requestResponse
             error = requestError
-            // Icrements semaphore count
-            // Releasing the resource
-            semaphore.signal()
         }
         dataTask.resume()
-        
-        // Decrements semaphore count
-        // Requesting the resource
-        _ = semaphore.wait(timeout: .distantFuture)
         
         return (data, response, error)
     }
@@ -42,21 +33,12 @@ extension URLSession {
         var response: URLResponse?
         var error: Error?
         
-        let semaphore = DispatchSemaphore(value: 0)
-
         let dataTask = self.dataTask(with: url) { (urlData, urlResponse, urlError) in
             data = urlData
             response = urlResponse
             error = urlError
-            // Increments semaphore count
-            // Releasing the resource
-            semaphore.signal()
         }
         dataTask.resume()
-        
-        // Decrements semaphore count
-        // Requesting the resource
-        _ = semaphore.wait(timeout: .distantFuture)
         
         return (data, response, error)
     }
