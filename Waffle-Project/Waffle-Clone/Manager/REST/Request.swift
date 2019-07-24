@@ -42,7 +42,8 @@ public class Request {
             request.httpBody = body
             return(request, nil)
         } else {
-            return(nil, "Unable to create URL")
+            let error = BackendError.urlError(reason: "Unable to create URL")
+            return(nil, error)
         }
     }
     

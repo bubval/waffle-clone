@@ -8,6 +8,6 @@
 
 import Foundation
 
-extension String: Error {
-    
+enum BackendError: Error {
+    case urlError(reason: String)
 }
