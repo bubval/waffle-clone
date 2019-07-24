@@ -26,29 +26,13 @@ open class RestManager {
     ///   - parameters: URL query items specified in [name : value] pairs
     ///   - headers: HTTP metadata
     ///   - completion: Data, URLResponse, Error
-    public func get(url: String, parameters: [String : String]? = nil, headers: [String : String]? = nil, completion: @escaping RestManagerCompletion) {
+    public func get(url: String, parameters: [String : String]? = nil, headers: [String : String]? = nil, completion: RestManagerCompletion? = nil) {
         let request = Request(url: url, method: .GET, parameters: parameters, headers: headers, body: nil)
         if let urlRequest = request.get().urlRequest {
-            let task = session.dataTask(with: urlRequest, completionHandler: completion)
+            let task = session.dataTask(with: urlRequest, completionHandler: completion!)
             task.resume()
         } else {
-            completion(nil, nil, request.get().error)
-        }
-    }
-    
-    /// Used to retrieve information from a given server. Using GET only retrieves data and has no effect on the data.
-    ///
-    /// - Parameters:
-    ///   - url: HTTP address
-    ///   - parameters: URL query items specified in [name : value] pairs
-    ///   - headers: HTTP metadata
-    /// - Returns: Data, URLResponse, Error
-    public func get(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil) -> RestManagerResult {
-        let request = Request(url: url, method: .GET, parameters: parameters, headers: headers, body: nil)
-        if let urlRequest = request.get().urlRequest {
-            return session.dataTask(request: urlRequest)
-        } else {
-            return (nil, nil, request.get().error)
+            completion?(nil, nil, request.get().error)
         }
     }
     
@@ -60,30 +44,13 @@ open class RestManager {
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Data, URLResponse, Error
-    public func post(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping RestManagerCompletion) {
+    public func post(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: RestManagerCompletion? = nil) {
         let request = Request(url: url, method: .POST, parameters: parameters, headers: headers, body: body)
         if let urlRequest = request.get().urlRequest {
-            let task = session.dataTask(with: urlRequest, completionHandler: completion)
+            let task = session.dataTask(with: urlRequest, completionHandler: completion!)
             task.resume()
         } else {
-            completion(nil, nil, request.get().error)
-        }
-    }
-
-    /// Used to send data to the server.
-    ///
-    /// - Parameters:
-    ///   - url: HTTP address
-    ///   - parameters: URL query items specified in [name : value] pairs
-    ///   - headers: HTTP metadata
-    ///   - body: data bytes transmitted in an HTTP transaction message
-    /// - Returns: Data, URLResponse, Error
-    public func post(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?) -> RestManagerResult {
-        let request = Request(url: url, method: .POST, parameters: parameters, headers: headers, body: body)
-        if let urlRequest = request.get().urlRequest {
-            return session.dataTask(request: urlRequest)
-        } else {
-            return (nil, nil, request.get().error)
+            completion?(nil, nil, request.get().error)
         }
     }
     
@@ -95,30 +62,13 @@ open class RestManager {
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Data, URLResponse, Error
-    public func put(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping RestManagerCompletion) {
+    public func put(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: RestManagerCompletion? = nil) {
         let request = Request(url: url, method: .PUT, parameters: parameters, headers: headers, body: body)
         if let urlRequest = request.get().urlRequest {
-            let task = session.dataTask(with: urlRequest, completionHandler: completion)
+            let task = session.dataTask(with: urlRequest, completionHandler: completion!)
             task.resume()
         } else {
-            completion(nil, nil, request.get().error)
-        }
-    }
-    
-    /// Replaces all the current representations of the target resource with the uploaded content.
-    ///
-    /// - Parameters:
-    ///   - url: HTTP address
-    ///   - parameters: URL query items specified in [name : value] pairs
-    ///   - headers: HTTP metadata
-    ///   - body: data bytes transmitted in an HTTP transaction message
-    /// - Returns: Data, URLResponse, Error
-    public func put(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?) -> RestManagerResult {
-        let request = Request(url: url, method: .PUT, parameters: parameters, headers: headers, body: body)
-        if let urlRequest = request.get().urlRequest {
-            return session.dataTask(request: urlRequest)
-        } else {
-            return (nil, nil, request.get().error)
+            completion?(nil, nil, request.get().error)
         }
     }
     
@@ -130,30 +80,13 @@ open class RestManager {
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Data, URLResponse, Error
-    public func delete(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data? = nil, completion: @escaping RestManagerCompletion) {
+    public func delete(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data? = nil, completion: RestManagerCompletion? = nil) {
         let request = Request(url: url, method: .DELETE, parameters: parameters, headers: headers, body: body)
         if let urlRequest = request.get().urlRequest {
-            let task = session.dataTask(with: urlRequest, completionHandler: completion)
+            let task = session.dataTask(with: urlRequest, completionHandler: completion!)
             task.resume()
         } else {
-            completion(nil, nil, request.get().error)
-        }
-    }
-    
-    /// Removes all current representation of the target resource given by URL.
-    ///
-    /// - Parameters:
-    ///   - url: HTTP address
-    ///   - parameters: URL query items specified in [name : value] pairs
-    ///   - headers: HTTP metadata
-    ///   - body: data bytes transmitted in an HTTP transaction message
-    /// - Returns: Data, URLResponse, Error
-    public func delete(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data? = nil) -> RestManagerResult {
-        let request = Request(url: url, method: .DELETE, parameters: parameters, headers: headers, body: body)
-        if let urlRequest = request.get().urlRequest {
-            return session.dataTask(request: urlRequest)
-        } else {
-            return (nil, nil, request.get().error)
+            completion?(nil, nil, request.get().error)
         }
     }
 }
