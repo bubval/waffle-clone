@@ -61,6 +61,7 @@ public class Request {
                     retrievedURL.append("\($0)=\(escapedValue)&")
                 }
             }
+            //Removes '&' at the end
             retrievedURL.removeLast()
         }
         return retrievedURL
