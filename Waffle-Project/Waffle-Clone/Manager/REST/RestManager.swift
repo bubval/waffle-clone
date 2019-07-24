@@ -9,7 +9,6 @@
 import Foundation
 
 public typealias RestManagerCompletion = (Data?, URLResponse?, Error?) -> Swift.Void
-public typealias RestManagerResult = DataTaskResult
 
 open class RestManager {
     
