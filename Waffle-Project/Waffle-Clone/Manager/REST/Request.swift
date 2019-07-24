@@ -28,7 +28,7 @@ public class Request {
     ///
     /// - Parameter path: String URL
     /// - Returns: URLRequest with parameters, headers, httpMethod, and body
-    public func request(path: String? = nil) -> (request: URLRequest?, error: Error?) {
+    public func get(path: String? = nil) -> (urlRequest: URLRequest?, error: Error?) {
         let url = URL(string: path ?? self.construct(url: self.url, with: self.parameters))
         
         if let url = url {

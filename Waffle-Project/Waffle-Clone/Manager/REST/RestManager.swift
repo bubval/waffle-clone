@@ -15,11 +15,7 @@ open class RestManager {
     
     var session: URLSession
     
-    public init() {
-        self.session = URLSession(configuration: URLSessionConfiguration.default)
-    }
-    
-    public init(session: URLSession) {
+    public init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
         self.session = session
     }
     
@@ -32,12 +28,11 @@ open class RestManager {
     ///   - completion: Data, URLResponse, Error
     public func get(url: String, parameters: [String : String]? = nil, headers: [String : String]? = nil, completion: @escaping RestManagerCompletion) {
         let request = Request(url: url, method: .GET, parameters: parameters, headers: headers, body: nil)
-        let buildRequest = request.request()
-        if let urlRequest = buildRequest.request {
+        if let urlRequest = request.get().urlRequest {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion(nil, nil, buildRequest.error)
+            completion(nil, nil, request.get().error)
         }
     }
     
@@ -50,11 +45,10 @@ open class RestManager {
     /// - Returns: Data, URLResponse, Error
     public func get(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil) -> RestManagerResult {
         let request = Request(url: url, method: .GET, parameters: parameters, headers: headers, body: nil)
-        let buildRequest = request.request()
-        if let urlRequest = buildRequest.request {
+        if let urlRequest = request.get().urlRequest {
             return session.dataTask(request: urlRequest)
         } else {
-            return (nil, nil, buildRequest.error)
+            return (nil, nil, request.get().error)
         }
     }
     
@@ -68,12 +62,11 @@ open class RestManager {
     ///   - completion: Data, URLResponse, Error
     public func post(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping RestManagerCompletion) {
         let request = Request(url: url, method: .POST, parameters: parameters, headers: headers, body: body)
-        let buildRequest = request.request()
-        if let urlRequest = buildRequest.request {
+        if let urlRequest = request.get().urlRequest {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion(nil, nil, buildRequest.error)
+            completion(nil, nil, request.get().error)
         }
     }
 
@@ -87,11 +80,10 @@ open class RestManager {
     /// - Returns: Data, URLResponse, Error
     public func post(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?) -> RestManagerResult {
         let request = Request(url: url, method: .POST, parameters: parameters, headers: headers, body: body)
-        let buildRequest = request.request()
-        if let urlRequest = buildRequest.request {
+        if let urlRequest = request.get().urlRequest {
             return session.dataTask(request: urlRequest)
         } else {
-            return (nil, nil, buildRequest.error)
+            return (nil, nil, request.get().error)
         }
     }
     
@@ -105,12 +97,11 @@ open class RestManager {
     ///   - completion: Data, URLResponse, Error
     public func put(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping RestManagerCompletion) {
         let request = Request(url: url, method: .PUT, parameters: parameters, headers: headers, body: body)
-        let buildRequest = request.request()
-        if let urlRequest = buildRequest.request {
+        if let urlRequest = request.get().urlRequest {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion(nil, nil, buildRequest.error)
+            completion(nil, nil, request.get().error)
         }
     }
     
@@ -124,11 +115,10 @@ open class RestManager {
     /// - Returns: Data, URLResponse, Error
     public func put(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?) -> RestManagerResult {
         let request = Request(url: url, method: .PUT, parameters: parameters, headers: headers, body: body)
-        let buildRequest = request.request()
-        if let urlRequest = buildRequest.request {
+        if let urlRequest = request.get().urlRequest {
             return session.dataTask(request: urlRequest)
         } else {
-            return (nil, nil, buildRequest.error)
+            return (nil, nil, request.get().error)
         }
     }
     
@@ -142,12 +132,11 @@ open class RestManager {
     ///   - completion: Data, URLResponse, Error
     public func delete(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data? = nil, completion: @escaping RestManagerCompletion) {
         let request = Request(url: url, method: .DELETE, parameters: parameters, headers: headers, body: body)
-        let buildRequest = request.request()
-        if let urlRequest = buildRequest.request {
+        if let urlRequest = request.get().urlRequest {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion(nil, nil, buildRequest.error)
+            completion(nil, nil, request.get().error)
         }
     }
     
@@ -161,11 +150,10 @@ open class RestManager {
     /// - Returns: Data, URLResponse, Error
     public func delete(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data? = nil) -> RestManagerResult {
         let request = Request(url: url, method: .DELETE, parameters: parameters, headers: headers, body: body)
-        let buildRequest = request.request()
-        if let urlRequest = buildRequest.request {
+        if let urlRequest = request.get().urlRequest {
             return session.dataTask(request: urlRequest)
         } else {
-            return (nil, nil, buildRequest.error)
+            return (nil, nil, request.get().error)
         }
     }
 }
