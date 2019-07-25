@@ -18,30 +18,30 @@ public enum httpError: Swift.Error, CustomStringConvertible {
             if code >= 400 && code < 600 {
                 switch code {
                 case 400:
-                    return "Bad Request"
+                    return "\(code) Bad Request"
                 case 401:
-                    return "Unauthorized"
+                    return "\(code) Unauthorized"
                 case 403:
-                    return "Forbidden"
+                    return "\(code) Forbidden"
                 case 404:
-                    return "Not Found"
+                    return "\(code) Not Found"
                 case 406:
-                    return "Not Accessible"
+                    return "\(code) Not Accessible"
                 case 500:
-                    return "Internal Server Error"
+                    return "\(code) Internal Server Error"
                 case 501:
-                    return "Not Implemented"
+                    return "\(code) Not Implemented"
                 case 502:
-                    return "Bad Gateway"
+                    return "\(code) Bad Gateway"
                 case 503:
-                    return "Service Unavailable"
+                    return "\(code) Service Unavailable"
                 default:
-                    return "Undefined http error"
+                    return "\(code) Undefined HTTP error"
                 }
             }
         case .customError(let message):
             return message
         }
-        return "Not an http error"
+        return "Not an client or server error"
     }
 }

@@ -54,5 +54,4 @@ public class Request {
         }
         return retrievedUrl
     }
-    
 }
