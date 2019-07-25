@@ -42,8 +42,7 @@ public class Request {
             request.httpBody = body
             return(request, nil)
         } else {
-            let error = BackendError.urlError(reason: "Unable to create URL")
-            return(nil, error)
+            return(nil, httpError.customError(message: "Unable to build URLRequest"))
         }
     }
     
