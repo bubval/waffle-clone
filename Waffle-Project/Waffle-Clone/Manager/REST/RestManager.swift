@@ -27,8 +27,9 @@ open class RestManager {
     ///   - completion: Data, URLResponse, Error
     public func get(url: String, parameters: [String : String]? = nil, headers: [String : String]? = nil, completion: RestManagerCompletion? = nil) {
         let request = Request(url: url, method: .GET, parameters: parameters, headers: headers, body: nil)
-        if let urlRequest = request.get().urlRequest {
-            let task = session.dataTask(with: urlRequest, completionHandler: completion!)
+        if let urlRequest = request.get().urlRequest,
+            let completion = completion {
+            let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
             completion?(nil, nil, request.get().error)
@@ -45,8 +46,9 @@ open class RestManager {
     ///   - completion: Data, URLResponse, Error
     public func post(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: RestManagerCompletion? = nil) {
         let request = Request(url: url, method: .POST, parameters: parameters, headers: headers, body: body)
-        if let urlRequest = request.get().urlRequest {
-            let task = session.dataTask(with: urlRequest, completionHandler: completion!)
+        if let urlRequest = request.get().urlRequest,
+            let completion = completion {
+            let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
             completion?(nil, nil, request.get().error)
@@ -63,8 +65,9 @@ open class RestManager {
     ///   - completion: Data, URLResponse, Error
     public func put(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: RestManagerCompletion? = nil) {
         let request = Request(url: url, method: .PUT, parameters: parameters, headers: headers, body: body)
-        if let urlRequest = request.get().urlRequest {
-            let task = session.dataTask(with: urlRequest, completionHandler: completion!)
+        if let urlRequest = request.get().urlRequest,
+            let completion = completion {
+            let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
             completion?(nil, nil, request.get().error)
@@ -81,8 +84,9 @@ open class RestManager {
     ///   - completion: Data, URLResponse, Error
     public func delete(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data? = nil, completion: RestManagerCompletion? = nil) {
         let request = Request(url: url, method: .DELETE, parameters: parameters, headers: headers, body: body)
-        if let urlRequest = request.get().urlRequest {
-            let task = session.dataTask(with: urlRequest, completionHandler: completion!)
+        if let urlRequest = request.get().urlRequest,
+            let completion = completion {
+            let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
             completion?(nil, nil, request.get().error)
