@@ -46,23 +46,13 @@ public class Request {
         }
     }
     
-    private func construct(url retrievedURL: String, with parameters: [String : String]?) -> String {
-        var retrievedURL = retrievedURL
+    private func construct(url retrievedUrl: String, with parameters: [String: String]?) -> String {
         if let parameters = parameters,
-            parameters.count > 0 {
-            retrievedURL.append("?")
-            parameters.keys.forEach {
-                guard let value = parameters[$0] else {
-                    return
-                }
-                let escapedValue = value.addingPercentEncoding(withAllowedCharacters: CharacterSet.URLQueryAllowedCharacterSet())
-                if let escapedValue = escapedValue {
-                    retrievedURL.append("\($0)=\(escapedValue)&")
-                }
-            }
-            //Removes '&' at the end
-            retrievedURL.removeLast()
+            var components = URLComponents(string: retrievedUrl) {
+            components.queryItems = parameters.map { element in URLQueryItem(name: element.key, value: element.value) }
+            return (components.url!.absoluteString)
         }
-        return retrievedURL
+        return retrievedUrl
     }
+    
 }
