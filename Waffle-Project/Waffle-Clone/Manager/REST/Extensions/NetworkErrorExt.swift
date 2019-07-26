@@ -8,11 +8,11 @@
 
 import Foundation
 
-extension networkError {
+extension NetworkError {
     
     init?(for urlRequest: URLRequest?) {
         if urlRequest == nil {
-            self = networkError.unableToBuildRequest
+            self = NetworkError.unableToBuildRequest
         } else {
             return nil
         }

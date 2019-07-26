@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum networkError: Swift.Error, CustomStringConvertible {
+public enum NetworkError: Swift.Error, CustomStringConvertible {
     case status(code: Int)
     case unableToBuildRequest
     
@@ -46,7 +46,7 @@ public enum networkError: Swift.Error, CustomStringConvertible {
     }
 }
 
-public enum customError: Swift.Error, CustomStringConvertible {
+public enum CustomError: Swift.Error, CustomStringConvertible {
     case localizedDescription(error: Error)
     
     public var description: String {

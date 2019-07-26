@@ -32,7 +32,7 @@ open class RestManager {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion?(nil, nil, networkError.init(for: urlRequest))
+            completion?(nil, nil, NetworkError.init(for: urlRequest))
         }
     }
     
@@ -51,7 +51,7 @@ open class RestManager {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion?(nil, nil, networkError.init(for: urlRequest))
+            completion?(nil, nil, NetworkError.init(for: urlRequest))
         }
     }
     
@@ -70,7 +70,7 @@ open class RestManager {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion?(nil, nil, networkError.init(for: urlRequest))
+            completion?(nil, nil, NetworkError.init(for: urlRequest))
         }
     }
 
@@ -89,7 +89,7 @@ open class RestManager {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion?(nil, nil, networkError.init(for: urlRequest))
+            completion?(nil, nil, NetworkError.init(for: urlRequest))
         }
     }
 }

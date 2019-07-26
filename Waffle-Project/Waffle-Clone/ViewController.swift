@@ -36,13 +36,13 @@ class ViewController: UIViewController {
                         completion(model, error)
                     } catch {
                         print(httpResponse.statusCode)
-                        completion(nil, networkError.status(code: httpResponse.statusCode))
+                        completion(nil, NetworkError.status(code: httpResponse.statusCode))
                     }
                 } else {
                     if let error = error {
-                        completion(nil, customError.localizedDescription(error: error))
+                        completion(nil, CustomError.localizedDescription(error: error))
                     } else {
-                        completion(nil, networkError.unableToBuildRequest)
+                        completion(nil, NetworkError.unableToBuildRequest)
                     }
                 }
             }
