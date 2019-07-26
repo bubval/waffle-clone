@@ -31,12 +31,16 @@ class ViewController: UIViewController {
                 if let data = data,
                     let httpResponse = response as? HTTPURLResponse {
                     do {
+                        print(httpResponse.statusCode)
                         let model = try decoder.decode(RepositoryResponse.self, from: data)
                         completion(model, error)
                     } catch {
+                        print("ERROR1")
+                        print(httpResponse.statusCode)
                         completion(nil, httpError.status(code: httpResponse.statusCode))
                     }
                 } else {
+                    print("ERROR2")
                     completion(nil, error)
                 }
             }
