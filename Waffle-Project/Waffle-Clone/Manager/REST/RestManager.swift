@@ -26,13 +26,13 @@ open class RestManager {
     ///   - headers: HTTP metadata
     ///   - completion: Data, URLResponse, Error
     public func get(url: String, parameters: [String : String]? = nil, headers: [String : String]? = nil, completion: RestManagerCompletion? = nil) {
-        let request = Request(url: url, method: .GET, parameters: parameters, headers: headers, body: nil)
-        if let urlRequest = request.get().urlRequest,
+        let urlRequest = URLRequest.init(url: url, method: .GET, parameters: parameters, headers: headers, body: nil)
+        if let urlRequest = urlRequest,
             let completion = completion {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion?(nil, nil, request.get().error)
+            completion?(nil, nil, networkError.init(for: urlRequest))
         }
     }
     
@@ -45,13 +45,13 @@ open class RestManager {
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Data, URLResponse, Error
     public func post(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: RestManagerCompletion? = nil) {
-        let request = Request(url: url, method: .POST, parameters: parameters, headers: headers, body: body)
-        if let urlRequest = request.get().urlRequest,
+        let urlRequest = URLRequest.init(url: url, method: .POST, parameters: parameters, headers: headers, body: body)
+        if let urlRequest = urlRequest,
             let completion = completion {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion?(nil, nil, request.get().error)
+            completion?(nil, nil, networkError.init(for: urlRequest))
         }
     }
     
@@ -64,16 +64,16 @@ open class RestManager {
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Data, URLResponse, Error
     public func put(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: RestManagerCompletion? = nil) {
-        let request = Request(url: url, method: .PUT, parameters: parameters, headers: headers, body: body)
-        if let urlRequest = request.get().urlRequest,
+        let urlRequest = URLRequest.init(url: url, method: .PUT, parameters: parameters, headers: headers, body: body)
+        if let urlRequest = urlRequest,
             let completion = completion {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion?(nil, nil, request.get().error)
+            completion?(nil, nil, networkError.init(for: urlRequest))
         }
     }
-    
+
     /// Removes all current representations of the target resource given by URL.
     ///
     /// - Parameters:
@@ -83,13 +83,14 @@ open class RestManager {
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Data, URLResponse, Error
     public func delete(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data? = nil, completion: RestManagerCompletion? = nil) {
-        let request = Request(url: url, method: .DELETE, parameters: parameters, headers: headers, body: body)
-        if let urlRequest = request.get().urlRequest,
+        let urlRequest = URLRequest(url: url, method: .DELETE, parameters: parameters, headers: headers, body: body)
+        if let urlRequest = urlRequest,
             let completion = completion {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion?(nil, nil, request.get().error)
+            completion?(nil, nil, networkError.init(for: urlRequest))
         }
     }
 }
+

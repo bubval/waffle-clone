@@ -13,7 +13,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        manager.get(owner: "Bubval", repo: "Contacts"){ (response, error) in
+        manager.get(owner: "Bubval", repo: "waffle-clone"){ (response, error) in
             if let response = response {
                 print(response)
             } else {
@@ -27,7 +27,7 @@ class ViewController: UIViewController {
         
         public func get(owner: String, repo: String, completion: @escaping(RepositoryResponse?, Error?) -> Void) {
             let decoder = JSONDecoder()
-            self.get(url: "https://api.github.com/repos/\(owner)/\(repo)") { (data, response, error) in
+            self.get(url: "https://api.github.com/repos/\(owner)/\(repo)", parameters: nil, headers: nil) { (data, response, error) in
                 if let data = data,
                     let httpResponse = response as? HTTPURLResponse {
                     do {
@@ -35,13 +35,15 @@ class ViewController: UIViewController {
                         let model = try decoder.decode(RepositoryResponse.self, from: data)
                         completion(model, error)
                     } catch {
-                        print("ERROR1")
                         print(httpResponse.statusCode)
-                        completion(nil, httpError.status(code: httpResponse.statusCode))
+                        completion(nil, networkError.status(code: httpResponse.statusCode))
                     }
                 } else {
-                    print("ERROR2")
-                    completion(nil, error)
+                    if let error = error {
+                        completion(nil, customError.localizedDescription(error: error))
+                    } else {
+                        completion(nil, networkError.unableToBuildRequest)
+                    }
                 }
             }
         }

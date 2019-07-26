@@ -8,9 +8,9 @@
 
 import Foundation
 
-public enum httpError: Swift.Error, CustomStringConvertible {
+public enum networkError: Swift.Error, CustomStringConvertible {
     case status(code: Int)
-    case customError(message: String)
+    case unableToBuildRequest
     
     public var description: String {
         switch self {
@@ -39,9 +39,20 @@ public enum httpError: Swift.Error, CustomStringConvertible {
                     return "\(code) Undefined HTTP error"
                 }
             }
-        case .customError(let message):
-            return message
+        case .unableToBuildRequest:
+            return "Unable to build request."
         }
         return "Not an client or server error"
+    }
+}
+
+public enum customError: Swift.Error, CustomStringConvertible {
+    case localizedDescription(error: Error)
+    
+    public var description: String {
+        switch self {
+        case .localizedDescription(let error):
+            return error.localizedDescription
+        }
     }
 }
