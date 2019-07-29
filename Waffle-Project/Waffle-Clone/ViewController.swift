@@ -13,6 +13,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(Locale.current.identifier)
         manager.get(owner: "Bubval", repo: "waffle-clone"){ (response, error) in
             if let response = response {
                 print(response)

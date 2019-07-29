@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A16A56A22EEE667007AE4EC /* GithubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A56922EEE667007AE4EC /* GithubManager.swift */; };
 		8A70601F22E606920069F4EE /* RestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70601E22E606920069F4EE /* RestManager.swift */; };
 		8A70602222E606B90069F4EE /* URLSessionExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70602122E606B90069F4EE /* URLSessionExt.swift */; };
 		8A70602622E6082D0069F4EE /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70602522E6082D0069F4EE /* RequestMethod.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8A16A56922EEE667007AE4EC /* GithubManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubManager.swift; sourceTree = "<group>"; };
 		8A70601E22E606920069F4EE /* RestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestManager.swift; sourceTree = "<group>"; };
 		8A70602122E606B90069F4EE /* URLSessionExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExt.swift; sourceTree = "<group>"; };
 		8A70602522E6082D0069F4EE /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
@@ -51,6 +53,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8A16A56822EEE656007AE4EC /* Github */ = {
+			isa = PBXGroup;
+			children = (
+				8A16A56922EEE667007AE4EC /* GithubManager.swift */,
+			);
+			path = Github;
+			sourceTree = "<group>";
+		};
 		8A35BEFC22E8815300D51F22 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +74,7 @@
 		8A70601C22E6066A0069F4EE /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				8A16A56822EEE656007AE4EC /* Github */,
 				8A70601D22E606720069F4EE /* REST */,
 			);
 			path = Manager;
@@ -193,6 +204,7 @@
 			files = (
 				8A70601F22E606920069F4EE /* RestManager.swift in Sources */,
 				8ABD12CD22E06ED900C62BB1 /* ViewController.swift in Sources */,
+				8A16A56A22EEE667007AE4EC /* GithubManager.swift in Sources */,
 				8A70602D22E610B30069F4EE /* ErrorEnum.swift in Sources */,
 				8AE9AA1822EB1243006D2F95 /* NetworkErrorExt.swift in Sources */,
 				8A70602222E606B90069F4EE /* URLSessionExt.swift in Sources */,
