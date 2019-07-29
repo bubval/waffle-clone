@@ -20,7 +20,7 @@ public class GithubManager: RestManager {
     public override init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
         super.init(session: session)
     }
-        
+    
     /// Used to retrieve information from GitHub. Using GET only retrieves data and has no effect on the data.
     ///
     /// - Parameters:
@@ -29,16 +29,21 @@ public class GithubManager: RestManager {
     ///   - headers: HTTP metadata
     ///   - completion: Decodable object or Error
     public func githubGet<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, completion: @escaping (T?, Error?) -> Swift.Void) {
-        self.get(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders) { (data, _, error) in
-            if let data = data {
+        self.get(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders) { (data, response, error) in
+            if let data = data,
+                let httpResponse = response as? HTTPURLResponse {
                 do {
                     let model = try GithubManager.decoder.decode(T.self, from: data)
                     completion(model, error)
                 } catch {
-                    completion(nil, error)
+                    completion(nil, NetworkError.status(code: httpResponse.statusCode))
                 }
             } else {
-                completion(nil, error)
+                if let error = error {
+                    completion(nil, CustomError.localizedDescription(error: error))
+                } else {
+                    completion(nil, NetworkError.unableToBuildRequest)
+                }
             }
         }
     }
@@ -52,16 +57,21 @@ public class GithubManager: RestManager {
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
     public func githubPost<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
-        self.post(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders, body: body) { (data, _, error) in
-            if let data = data {
+        self.post(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders, body: body) { (data, response, error) in
+            if let data = data,
+                let httpResponse = response as? HTTPURLResponse {
                 do {
                     let model = try GithubManager.decoder.decode(T.self, from: data)
                     completion(model, error)
                 } catch {
-                    completion(nil, error)
+                    completion(nil, NetworkError.status(code: httpResponse.statusCode))
                 }
             } else {
-                completion(nil, error)
+                if let error = error {
+                    completion(nil, CustomError.localizedDescription(error: error))
+                } else {
+                    completion(nil, NetworkError.unableToBuildRequest)
+                }
             }
         }
     }
@@ -75,20 +85,25 @@ public class GithubManager: RestManager {
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
     public func githubPut<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
-        self.put(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders, body: body) { (data, _, error) in
-            if let data = data {
+        self.put(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders, body: body) { (data, response, error) in
+            if let data = data,
+                let httpResponse = response as? HTTPURLResponse {
                 do {
                     let model = try GithubManager.decoder.decode(T.self, from: data)
                     completion(model, error)
                 } catch {
-                    completion(nil, error)
+                    completion(nil, NetworkError.status(code: httpResponse.statusCode))
                 }
             } else {
-                completion(nil, error)
+                if let error = error {
+                    completion(nil, CustomError.localizedDescription(error: error))
+                } else {
+                    completion(nil, NetworkError.unableToBuildRequest)
+                }
             }
         }
     }
-        
+    
     /// Removes all current representations of the target resource given by URL.
     ///
     /// - Parameters:
@@ -98,16 +113,21 @@ public class GithubManager: RestManager {
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
     public func githubDelete<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
-        self.delete(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders) { (data, _, error) in
-            if let data = data {
+        self.delete(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders) { (data, response, error) in
+            if let data = data,
+                let httpResponse = response as? HTTPURLResponse {
                 do {
                     let model = try GithubManager.decoder.decode(T.self, from: data)
                     completion(model, error)
                 } catch {
-                    completion(nil, error)
+                    completion(nil, NetworkError.status(code: httpResponse.statusCode))
                 }
             } else {
-                completion(nil, error)
+                if let error = error {
+                    completion(nil, CustomError.localizedDescription(error: error))
+                } else {
+                    completion(nil, NetworkError.unableToBuildRequest)
+                }
             }
         }
     }
