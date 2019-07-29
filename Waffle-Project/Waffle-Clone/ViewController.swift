@@ -9,11 +9,10 @@
 import UIKit
 
 class ViewController: UIViewController {
-    let manager = test()
+    let manager = testingRepositoryManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(Locale.current.identifier)
         manager.get(owner: "Bubval", repo: "waffle-clone"){ (response, error) in
             if let response = response {
                 print(response)
@@ -24,29 +23,10 @@ class ViewController: UIViewController {
     }
 
     // Just written for the purposes of testing
-    public class test: RestManager {
-        
+    public class testingRepositoryManager: GithubManager {
         public func get(owner: String, repo: String, completion: @escaping(RepositoryResponse?, Error?) -> Void) {
-            let decoder = JSONDecoder()
-            self.get(url: "https://api.github.com/repos/\(owner)/\(repo)", parameters: nil, headers: nil) { (data, response, error) in
-                if let data = data,
-                    let httpResponse = response as? HTTPURLResponse {
-                    do {
-                        print(httpResponse.statusCode)
-                        let model = try decoder.decode(RepositoryResponse.self, from: data)
-                        completion(model, error)
-                    } catch {
-                        print(httpResponse.statusCode)
-                        completion(nil, NetworkError.status(code: httpResponse.statusCode))
-                    }
-                } else {
-                    if let error = error {
-                        completion(nil, CustomError.localizedDescription(error: error))
-                    } else {
-                        completion(nil, NetworkError.unableToBuildRequest)
-                    }
-                }
-            }
+            let path = "/repos/\(owner)/\(repo)"
+            self.githubGet(path: path, completion: completion)
         }
     }
 
