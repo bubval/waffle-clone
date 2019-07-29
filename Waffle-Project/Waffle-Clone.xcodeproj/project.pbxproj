@@ -11,6 +11,7 @@
 		8A16A58122EF19FC007AE4EC /* IssueResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58022EF19FC007AE4EC /* IssueResponse.swift */; };
 		8A16A58322EF1A16007AE4EC /* IssueUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58222EF1A16007AE4EC /* IssueUser.swift */; };
 		8A16A58522EF1A2C007AE4EC /* IssueLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58422EF1A2C007AE4EC /* IssueLabel.swift */; };
+		8A16A58822EF1A71007AE4EC /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58722EF1A71007AE4EC /* UserResponse.swift */; };
 		8A70601F22E606920069F4EE /* RestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70601E22E606920069F4EE /* RestManager.swift */; };
 		8A70602222E606B90069F4EE /* URLSessionExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70602122E606B90069F4EE /* URLSessionExt.swift */; };
 		8A70602622E6082D0069F4EE /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70602522E6082D0069F4EE /* RequestMethod.swift */; };
@@ -31,6 +32,7 @@
 		8A16A58022EF19FC007AE4EC /* IssueResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueResponse.swift; sourceTree = "<group>"; };
 		8A16A58222EF1A16007AE4EC /* IssueUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueUser.swift; sourceTree = "<group>"; };
 		8A16A58422EF1A2C007AE4EC /* IssueLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabel.swift; sourceTree = "<group>"; };
+		8A16A58722EF1A71007AE4EC /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
 		8A70601E22E606920069F4EE /* RestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestManager.swift; sourceTree = "<group>"; };
 		8A70602122E606B90069F4EE /* URLSessionExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExt.swift; sourceTree = "<group>"; };
 		8A70602522E6082D0069F4EE /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 		8A16A57E22EF18F3007AE4EC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8A16A58622EF1A68007AE4EC /* User */,
 				8A16A57F22EF18FA007AE4EC /* Issue */,
 			);
 			path = Models;
@@ -83,6 +86,14 @@
 				8A16A58422EF1A2C007AE4EC /* IssueLabel.swift */,
 			);
 			path = Issue;
+			sourceTree = "<group>";
+		};
+		8A16A58622EF1A68007AE4EC /* User */ = {
+			isa = PBXGroup;
+			children = (
+				8A16A58722EF1A71007AE4EC /* UserResponse.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		8A35BEFC22E8815300D51F22 /* Enums */ = {
@@ -232,6 +243,7 @@
 				8A16A56A22EEE667007AE4EC /* GithubManager.swift in Sources */,
 				8A70602D22E610B30069F4EE /* ErrorEnum.swift in Sources */,
 				8A16A58522EF1A2C007AE4EC /* IssueLabel.swift in Sources */,
+				8A16A58822EF1A71007AE4EC /* UserResponse.swift in Sources */,
 				8A16A58322EF1A16007AE4EC /* IssueUser.swift in Sources */,
 				8AE9AA1822EB1243006D2F95 /* NetworkErrorExt.swift in Sources */,
 				8A70602222E606B90069F4EE /* URLSessionExt.swift in Sources */,
