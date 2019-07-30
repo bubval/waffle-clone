@@ -26,7 +26,7 @@ class ViewController: UIViewController {
     public class testingRepositoryManager: GithubManager {
         public func get(owner: String, repo: String, completion: @escaping(RepositoryResponse?, Error?) -> Void) {
             let path = "/repos/\(owner)/\(repo)"
-            self.githubGet(path: path, completion: completion)
+            self.get(path: path, completion: completion)
         }
     }
 

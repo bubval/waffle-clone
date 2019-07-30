@@ -28,21 +28,24 @@ public class GithubManager: RestManager {
     ///   - parameters: URL query items specified in [name : value] pairs
     ///   - headers: HTTP metadata
     ///   - completion: Decodable object or Error
-    public func githubGet<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, completion: @escaping (T?, Error?) -> Swift.Void) {
+    public func get<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, completion: @escaping (T?, Error?) -> Swift.Void) {
         self.get(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders) { (data, response, error) in
-            if let data = data,
-                let httpResponse = response as? HTTPURLResponse {
+            
+            guard error == nil else {
+                return completion(nil, CustomError.localizedDescription(error: error!))
+            }
+            if let response = response as? HTTPURLResponse {
+                guard response.statusCode >= 200 && response.statusCode <= 299 else {
+                    return completion(nil, NetworkError.status(code: response.statusCode))
+                }
+            }
+            
+            if let data = data {
                 do {
                     let model = try GithubManager.decoder.decode(T.self, from: data)
-                    completion(model, error)
+                    completion(model, nil)
                 } catch {
-                    completion(nil, NetworkError.status(code: httpResponse.statusCode))
-                }
-            } else {
-                if let error = error {
-                    completion(nil, CustomError.localizedDescription(error: error))
-                } else {
-                    completion(nil, NetworkError.unableToBuildRequest)
+                    completion(nil, CustomError.model)
                 }
             }
         }
@@ -56,21 +59,24 @@ public class GithubManager: RestManager {
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
-    public func githubPost<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
+    public func post<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
         self.post(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders, body: body) { (data, response, error) in
-            if let data = data,
-                let httpResponse = response as? HTTPURLResponse {
+            
+            guard error == nil else {
+                return completion(nil, CustomError.localizedDescription(error: error!))
+            }
+            if let response = response as? HTTPURLResponse {
+                guard response.statusCode >= 200 && response.statusCode <= 299 else {
+                    return completion(nil, NetworkError.status(code: response.statusCode))
+                }
+            }
+            
+            if let data = data {
                 do {
                     let model = try GithubManager.decoder.decode(T.self, from: data)
-                    completion(model, error)
+                    completion(model, nil)
                 } catch {
-                    completion(nil, NetworkError.status(code: httpResponse.statusCode))
-                }
-            } else {
-                if let error = error {
-                    completion(nil, CustomError.localizedDescription(error: error))
-                } else {
-                    completion(nil, NetworkError.unableToBuildRequest)
+                    completion(nil, CustomError.model)
                 }
             }
         }
@@ -84,21 +90,24 @@ public class GithubManager: RestManager {
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
-    public func githubPut<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
+    public func put<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
         self.put(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders, body: body) { (data, response, error) in
-            if let data = data,
-                let httpResponse = response as? HTTPURLResponse {
+            
+            guard error == nil else {
+                return completion(nil, CustomError.localizedDescription(error: error!))
+            }
+            if let response = response as? HTTPURLResponse {
+                guard response.statusCode >= 200 && response.statusCode <= 299 else {
+                    return completion(nil, NetworkError.status(code: response.statusCode))
+                }
+            }
+            
+            if let data = data {
                 do {
                     let model = try GithubManager.decoder.decode(T.self, from: data)
-                    completion(model, error)
+                    completion(model, nil)
                 } catch {
-                    completion(nil, NetworkError.status(code: httpResponse.statusCode))
-                }
-            } else {
-                if let error = error {
-                    completion(nil, CustomError.localizedDescription(error: error))
-                } else {
-                    completion(nil, NetworkError.unableToBuildRequest)
+                    completion(nil, CustomError.model)
                 }
             }
         }
@@ -112,21 +121,24 @@ public class GithubManager: RestManager {
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
-    public func githubDelete<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
+    public func delete<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
         self.delete(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders) { (data, response, error) in
-            if let data = data,
-                let httpResponse = response as? HTTPURLResponse {
+            
+            guard error == nil else {
+                return completion(nil, CustomError.localizedDescription(error: error!))
+            }
+            if let response = response as? HTTPURLResponse {
+                guard response.statusCode >= 200 && response.statusCode <= 299 else {
+                    return completion(nil, NetworkError.status(code: response.statusCode))
+                }
+            }
+            
+            if let data = data {
                 do {
                     let model = try GithubManager.decoder.decode(T.self, from: data)
-                    completion(model, error)
+                    completion(model, nil)
                 } catch {
-                    completion(nil, NetworkError.status(code: httpResponse.statusCode))
-                }
-            } else {
-                if let error = error {
-                    completion(nil, CustomError.localizedDescription(error: error))
-                } else {
-                    completion(nil, NetworkError.unableToBuildRequest)
+                    completion(nil, CustomError.model)
                 }
             }
         }
@@ -171,5 +183,56 @@ extension GithubManager {
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
         encoder.dateEncodingStrategy = .formatted(formatter)
         return encoder
+    }
+}
+
+extension GithubManager {
+    private enum CustomError: Swift.Error, CustomStringConvertible {
+        case localizedDescription(error: Error)
+        case model
+        
+        public var description: String {
+            switch self {
+            case .localizedDescription(let error):
+                return error.localizedDescription
+            case .model:
+                return "Unable to parse JSON response to model."
+            }
+        }
+    }
+    
+    private enum NetworkError: Swift.Error, CustomStringConvertible {
+        case status(code: Int)
+        
+        public var description: String {
+            switch self {
+            case .status(let code):
+                if code >= 400 && code < 600 {
+                    switch code {
+                    case 400:
+                        return "\(code) Bad Request"
+                    case 401:
+                        return "\(code) Unauthorized"
+                    case 403:
+                        return "\(code) Forbidden"
+                    case 404:
+                        return "\(code) Not Found"
+                    case 406:
+                        return "\(code) Not Accessible"
+                    case 500:
+                        return "\(code) Internal Server Error"
+                    case 501:
+                        return "\(code) Not Implemented"
+                    case 502:
+                        return "\(code) Bad Gateway"
+                    case 503:
+                        return "\(code) Service Unavailable"
+                    default:
+                        return "\(code) Undefined HTTP error"
+                    }
+                }
+                return "Not an client or server error"
+            }
+        }
     }
 }

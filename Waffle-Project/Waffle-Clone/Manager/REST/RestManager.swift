@@ -32,7 +32,7 @@ open class RestManager {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion?(nil, nil, NetworkError.init(for: urlRequest))
+            completion?(nil, nil, RequestError.unableToBuildRequest)
         }
     }
     
@@ -51,7 +51,7 @@ open class RestManager {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion?(nil, nil, NetworkError.init(for: urlRequest))
+            completion?(nil, nil, RequestError.unableToBuildRequest)
         }
     }
     
@@ -70,7 +70,7 @@ open class RestManager {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion?(nil, nil, NetworkError.init(for: urlRequest))
+            completion?(nil, nil, RequestError.unableToBuildRequest)
         }
     }
 
@@ -89,7 +89,20 @@ open class RestManager {
             let task = session.dataTask(with: urlRequest, completionHandler: completion)
             task.resume()
         } else {
-            completion?(nil, nil, NetworkError.init(for: urlRequest))
+            completion?(nil, nil, RequestError.unableToBuildRequest)
+        }
+    }
+}
+
+extension RestManager {
+    private enum RequestError: Swift.Error, CustomStringConvertible {
+        case unableToBuildRequest
+        
+        public var description: String {
+            switch self {
+            case .unableToBuildRequest:
+                return "Unable to build request."
+            }
         }
     }
 }
