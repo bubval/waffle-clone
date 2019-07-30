@@ -28,8 +28,8 @@ extension URLRequest {
         if let url = url {
             var request = URLRequest(url: url)
             if let headers = headers {
-                for headerKey in headers.keys {
-                    request.addValue(headers[headerKey]!, forHTTPHeaderField: headerKey)
+                for (key, value) in headers {
+                    request.addValue(key, forHTTPHeaderField: value)
                 }
             }
             request.httpMethod = method.rawValue
