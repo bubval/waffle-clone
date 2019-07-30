@@ -18,7 +18,7 @@ public struct Constants {
 
 public class GithubManager: RestManager {
     
-    private let baseUrl = "https://api.github.com"    
+    private let baseUrl = "https://api.github.com"
     
     public override init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
         super.init(session: session)
