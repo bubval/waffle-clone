@@ -149,7 +149,7 @@ public class GithubManager: RestManager {
 
 extension GithubManager {
     
-    public static var decoder: JSONDecoder {
+    private static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .custom({ (decoder) -> Date in
             let container = try decoder.singleValueContainer()
@@ -173,7 +173,7 @@ extension GithubManager {
         return decoder
     }
     
-    public static var encoder: JSONEncoder {
+    private static var encoder: JSONEncoder {
         let encoder = JSONEncoder()
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .iso8601)
