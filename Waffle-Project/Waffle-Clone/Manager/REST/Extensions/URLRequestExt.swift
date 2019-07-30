@@ -29,7 +29,7 @@ extension URLRequest {
             var request = URLRequest(url: url)
             if let headers = headers {
                 for (key, value) in headers {
-                    request.addValue(key, forHTTPHeaderField: value)
+                    request.addValue(value, forHTTPHeaderField: key)
                 }
             }
             request.httpMethod = method.rawValue

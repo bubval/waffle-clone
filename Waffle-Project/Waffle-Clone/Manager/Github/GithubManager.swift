@@ -11,6 +11,7 @@ import Foundation
 public class GithubManager: RestManager {
     
     private let baseUrl = "https://api.github.com"
+    // TODO: CORRECT!!!
     private var defaultHeaders = [
         "Accept" : "application/vnd.github.v3+json",
         RequestHeaderFields.acceptEncoding.rawValue : "gzip",
@@ -32,7 +33,7 @@ public class GithubManager: RestManager {
         self.get(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders) { (data, response, error) in
             
             guard error == nil else {
-                return completion(nil, CustomError.localizedDescription(error: error!))
+                return completion(nil, UnknownError.internalError(error: error!))
             }
             if let response = response as? HTTPURLResponse {
                 guard response.statusCode >= 200 && response.statusCode <= 299 else {
@@ -45,7 +46,7 @@ public class GithubManager: RestManager {
                     let model = try GithubManager.decoder.decode(T.self, from: data)
                     completion(model, nil)
                 } catch {
-                    completion(nil, CustomError.model)
+                    completion(nil, JsonError.unparsableModel)
                 }
             }
         }
@@ -63,7 +64,7 @@ public class GithubManager: RestManager {
         self.post(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders, body: body) { (data, response, error) in
             
             guard error == nil else {
-                return completion(nil, CustomError.localizedDescription(error: error!))
+                return completion(nil, UnknownError.internalError(error: error!))
             }
             if let response = response as? HTTPURLResponse {
                 guard response.statusCode >= 200 && response.statusCode <= 299 else {
@@ -76,7 +77,7 @@ public class GithubManager: RestManager {
                     let model = try GithubManager.decoder.decode(T.self, from: data)
                     completion(model, nil)
                 } catch {
-                    completion(nil, CustomError.model)
+                    completion(nil, JsonError.unparsableModel)
                 }
             }
         }
@@ -94,7 +95,7 @@ public class GithubManager: RestManager {
         self.put(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders, body: body) { (data, response, error) in
             
             guard error == nil else {
-                return completion(nil, CustomError.localizedDescription(error: error!))
+                return completion(nil, UnknownError.internalError(error: error!))
             }
             if let response = response as? HTTPURLResponse {
                 guard response.statusCode >= 200 && response.statusCode <= 299 else {
@@ -107,7 +108,7 @@ public class GithubManager: RestManager {
                     let model = try GithubManager.decoder.decode(T.self, from: data)
                     completion(model, nil)
                 } catch {
-                    completion(nil, CustomError.model)
+                    completion(nil, JsonError.unparsableModel)
                 }
             }
         }
@@ -125,7 +126,7 @@ public class GithubManager: RestManager {
         self.delete(url: self.baseUrl + path, parameters: parameters, headers: headers ?? defaultHeaders) { (data, response, error) in
             
             guard error == nil else {
-                return completion(nil, CustomError.localizedDescription(error: error!))
+                return completion(nil, UnknownError.internalError(error: error!))
             }
             if let response = response as? HTTPURLResponse {
                 guard response.statusCode >= 200 && response.statusCode <= 299 else {
@@ -138,7 +139,7 @@ public class GithubManager: RestManager {
                     let model = try GithubManager.decoder.decode(T.self, from: data)
                     completion(model, nil)
                 } catch {
-                    completion(nil, CustomError.model)
+                    completion(nil, JsonError.unparsableModel)
                 }
             }
         }
@@ -187,15 +188,23 @@ extension GithubManager {
 }
 
 extension GithubManager {
-    private enum CustomError: Swift.Error, CustomStringConvertible {
-        case localizedDescription(error: Error)
-        case model
+    private enum UnknownError: Swift.Error, CustomStringConvertible {
+        case internalError(error: Error)
         
         public var description: String {
             switch self {
-            case .localizedDescription(let error):
+            case .internalError(let error):
                 return error.localizedDescription
-            case .model:
+            }
+        }
+    }
+    
+    private enum JsonError: Swift.Error, CustomStringConvertible {
+        case unparsableModel
+        
+        public var description: String {
+            switch self {
+            case .unparsableModel:
                 return "Unable to parse JSON response to model."
             }
         }
