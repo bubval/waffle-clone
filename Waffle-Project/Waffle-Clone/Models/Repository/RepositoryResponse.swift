@@ -16,7 +16,7 @@ public struct RepositoryResponse: Codable {
     let createdAt: String
     let updatedAt: String
     let hasIssues: Bool
-    let homepage: String
+    let homepage: String?
     let isPrivate: Bool
     let owner: RepoCreator?
     let organization: RepoCreator?
@@ -44,7 +44,7 @@ public struct RepositoryResponse: Codable {
         createdAt = try values.decode(String.self, forKey: .createdAt)
         updatedAt = try values.decode(String.self, forKey: .updatedAt)
         hasIssues = try values.decode(Bool.self, forKey: .hasIssues)
-        homepage = try values.decode(String.self, forKey: .homepage)
+        homepage = try values.decodeIfPresent(String.self, forKey: .homepage)
         isPrivate = try values.decode(Bool.self, forKey: .isPrivate)
         owner = try values.decodeIfPresent(RepoCreator.self, forKey: .owner)
         organization = try values.decodeIfPresent(RepoCreator.self, forKey: .organization)

@@ -39,7 +39,7 @@ class BasicAuthentication: Authentication {
         return .headers
     }
     override var key: String {
-        return "Authentication"
+        return "Authorization"
     }
     override var value: String {
         let authorization = "\(self.username):\(self.password)"
@@ -55,6 +55,27 @@ class BasicAuthentication: Authentication {
     
     override func headers() -> [String : String] {
         return [key : value]
+    }
+}
+
+class TokenAuthentication: Authentication {
+    override var type: AuthenticationType {
+        return .headers
+    }
+    override var key: String {
+        return "Authorization"
+    }
+    override var value: String {
+        return "token \(self.token)"
+    }
+    var token: String
+    
+    public init(token: String) {
+        self.token = token
+    }
+    
+    override func headers() -> [String : String] {
+        return [self.key: "token \(self.token)"]
     }
 }
 

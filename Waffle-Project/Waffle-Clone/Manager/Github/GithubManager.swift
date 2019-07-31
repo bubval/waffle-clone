@@ -19,8 +19,14 @@ struct Constants {
 class GithubManager: RestManager {
     
     private let baseUrl = "https://api.github.com"
-    
+    var authentication: Authentication?
+
     public override init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
+        super.init(session: session)
+    }
+    
+    public init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default), authentication: Authentication? = nil) {
+        self.authentication = authentication
         super.init(session: session)
     }
     
@@ -32,8 +38,8 @@ class GithubManager: RestManager {
     ///   - headers: HTTP metadata
     ///   - completion: Decodable object or Error
     func get<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = Constants.defaultHeaders, completion: @escaping (T?, Error?) -> Swift.Void) {
-        self.get(url: self.baseUrl + path, parameters: parameters, headers: headers) { (data, response, error) in
-            
+        let (newHeaders, newParameters) = self.addAuthenticationIfNeeded(headers, parameters: parameters)
+        self.get(url: self.baseUrl + path, parameters: newParameters, headers: newHeaders) { (data, response, error) in
             guard error == nil else {
                 return completion(nil, UnknownError.internalError(error: error!))
             }
@@ -245,5 +251,32 @@ extension GithubManager {
                 return "Not an client or server error"
             }
         }
+    }
+}
+
+// MARK: - Authentication
+
+extension GithubManager {
+    
+    func addAuthenticationIfNeeded(_ headers: [String : String]?, parameters: [String : String]?) -> (headers: [String : String]?, parameters: [String : String]?) {
+        var headers = headers
+        var parameters = parameters
+        
+        if let authentication = self.authentication {
+            if authentication.type == .headers {
+                if headers == nil {
+                    headers = [String : String]()
+                }
+                headers!.updateValue(authentication.value, forKey: authentication.key)
+                return (headers, parameters)
+            } else if authentication.type == .parameters {
+                if parameters == nil {
+                    parameters = [String : String]()
+                }
+                parameters!.updateValue(authentication.value, forKey: authentication.key)
+                return (headers, parameters)
+            }
+        }
+        return (headers, parameters)
     }
 }
