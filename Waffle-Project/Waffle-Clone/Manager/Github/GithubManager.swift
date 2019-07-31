@@ -9,7 +9,7 @@
 import Foundation
 
 struct Constants {
-    public static var defaultHeaders = [
+    static var defaultHeaders = [
         "Accept" : "application/vnd.github.v3+json",
         RequestHeaderFields.acceptEncoding.rawValue : "gzip",
         "Content-Type" : "application/json; charset=utf-8"
