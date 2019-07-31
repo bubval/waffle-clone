@@ -10,7 +10,7 @@ import Foundation
 
 extension URLRequest {
     
-    public init?(url: String, method: RequestMethod, parameters: [String : String]? = nil, headers: [String : String]? = nil, body: Data? = nil) {
+    init?(url: String, method: RequestMethod, parameters: [String : String]? = nil, headers: [String : String]? = nil, body: Data? = nil) {
         
         // Builds query url from parameters
         var url: URL? {

@@ -10,11 +10,11 @@ import Foundation
 
 public typealias RestManagerCompletion = (Data?, URLResponse?, Error?) -> Swift.Void
 
-open class RestManager {
+class RestManager {
     
     var session: URLSession
     
-    public init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
+    init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
         self.session = session
     }
     
@@ -25,7 +25,7 @@ open class RestManager {
     ///   - parameters: URL query items specified in [name : value] pairs
     ///   - headers: HTTP metadata
     ///   - completion: Data, URLResponse, Error
-    public func get(url: String, parameters: [String : String]? = nil, headers: [String : String]? = nil, completion: RestManagerCompletion? = nil) {
+    func get(url: String, parameters: [String : String]? = nil, headers: [String : String]? = nil, completion: RestManagerCompletion? = nil) {
         let urlRequest = URLRequest.init(url: url, method: .GET, parameters: parameters, headers: headers, body: nil)
         if let urlRequest = urlRequest,
             let completion = completion {
@@ -44,7 +44,7 @@ open class RestManager {
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Data, URLResponse, Error
-    public func post(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: RestManagerCompletion? = nil) {
+    func post(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: RestManagerCompletion? = nil) {
         let urlRequest = URLRequest.init(url: url, method: .POST, parameters: parameters, headers: headers, body: body)
         if let urlRequest = urlRequest,
             let completion = completion {
@@ -63,7 +63,7 @@ open class RestManager {
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Data, URLResponse, Error
-    public func put(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: RestManagerCompletion? = nil) {
+    func put(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: RestManagerCompletion? = nil) {
         let urlRequest = URLRequest.init(url: url, method: .PUT, parameters: parameters, headers: headers, body: body)
         if let urlRequest = urlRequest,
             let completion = completion {
@@ -82,7 +82,7 @@ open class RestManager {
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Data, URLResponse, Error
-    public func delete(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data? = nil, completion: RestManagerCompletion? = nil) {
+    func delete(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data? = nil, completion: RestManagerCompletion? = nil) {
         let urlRequest = URLRequest(url: url, method: .DELETE, parameters: parameters, headers: headers, body: body)
         if let urlRequest = urlRequest,
             let completion = completion {

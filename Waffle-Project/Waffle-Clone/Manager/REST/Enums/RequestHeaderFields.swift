@@ -8,6 +8,6 @@
 
 import Foundation
 
-public enum RequestHeaderFields: String {
+enum RequestHeaderFields: String {
     case acceptEncoding = "Accept-Encoding"
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Constants {
+struct Constants {
     public static var defaultHeaders = [
         "Accept" : "application/vnd.github.v3+json",
         RequestHeaderFields.acceptEncoding.rawValue : "gzip",
@@ -16,7 +16,7 @@ public struct Constants {
     ]
 }
 
-public class GithubManager: RestManager {
+class GithubManager: RestManager {
     
     private let baseUrl = "https://api.github.com"
     
@@ -31,7 +31,7 @@ public class GithubManager: RestManager {
     ///   - parameters: URL query items specified in [name : value] pairs
     ///   - headers: HTTP metadata
     ///   - completion: Decodable object or Error
-    public func get<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = Constants.defaultHeaders, completion: @escaping (T?, Error?) -> Swift.Void) {
+    func get<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = Constants.defaultHeaders, completion: @escaping (T?, Error?) -> Swift.Void) {
         self.get(url: self.baseUrl + path, parameters: parameters, headers: headers) { (data, response, error) in
             
             guard error == nil else {
@@ -62,7 +62,7 @@ public class GithubManager: RestManager {
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
-    public func post<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = Constants.defaultHeaders, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
+    func post<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = Constants.defaultHeaders, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
         self.post(url: self.baseUrl + path, parameters: parameters, headers: headers, body: body) { (data, response, error) in
             
             guard error == nil else {
@@ -93,7 +93,7 @@ public class GithubManager: RestManager {
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
-    public func put<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = Constants.defaultHeaders, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
+    func put<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = Constants.defaultHeaders, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
         self.put(url: self.baseUrl + path, parameters: parameters, headers: headers, body: body) { (data, response, error) in
             
             guard error == nil else {
@@ -124,7 +124,7 @@ public class GithubManager: RestManager {
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
-    public func delete<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = Constants.defaultHeaders, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
+    func delete<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = Constants.defaultHeaders, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
         self.delete(url: self.baseUrl + path, parameters: parameters, headers: headers) { (data, response, error) in
             
             guard error == nil else {
