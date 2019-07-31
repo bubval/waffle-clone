@@ -29,22 +29,5 @@ class ViewController: UIViewController {
             self.get(path: path, completion: completion)
         }
     }
-
-    // MARK: - Model
-    public struct RepositoryResponse: Codable {
-        let id: Int
-        let fullName: String
-        
-        enum CodingKeys: String, CodingKey {
-            case id
-            case fullName = "full_name"
-        }
-        
-        public init(from decoder: Decoder) throws {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-            id = try values.decode(Int.self, forKey: .id)
-            fullName = try values.decode(String.self, forKey: .fullName)
-        }
-    }
 }
 
