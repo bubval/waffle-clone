@@ -14,7 +14,7 @@ public struct UserResponse: Codable {
     let avatarUrl: String
     let name: String
     let email: String
-    let bio: String
+    let bio: String?
     let createdAt: String
     
     enum CodingKeys: String, CodingKey {
@@ -34,7 +34,7 @@ public struct UserResponse: Codable {
         avatarUrl = try values.decode(String.self, forKey: .avatarUrl)
         name = try values.decode(String.self, forKey: .name)
         email = try values.decode(String.self, forKey: .email)
-        bio = try values.decode(String.self, forKey: .bio)
+        bio = try values.decodeIfPresent(String.self, forKey: .bio)
         createdAt = try values.decode(String.self, forKey: .createdAt)
     }
 }

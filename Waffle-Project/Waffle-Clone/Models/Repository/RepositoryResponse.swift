@@ -11,7 +11,7 @@ import Foundation
 public struct RepositoryResponse: Codable {
     let id: Int
     let name: String
-    let description: String
+    let description: String?
     let url: String
     let createdAt: String
     let updatedAt: String
@@ -39,7 +39,7 @@ public struct RepositoryResponse: Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(Int.self, forKey: .id)
         name = try values.decode(String.self, forKey: .name)
-        description = try values.decode(String.self, forKey: .description)
+        description = try values.decodeIfPresent(String.self, forKey: .description)
         url = try values.decode(String.self, forKey: .url)
         createdAt = try values.decode(String.self, forKey: .createdAt)
         updatedAt = try values.decode(String.self, forKey: .updatedAt)
