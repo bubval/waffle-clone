@@ -18,6 +18,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         return true
     }
+    
+    
+    internal func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        // Redirect URL (scheme://host)
+        if url.scheme == "waffleclone" {
+            if url.host == "gitlogin" {
+                // Redirect URL + with query items
+                if let urlComponents = URLComponents(string: url.absoluteString),
+                    // query items:
+                    // 1. code - identifying user
+                    // 2. state - used to protect against cross-site request forgery attacks)
+                    let queryItems = urlComponents.queryItems {
+                    let code = queryItems[0].value
+
+                    let manager = LoginManager()
+                    manager.getAccessToken(clientID: "ea4bd88e013f85f15b8d", clientSecret: "ea2be42b66eaba386af229d08fc98c83bc3c7639", code: code!, redirectURL: "waffleclone://gitlogin") { (response, error) in
+                        print(response!)
+                    }
+                }
+            }
+        }
+        return true
+    }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

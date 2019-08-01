@@ -12,6 +12,32 @@ enum AuthenticationType {
     case none
     case headers
     case parameters
+//
+//
+//    init?(email: String, password: String) {
+//        //login email pass
+//        // basic token
+//        self = .headers
+//
+//    }
+//
+//    var headers: [String: String]? {
+//        switch self {
+//        case .headers:
+//            return [:] ...
+//        default:
+//            return nil
+//        }
+//    }
+//
+//    var parameters: [String: String]? {
+//        switch self {
+//        case .parameters:
+//            return [:] ...
+//        default:
+//            return nil
+//        }
+//    }
 }
 
 class Authentication {
