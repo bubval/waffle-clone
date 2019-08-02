@@ -12,7 +12,7 @@ public protocol KeychainQueryable {
     var query: [String: Any] { get }
 }
 
-public struct GenericPasswordQueryable {
+public struct Queryable {
     let service: String
     let accessGroup: String?
     
@@ -22,7 +22,7 @@ public struct GenericPasswordQueryable {
     }
 }
 
-extension GenericPasswordQueryable: KeychainQueryable {
+extension Queryable: KeychainQueryable {
     public var query: [String: Any] {
         var query: [String: Any] = [:]
         query[String(kSecClass)] = kSecClassGenericPassword

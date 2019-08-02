@@ -29,7 +29,7 @@ public struct Keychain {
         // Return the keychain item that matches the query
         var status = SecItemCopyMatching(query as CFDictionary, nil)
         switch status {
-            // If the query succeeds, it means a password for that account already exists
+        // If the query succeeds, it means a password for that account already exists
         // If it exists - replace the existing password’s value using SecItemUpdate(_:_:)
         case errSecSuccess:
             var attributesToUpdate: [String: Any] = [:]

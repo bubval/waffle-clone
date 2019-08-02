@@ -37,6 +37,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                            clientSecret: AuthContants.clientSecret,
                                            code: code!,
                                            redirectURL: AuthContants.callbackUrl) { (response, error) in
+//                                            if let response = response {
+//                                                let keychain = Keychain(keychainQueryable: GenericPasswordQueryable(service: "AccessToken"))
+//                                                do {
+//                                                    try keychain.setValue(response.accessToken, for: "accessToken")
+//                                                } catch (let e) {
+//                                                    print("Saving generic password failed with \(e.localizedDescription).")
+//                                                }
+//                                            }
+//                                            if let error = error {
+//                                                print(error.localizedDescription)
+//                                            }
+
                         print(response!)
                     }
                 }
