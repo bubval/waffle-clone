@@ -33,7 +33,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let code = queryItems[0].value
 
                     let manager = LoginManager()
-                    manager.getAccessToken(clientID: "ea4bd88e013f85f15b8d", clientSecret: "ea2be42b66eaba386af229d08fc98c83bc3c7639", code: code!, redirectURL: "waffleclone://gitlogin") { (response, error) in
+                    manager.getAccessToken(clientID: AuthContants.clientId,
+                                           clientSecret: AuthContants.clientSecret,
+                                           code: code!,
+                                           redirectURL: AuthContants.callbackUrl) { (response, error) in
                         print(response!)
                     }
                 }

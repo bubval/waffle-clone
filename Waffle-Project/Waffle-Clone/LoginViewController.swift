@@ -21,8 +21,8 @@ class LoginViewController: UIViewController {
     @IBAction func loginBtnPressed(_ sender: UIButton) {
         print("pressed")
         var url = "https://github.com/login/oauth/authorize"
-        url += "?client_id=\(clientID)"
-        url += "&redirect_url=waffleclone://gitlogin"
+        url += "?client_id=\(AuthContants.clientId)"
+        url += "&redirect_url=\(AuthContants.callbackUrl)"
         url += "&scope=user"
         url += "&state=unguessable"
         url += "&allow_signup=true"

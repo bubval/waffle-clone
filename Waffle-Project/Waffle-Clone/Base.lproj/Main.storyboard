@@ -18,23 +18,58 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Cv-Zp-roU">
-                                <rect key="frame" x="157" y="455" width="100" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="0C8-aQ-teg"/>
-                                    <constraint firstAttribute="width" constant="100" id="61s-e1-Ugp"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Login"/>
-                                <connections>
-                                    <action selector="loginBtnPressed:" destination="1F5-Qu-Qsi" eventType="touchUpInside" id="diK-pz-ysb"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="203" translatesAutoresizingMaskIntoConstraints="NO" id="I4e-fW-8zH">
+                                <rect key="frame" x="88" y="223" width="238" height="504.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="1gz-5F-04C">
+                                        <rect key="frame" x="0.0" y="0.0" width="238" height="241.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome Stranger!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u20-9r-Pak">
+                                                <rect key="frame" x="0.0" y="0.0" width="238" height="35"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="githubLogo" translatesAutoresizingMaskIntoConstraints="NO" id="W59-TH-t7W">
+                                                <rect key="frame" x="49" y="55" width="140" height="140"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="140" id="6rH-fq-MaY"/>
+                                                    <constraint firstAttribute="height" constant="140" id="PIW-9q-Fb3"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please log in to continue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AY8-8h-2wO">
+                                                <rect key="frame" x="4" y="215" width="230" height="26.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Cv-Zp-roU">
+                                        <rect key="frame" x="44" y="444.5" width="150" height="60"/>
+                                        <color key="backgroundColor" red="0.0" green="0.71764705882352942" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="150" id="pq0-Op-c11"/>
+                                            <constraint firstAttribute="height" constant="60" id="yZT-6l-Lxu"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <size key="titleShadowOffset" width="2" height="2"/>
+                                        <state key="normal" title="Login">
+                                            <color key="titleShadowColor" white="0.0" alpha="0.1992722602739726" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loginBtnPressed:" destination="1F5-Qu-Qsi" eventType="touchUpInside" id="diK-pz-ysb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                         <constraints>
-                            <constraint firstItem="3Cv-Zp-roU" firstAttribute="centerY" secondItem="0Z0-Dw-Qa3" secondAttribute="centerY" id="fNM-Xg-HMw"/>
-                            <constraint firstItem="3Cv-Zp-roU" firstAttribute="centerX" secondItem="0Z0-Dw-Qa3" secondAttribute="centerX" id="nkC-3t-y6D"/>
+                            <constraint firstItem="I4e-fW-8zH" firstAttribute="centerX" secondItem="0Z0-Dw-Qa3" secondAttribute="centerX" id="eue-00-JR7"/>
+                            <constraint firstItem="I4e-fW-8zH" firstAttribute="centerY" secondItem="0Z0-Dw-Qa3" secondAttribute="centerY" id="h7S-tz-Bxt"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0Z0-Dw-Qa3"/>
                     </view>
@@ -81,4 +116,7 @@
             <point key="canvasLocation" x="-815.94202898550736" y="63.616071428571423"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="githubLogo" width="512" height="512"/>
+    </resources>
 </document>
