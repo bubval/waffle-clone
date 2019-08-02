@@ -10,14 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
     let manager = testingRepositoryManager()
-    var secureStoreWithGenericPwd: SecureStore!
+    var accessTokenKeychain: Keychain!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let result = addAuthenticationIfNeeded(["1":"2"], parameters: ["3":"4"])
-//        print(result)
+
         let genericPwdQueryable = GenericPasswordQueryable(service: "MyService")
-        secureStoreWithGenericPwd = SecureStore(secureStoreQueryable: genericPwdQueryable)
+        accessTokenKeychain = Keychain(keychainQueryable: genericPwdQueryable)
 
 //        do {
 //            try secureStoreWithGenericPwd.setValue("pwd_1234", for: "genericPassword")
@@ -25,7 +24,7 @@ class ViewController: UIViewController {
 //            print("Saving generic password failed with \(e.localizedDescription).")
 //        }
         do {
-            let password = try secureStoreWithGenericPwd.getValue(for: "genericPassword")
+            let password = try accessTokenKeychain.getValue(for: "genericPassword")
             print(password)
         } catch (let e) {
             print("Reading generic password failed with \(e.localizedDescription).")

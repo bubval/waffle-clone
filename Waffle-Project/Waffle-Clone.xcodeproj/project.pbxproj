@@ -14,11 +14,9 @@
 		8A16A58822EF1A71007AE4EC /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58722EF1A71007AE4EC /* UserResponse.swift */; };
 		8A16A58B22EF1AB8007AE4EC /* RepoCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58A22EF1AB8007AE4EC /* RepoCreator.swift */; };
 		8A16A58D22EF1ACF007AE4EC /* RepositoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58C22EF1ACF007AE4EC /* RepositoryResponse.swift */; };
-		8A66653222F4292100626DFF /* InternetAuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653122F4292100626DFF /* InternetAuthenticationType.swift */; };
-		8A66653422F4293F00626DFF /* InternetProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653322F4293F00626DFF /* InternetProtocol.swift */; };
-		8A66653622F4295B00626DFF /* SecureStoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653522F4295B00626DFF /* SecureStoreError.swift */; };
-		8A66653822F4298100626DFF /* SecureStoreQueryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653722F4298100626DFF /* SecureStoreQueryable.swift */; };
-		8A66653A22F429DA00626DFF /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653922F429DA00626DFF /* SecureStore.swift */; };
+		8A66653622F4295B00626DFF /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653522F4295B00626DFF /* KeychainError.swift */; };
+		8A66653822F4298100626DFF /* KeychainQueryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653722F4298100626DFF /* KeychainQueryable.swift */; };
+		8A66653A22F429DA00626DFF /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653922F429DA00626DFF /* Keychain.swift */; };
 		8A70601F22E606920069F4EE /* RestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70601E22E606920069F4EE /* RestManager.swift */; };
 		8A70602622E6082D0069F4EE /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70602522E6082D0069F4EE /* RequestMethod.swift */; };
 		8A70602822E6084C0069F4EE /* RequestHeaderFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70602722E6084C0069F4EE /* RequestHeaderFields.swift */; };
@@ -44,12 +42,9 @@
 		8A16A58722EF1A71007AE4EC /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
 		8A16A58A22EF1AB8007AE4EC /* RepoCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoCreator.swift; sourceTree = "<group>"; };
 		8A16A58C22EF1ACF007AE4EC /* RepositoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryResponse.swift; sourceTree = "<group>"; };
-		8A66653022F428DE00626DFF /* SecureStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecureStore.h; sourceTree = "<group>"; };
-		8A66653122F4292100626DFF /* InternetAuthenticationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetAuthenticationType.swift; sourceTree = "<group>"; };
-		8A66653322F4293F00626DFF /* InternetProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetProtocol.swift; sourceTree = "<group>"; };
-		8A66653522F4295B00626DFF /* SecureStoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStoreError.swift; sourceTree = "<group>"; };
-		8A66653722F4298100626DFF /* SecureStoreQueryable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStoreQueryable.swift; sourceTree = "<group>"; };
-		8A66653922F429DA00626DFF /* SecureStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStore.swift; sourceTree = "<group>"; };
+		8A66653522F4295B00626DFF /* KeychainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainError.swift; sourceTree = "<group>"; };
+		8A66653722F4298100626DFF /* KeychainQueryable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainQueryable.swift; sourceTree = "<group>"; };
+		8A66653922F429DA00626DFF /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		8A70601E22E606920069F4EE /* RestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestManager.swift; sourceTree = "<group>"; };
 		8A70602522E6082D0069F4EE /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
 		8A70602722E6084C0069F4EE /* RequestHeaderFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHeaderFields.swift; sourceTree = "<group>"; };
@@ -138,12 +133,9 @@
 		8A66652F22F4280B00626DFF /* Keychain */ = {
 			isa = PBXGroup;
 			children = (
-				8A66653022F428DE00626DFF /* SecureStore.h */,
-				8A66653922F429DA00626DFF /* SecureStore.swift */,
-				8A66653722F4298100626DFF /* SecureStoreQueryable.swift */,
-				8A66653522F4295B00626DFF /* SecureStoreError.swift */,
-				8A66653322F4293F00626DFF /* InternetProtocol.swift */,
-				8A66653122F4292100626DFF /* InternetAuthenticationType.swift */,
+				8A66653922F429DA00626DFF /* Keychain.swift */,
+				8A66653722F4298100626DFF /* KeychainQueryable.swift */,
+				8A66653522F4295B00626DFF /* KeychainError.swift */,
 			);
 			path = Keychain;
 			sourceTree = "<group>";
@@ -300,14 +292,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A70601F22E606920069F4EE /* RestManager.swift in Sources */,
-				8A66653822F4298100626DFF /* SecureStoreQueryable.swift in Sources */,
-				8A66653622F4295B00626DFF /* SecureStoreError.swift in Sources */,
+				8A66653822F4298100626DFF /* KeychainQueryable.swift in Sources */,
+				8A66653622F4295B00626DFF /* KeychainError.swift in Sources */,
 				8ABD12CD22E06ED900C62BB1 /* ViewController.swift in Sources */,
 				8A16A58B22EF1AB8007AE4EC /* RepoCreator.swift in Sources */,
 				8A16A56A22EEE667007AE4EC /* GithubManager.swift in Sources */,
 				8A16A58522EF1A2C007AE4EC /* IssueLabel.swift in Sources */,
 				8A16A58D22EF1ACF007AE4EC /* RepositoryResponse.swift in Sources */,
-				8A66653A22F429DA00626DFF /* SecureStore.swift in Sources */,
+				8A66653A22F429DA00626DFF /* Keychain.swift in Sources */,
 				8A16A58822EF1A71007AE4EC /* UserResponse.swift in Sources */,
 				8A16A58322EF1A16007AE4EC /* IssueUser.swift in Sources */,
 				8AC952C022F18F4F002B4023 /* Authentication.swift in Sources */,
@@ -318,9 +310,7 @@
 				8A7E63D122F2EFE900B54191 /* AccessTokenResponse.swift in Sources */,
 				8A7E63CD22F2E54800B54191 /* LoginViewController.swift in Sources */,
 				8A7E63D322F2F01300B54191 /* AuthManager.swift in Sources */,
-				8A66653222F4292100626DFF /* InternetAuthenticationType.swift in Sources */,
 				8ABD12CB22E06ED900C62BB1 /* AppDelegate.swift in Sources */,
-				8A66653422F4293F00626DFF /* InternetProtocol.swift in Sources */,
 				8A16A58122EF19FC007AE4EC /* IssueResponse.swift in Sources */,
 				8AE9AA1422EB0887006D2F95 /* URLRequestExt.swift in Sources */,
 			);

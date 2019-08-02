@@ -8,18 +8,18 @@
 
 import Foundation
 
-public enum SecureStoreError: Error {
-    case string2DataConversionError
-    case data2StringConversionError
+public enum KeychainError: Error {
+    case stringToDataConversionError
+    case dataToStringConversionError
     case unhandledError(message: String)
 }
 
-extension SecureStoreError: LocalizedError {
+extension KeychainError: LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case .string2DataConversionError:
+        case .stringToDataConversionError:
             return NSLocalizedString("String to Data conversion error", comment: "")
-        case .data2StringConversionError:
+        case .dataToStringConversionError:
             return NSLocalizedString("Data to String conversion error", comment: "")
         case .unhandledError(let message):
             return NSLocalizedString(message, comment: "")

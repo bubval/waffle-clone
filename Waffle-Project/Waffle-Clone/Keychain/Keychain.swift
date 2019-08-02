@@ -9,21 +9,21 @@
 import Foundation
 import Security
 
-public struct SecureStore {
-    let secureStoreQueryable: SecureStoreQueryable
+public struct Keychain {
+    let keychainQueryable: KeychainQueryable
     
-    public init(secureStoreQueryable: SecureStoreQueryable) {
-        self.secureStoreQueryable = secureStoreQueryable
+    public init(keychainQueryable: KeychainQueryable) {
+        self.keychainQueryable = keychainQueryable
     }
     
     public func setValue(_ value: String, for userAccount: String) throws {
         // Check if it can encode the value to store into a Data type
         guard let encodedPassword = value.data(using: .utf8) else {
-            throw SecureStoreError.string2DataConversionError
+            throw KeychainError.stringToDataConversionError
         }
         
         // Ask for the query to execute and append
-        var query = secureStoreQueryable.query
+        var query = keychainQueryable.query
         query[String(kSecAttrAccount)] = userAccount
         
         // Return the keychain item that matches the query
@@ -55,7 +55,7 @@ public struct SecureStore {
     
     public func getValue(for userAccount: String) throws -> String? {
         // Ask secureStoreQueryable for the query to execute
-        var query = secureStoreQueryable.query
+        var query = keychainQueryable.query
         query[String(kSecMatchLimit)] = kSecMatchLimitOne
         query[String(kSecReturnAttributes)] = kCFBooleanTrue
         query[String(kSecReturnData)] = kCFBooleanTrue
@@ -69,7 +69,7 @@ public struct SecureStore {
         }
         
         switch status {
-            // It found an item
+        // It found an item
         // Extract the data and then decode it into a Data type
         case errSecSuccess:
             guard
@@ -77,7 +77,7 @@ public struct SecureStore {
                 let passwordData = queriedItem[String(kSecValueData)] as? Data,
                 let password = String(data: passwordData, encoding: .utf8)
                 else {
-                    throw SecureStoreError.data2StringConversionError
+                    throw KeychainError.dataToStringConversionError
             }
             return password
         // If item not found return nil
@@ -86,12 +86,10 @@ public struct SecureStore {
         default:
             throw error(from: status)
         }
-        
-        return nil
     }
     
     public func removeValue(for userAccount: String) throws {
-        var query = secureStoreQueryable.query
+        var query = keychainQueryable.query
         query[String(kSecAttrAccount)] = userAccount
         
         let status = SecItemDelete(query as CFDictionary)
@@ -101,7 +99,7 @@ public struct SecureStore {
     }
     
     public func removeAllValues() throws {
-        let query = secureStoreQueryable.query
+        let query = keychainQueryable.query
         
         let status = SecItemDelete(query as CFDictionary)
         guard status == errSecSuccess || status == errSecItemNotFound else {
@@ -109,8 +107,8 @@ public struct SecureStore {
         }
     }
     
-    private func error(from status: OSStatus) -> SecureStoreError {
+    private func error(from status: OSStatus) -> KeychainError {
         let message = SecCopyErrorMessageString(status, nil) as String? ?? NSLocalizedString("Unhandled Error", comment: "")
-        return SecureStoreError.unhandledError(message: message)
+        return KeychainError.unhandledError(message: message)
     }
 }
