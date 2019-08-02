@@ -9,12 +9,14 @@
 import UIKit
 
 class ViewController: UIViewController {
+    let authentication = Authentication(username: "bubval", password: "Valkov97")
     let manager = testingRepositoryManager()
     var accessTokenKeychain: Keychain!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//        print(self.authentication?.getKey())
+//        print(self.authentication?.getValue())
         let genericPwdQueryable = GenericPasswordQueryable(service: "MyService")
         accessTokenKeychain = Keychain(keychainQueryable: genericPwdQueryable)
 
@@ -30,19 +32,20 @@ class ViewController: UIViewController {
             print("Reading generic password failed with \(e.localizedDescription).")
 
         }
-//        manager.repositories { (response, error) in
-//            if let response = response {
-//                print(response)
-//            } else {
-//                print(error ?? "error")
-//            }
-//        }
+        manager.repositories { (response, error) in
+            if let response = response {
+                print(response)
+            } else {
+                print(error ?? "error")
+            }
+        }
     }
 
     // Just written for the purposes of testing
     public class testingRepositoryManager: GithubManager {
-        let auth = BasicAuthentication(username: "Bubval", password: "Valkov97")
-//        let auth = AccessTokenAuthentication(accessToken: "c603597becdf07dac7a17f7430d2fdc97c0d7b92")
+        
+        let auth = Authentication(accessToken: "c603597becdf07dac7a17f7430d2fdc97c0d7b92")
+
         public func get(owner: String, repo: String, completion: @escaping(RepositoryResponse?, Error?) -> Void) {
             let path = "/repos/\(owner)/\(repo)"
             self.get(path: path, completion: completion)

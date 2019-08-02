@@ -25,7 +25,7 @@ class GithubManager: RestManager {
         super.init(session: session)
     }
     
-    public init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default), authentication: Authentication? = nil) {
+    public init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default), authentication: Authentication? = Authentication()) {
         self.authentication = authentication
         super.init(session: session)
     }
@@ -263,17 +263,19 @@ extension GithubManager {
         var parameters = parameters
         
         if let authentication = self.authentication {
-            if authentication.type == .headers {
+            if authentication.type == .basic || authentication.type == .basicToken {
                 if headers == nil {
                     headers = [String : String]()
                 }
-                headers!.updateValue(authentication.value, forKey: authentication.key)
+                headers!.updateValue(authentication.getValue(), forKey: authentication.getValue())
                 return (headers, parameters)
-            } else if authentication.type == .parameters {
+
+            }
+            if authentication.type == .accessToken {
                 if parameters == nil {
                     parameters = [String : String]()
                 }
-                parameters!.updateValue(authentication.value, forKey: authentication.key)
+                parameters!.updateValue(authentication.getValue(), forKey: authentication.getKey())
                 return (headers, parameters)
             }
         }

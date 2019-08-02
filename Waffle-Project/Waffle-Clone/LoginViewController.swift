@@ -9,14 +9,11 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-    private let clientID: String = "ea4bd88e013f85f15b8d"
-    private let clientSecret: String = "ea2be42b66eaba386af229d08fc98c83bc3c7639"
-
     @IBOutlet weak var loginBtn: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
 
     @IBAction func loginBtnPressed(_ sender: UIButton) {
         print("pressed")
