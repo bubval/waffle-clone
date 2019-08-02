@@ -142,3 +142,51 @@ extension String {
         return data.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
     }
 }
+
+enum Auth {
+    case none
+    case basic
+    case basicToken
+    case accessToken
+    
+    init(type: Auth) {
+        self = type
+    }
+    
+    var key: String {
+        switch self {
+        case .none:
+            return ""
+        case .basic:
+            return "Authorization"
+        case .basicToken:
+            return "Authorization"
+        case .accessToken:
+            return "access_token"
+        }
+    }
+    
+    func headers(token: String? = nil) -> [String : String] {
+        if let token = token {
+            if self == .basicToken {
+                return [self.key : "Basic \(token)"]
+            } else if self == .accessToken {
+                return [self.key : token]
+            }
+        }
+        return [:]
+    }
+    
+    func headers(username: String? = nil, password: String? = nil) -> [String : String] {
+        if let username = username,
+            let password = password {
+            if self == .basic {
+                let authorization = "\(username):\(password)"
+                if let value = authorization.toBase64() {
+                    return [self.key : "Basic \(value)"]
+                }
+            }
+        }
+        return [:]
+    }
+}
