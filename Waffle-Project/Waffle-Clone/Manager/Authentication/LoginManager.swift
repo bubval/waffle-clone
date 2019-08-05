@@ -87,3 +87,19 @@ extension LoginManager {
         }
     }
 }
+
+extension LoginManager {
+    func buildURL(with scopes : [Scopes], allowSignup: Bool) -> URL {
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = "github.com"
+        urlComponents.path = "/login/oauth/authorize"
+        let scopeStrings = scopes.map { $0.rawValue }
+        let scopesQueryItem = URLQueryItem(name: "scope", value: scopeStrings.joined(separator: " "))
+        let redirectURIQueryItem = URLQueryItem(name: "redirect_uri", value: "\(AuthContants.callbackUrl)")
+        let allowSignupQueryItem = URLQueryItem(name: "allow_signup", value: "\(allowSignup ? "true" : "false")")
+        let clientIDQueryItem = URLQueryItem(name: "client_id", value: "\(AuthContants.clientId)")
+        urlComponents.queryItems = [scopesQueryItem, redirectURIQueryItem, allowSignupQueryItem, clientIDQueryItem]
+        return urlComponents.url!
+    }
+}
