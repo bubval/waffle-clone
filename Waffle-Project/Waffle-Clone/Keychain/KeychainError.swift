@@ -12,17 +12,23 @@ public enum KeychainError: Error {
     case stringToDataConversionError
     case dataToStringConversionError
     case unhandledError(message: String)
+    case savingError
+    case gettingError
 }
 
-extension KeychainError: LocalizedError {
-    public var errorDescription: String? {
+extension KeychainError: CustomStringConvertible {
+    public var description: String {
         switch self {
         case .stringToDataConversionError:
-            return NSLocalizedString("String to Data conversion error", comment: "")
+            return "String to Data conversion error"
         case .dataToStringConversionError:
-            return NSLocalizedString("Data to String conversion error", comment: "")
+            return "Data to String conversion error"
         case .unhandledError(let message):
-            return NSLocalizedString(message, comment: "")
+            return message
+        case .savingError:
+            return "Saving generic password failed."
+        case .gettingError:
+            return "Retriving generic password failed."
         }
     }
 }

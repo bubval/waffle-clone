@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 class AuthenticationManager: GithubManager {
     enum Parameters: String {
         case clientID = "client_id"
@@ -81,8 +82,8 @@ extension AuthenticationManager {
             do {
                 let token = try keychain.getValue(for: "accessToken")
                 return token
-            } catch (let e) {
-                print("Saving generic password failed with \(e.localizedDescription).")
+            } catch {
+                print(KeychainError.gettingError)
             }
             return nil
         }
@@ -91,8 +92,8 @@ extension AuthenticationManager {
                 if let newValue = newValue {
                     try self.keychain.setValue(newValue, for: "accessToken")
                 }
-            } catch (let e) {
-                print("Saving generic password failed with \(e.localizedDescription).")
+            } catch {
+                print(KeychainError.savingError)
             }
         }
     }
