@@ -40,18 +40,9 @@ class GithubManager: RestManager {
     ///   - headers: HTTP metadata
     ///   - completion: Decodable object or Error
     func get<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, completion: @escaping (T?, Error?) -> Swift.Void) {
+        let (newHeaders, newParameters) = updateQueryDefaults(headers, parameters)
         
-        var newParamters = Constants.defaultParameters
-        var newHeaders = Constants.defaultHeaders
-        
-        if let parameters = parameters {
-            newParamters.merge(dict: parameters)
-        }
-        if let headers = headers {
-            newHeaders.merge(dict: headers)
-        }
-        
-        self.get(url: self.baseUrl + path, parameters: newParamters, headers: newHeaders) { (data, response, error) in
+        self.get(url: self.baseUrl + path, parameters: newParameters, headers: newHeaders) { (data, response, error) in
             guard error == nil else {
                 return completion(nil, UnknownError.internalError(error: error!))
             }
@@ -81,18 +72,9 @@ class GithubManager: RestManager {
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
     func post<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
-        
-        var newParamters = Constants.defaultParameters
-        var newHeaders = Constants.defaultHeaders
-        
-        if let parameters = parameters {
-            newParamters.merge(dict: parameters)
-        }
-        if let headers = headers {
-            newHeaders.merge(dict: headers)
-        }
-        
-        self.post(url: self.baseUrl + path, parameters: newParamters, headers: newHeaders, body: body) { (data, response, error) in
+        let (newHeaders, newParameters) = updateQueryDefaults(headers, parameters)
+
+        self.post(url: self.baseUrl + path, parameters: newParameters, headers: newHeaders, body: body) { (data, response, error) in
             
             guard error == nil else {
                 return completion(nil, UnknownError.internalError(error: error!))
@@ -123,18 +105,9 @@ class GithubManager: RestManager {
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
     func put<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
-       
-        var newParamters = Constants.defaultParameters
-        var newHeaders = Constants.defaultHeaders
-        
-        if let parameters = parameters {
-            newParamters.merge(dict: parameters)
-        }
-        if let headers = headers {
-            newHeaders.merge(dict: headers)
-        }
-        
-        self.put(url: self.baseUrl + path, parameters: newParamters, headers: newHeaders, body: body) { (data, response, error) in
+        let (newHeaders, newParameters) = updateQueryDefaults(headers, parameters)
+
+        self.put(url: self.baseUrl + path, parameters: newParameters, headers: newHeaders, body: body) { (data, response, error) in
             
             guard error == nil else {
                 return completion(nil, UnknownError.internalError(error: error!))
@@ -165,18 +138,9 @@ class GithubManager: RestManager {
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
     func delete<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
-        
-        var newParamters = Constants.defaultParameters
-        var newHeaders = Constants.defaultHeaders
-        
-        if let parameters = parameters {
-            newParamters.merge(dict: parameters)
-        }
-        if let headers = headers {
-            newHeaders.merge(dict: headers)
-        }
-        
-        self.delete(url: self.baseUrl + path, parameters: newParamters, headers: newHeaders) { (data, response, error) in
+        let (newHeaders, newParameters) = updateQueryDefaults(headers, parameters)
+
+        self.delete(url: self.baseUrl + path, parameters: newParameters, headers: newHeaders) { (data, response, error) in
             
             guard error == nil else {
                 return completion(nil, UnknownError.internalError(error: error!))
@@ -313,6 +277,19 @@ extension GithubManager {
                 Constants.defaultParameters.updateValue(authentication.getValue(), forKey: authentication.getKey())
             }
         }
+    }
+    
+    func updateQueryDefaults(_ headers: [String : String]?, _ parameters: [String : String]?) -> (headers: [String : String]?, parameters: [String : String]?) {
+        var newParamters = Constants.defaultParameters
+        var newHeaders = Constants.defaultHeaders
+        
+        if let parameters = parameters {
+            newParamters.merge(dict: parameters)
+        }
+        if let headers = headers {
+            newHeaders.merge(dict: headers)
+        }
+        return (newParamters, newHeaders)
     }
 }
 
