@@ -17,6 +17,8 @@ class LoginManager: GithubManager {
         case redirectURL = "redirect_uri"
     }
     
+//    static var accessToken: String?
+    
     public func getAccessToken(clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping(AccessTokenResponse?, Error?) -> Void) {
         let url = "https://github.com/login/oauth/access_token"
         

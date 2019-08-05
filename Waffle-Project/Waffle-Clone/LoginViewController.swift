@@ -11,14 +11,13 @@ import UIKit
 class LoginViewController: UIViewController {
     
     // MARK: - Properties
-    
     @IBOutlet weak var loginBtn: UIButton!
-    private var keychain = Keychain(keychainQueryable: Queryable(service: "AccessToken"))
 
     // MARK: - App Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(getAccessToken())
     }
     
     // MARK: - Actions
@@ -43,8 +42,10 @@ class LoginViewController: UIViewController {
     
     private func getAccessToken() -> String? {
         do {
-            let token = try keychain.getValue(for: "AccessToken")
-            return token
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+                let token = try appDelegate.getKeychain().getValue(for: "accessToken") {
+                return token
+            }
         } catch (let e) {
             print("Reading token error \(e.localizedDescription)")
         }

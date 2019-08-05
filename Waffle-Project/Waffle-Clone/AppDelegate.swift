@@ -12,7 +12,14 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    private lazy var keychain: Keychain = {
+        let manager = Keychain(delegate: self, keychainQueryable: Queryable(service: "AccessToken"))
+        return manager
+    }()
+    
+     func getKeychain() -> Keychain {
+        return self.keychain
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -37,14 +44,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                            clientSecret: AuthContants.clientSecret,
                                            code: code!,
                                            redirectURL: AuthContants.callbackUrl) { (response, error) in
-//                                            if let response = response {
-//                                                let keychain = Keychain(keychainQueryable: GenericPasswordQueryable(service: "AccessToken"))
-//                                                do {
-//                                                    try keychain.setValue(response.accessToken, for: "accessToken")
-//                                                } catch (let e) {
-//                                                    print("Saving generic password failed with \(e.localizedDescription).")
-//                                                }
-//                                            }
+                                            if let response = response {
+                                                do {
+                                                    try self.keychain.setValue(response.accessToken, for: "accessToken")
+                                                } catch (let e) {
+                                                    print("Saving generic password failed with \(e.localizedDescription).")
+                                                }
+                                            }
 //                                            if let error = error {
 //                                                print(error.localizedDescription)
 //                                            }
