@@ -267,7 +267,7 @@ extension GithubManager {
 
 extension GithubManager {
     
-    func addAuthentication() {
+    private func addAuthentication() {
         
         if let authentication = self.authentication {
             if authentication.type == .basic || authentication.type == .basicToken {
@@ -279,7 +279,7 @@ extension GithubManager {
         }
     }
     
-    func updateQueryDefaults(_ headers: [String : String]?, _ parameters: [String : String]?) -> (headers: [String : String]?, parameters: [String : String]?) {
+    private func updateQueryDefaults(_ headers: [String : String]?, _ parameters: [String : String]?) -> (headers: [String : String]?, parameters: [String : String]?) {
         var newParamters = Constants.defaultParameters
         var newHeaders = Constants.defaultHeaders
         
@@ -289,7 +289,7 @@ extension GithubManager {
         if let headers = headers {
             newHeaders.merge(dict: headers)
         }
-        return (newParamters, newHeaders)
+        return (newHeaders, newParamters)
     }
 }
 

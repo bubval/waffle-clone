@@ -17,6 +17,14 @@ class AuthenticationManager: GithubManager {
     }
     
     
+    /// Performs http GET under AccessTokenResponse model for purposes of authentication
+    ///
+    /// - Parameters:
+    ///   - clientID: App specific client id
+    ///   - clientSecret: App specific client secret
+    ///   - code: Identifies user after login
+    ///   - redirectURL: App specific redirect url
+    ///   - completion: Returns AccessTokenResponse containing access token, scope and user type. Othewise, returns error.
     func getAccessToken(clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping(AccessTokenResponse?, Error?) -> Void) {
         let url = "https://github.com/login/oauth/access_token"
         
@@ -33,7 +41,7 @@ class AuthenticationManager: GithubManager {
             if let data = data {
                 do {
                     let model = try JSONDecoder().decode(AccessTokenResponse.self, from: data)
-                    completion(model, error)
+                    completion(model, nil)
                 } catch {
                     completion(nil, error)
                 }
@@ -43,6 +51,9 @@ class AuthenticationManager: GithubManager {
         }
     }
     
+    /// Performs an http GET of the authenticated GitHub user.
+    ///
+    /// - Parameter completion: Returns true if status code = 200, otherwise returns false
     func isValidToken(completion: @escaping (Bool) -> Void) {
         if let accessToken = AuthenticationManager.AccessToken {
             let url = "https://api.github.com/user/repos"
@@ -88,7 +99,14 @@ extension AuthenticationManager {
 }
 
 extension AuthenticationManager {
-    func buildURL(with scopes : [Scopes], allowSignup: Bool) -> URL {
+    
+    /// Builds github login url
+    ///
+    /// - Parameters:
+    ///   - scopes: Specifies the type of access
+    ///   - allowSignup: Specifies if the user should be allowed to sign up
+    /// - Returns: URL with scopes, redirect url, client id which allows signup if specified
+    func buildLoginURL(with scopes : [Scopes], allowSignup: Bool) -> URL {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "github.com"

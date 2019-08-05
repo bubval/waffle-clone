@@ -38,17 +38,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                redirectURL: AuthenticationConstants.redirectUrl) { (response, error) in
                                                 
                                                 if let response = response {
+                                                    // Saves access code
                                                     AuthenticationManager.AccessToken = response.accessToken
                                                     print(response)
-                                                }
-                                                
-                                                manager.isValidToken() { (success) in
-                                                    if success == true {
-                                                        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                                                        if let vc = mainStoryboard.instantiateViewController(withIdentifier: "RepoViewController") as? RepositoryViewController {
-                                                            if let window = self.window {
-                                                                DispatchQueue.main.async {
-                                                                    window.rootViewController = vc
+                                                    
+                                                    // Performs GET w/ access code
+                                                    // If status code = 200, then go to repository view controller
+                                                    manager.isValidToken() { (success) in
+                                                        if success == true {
+                                                            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                                                            if let vc = mainStoryboard.instantiateViewController(withIdentifier: "RepoViewController") as? RepositoryViewController {
+                                                                if let window = self.window {
+                                                                    DispatchQueue.main.async {
+                                                                        window.rootViewController = vc
+                                                                    }
                                                                 }
                                                             }
                                                         }
