@@ -82,10 +82,10 @@
             </objects>
             <point key="canvasLocation" x="94.20289855072464" y="63.616071428571423"/>
         </scene>
-        <!--View Controller-->
+        <!--Repository View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="Waffle_Clone" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RepoViewController" id="BYZ-38-t0r" customClass="RepositoryViewController" customModule="Waffle_Clone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

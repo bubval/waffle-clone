@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class RepositoryViewController: UIViewController {
     let manager = testingRepositoryManager()
     var repositories = [RepositoryResponse]()
     @IBOutlet weak var tableView: UITableView!
@@ -40,7 +40,7 @@ class ViewController: UIViewController {
 }
 // MARK: - UITableView
 
-extension ViewController: UITableViewDataSource, UITableViewDelegate {
+extension RepositoryViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return repositories.count

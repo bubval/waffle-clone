@@ -26,7 +26,7 @@
 		8A7E63D322F2F01300B54191 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E63D222F2F01300B54191 /* AuthManager.swift */; };
 		8A7E63D722F3121E00B54191 /* AuthConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E63D622F3121E00B54191 /* AuthConstants.swift */; };
 		8ABD12CB22E06ED900C62BB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABD12CA22E06ED900C62BB1 /* AppDelegate.swift */; };
-		8ABD12CD22E06ED900C62BB1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABD12CC22E06ED900C62BB1 /* ViewController.swift */; };
+		8ABD12CD22E06ED900C62BB1 /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABD12CC22E06ED900C62BB1 /* RepositoryViewController.swift */; };
 		8ABD12D022E06ED900C62BB1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8ABD12CE22E06ED900C62BB1 /* Main.storyboard */; };
 		8ABD12D222E06EDB00C62BB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8ABD12D122E06EDB00C62BB1 /* Assets.xcassets */; };
 		8ABD12D522E06EDB00C62BB1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8ABD12D322E06EDB00C62BB1 /* LaunchScreen.storyboard */; };
@@ -57,7 +57,7 @@
 		8A7E63D622F3121E00B54191 /* AuthConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConstants.swift; sourceTree = "<group>"; };
 		8ABD12C722E06ED900C62BB1 /* Waffle-Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Waffle-Clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ABD12CA22E06ED900C62BB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8ABD12CC22E06ED900C62BB1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8ABD12CC22E06ED900C62BB1 /* RepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
 		8ABD12CF22E06ED900C62BB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8ABD12D122E06EDB00C62BB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8ABD12D422E06EDB00C62BB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -200,17 +200,14 @@
 		8ABD12C922E06ED900C62BB1 /* Waffle-Clone */ = {
 			isa = PBXGroup;
 			children = (
-				8A66652F22F4280B00626DFF /* Keychain */,
-				8A16A57E22EF18F3007AE4EC /* Models */,
-				8A70601C22E6066A0069F4EE /* Manager */,
-				8ABD12CA22E06ED900C62BB1 /* AppDelegate.swift */,
-				8ABD12CC22E06ED900C62BB1 /* ViewController.swift */,
-				8ABD12CE22E06ED900C62BB1 /* Main.storyboard */,
-				8AC9017622F85A1F0084E493 /* TableViewCell.swift */,
-				8A7E63CC22F2E54800B54191 /* LoginViewController.swift */,
-				8ABD12D122E06EDB00C62BB1 /* Assets.xcassets */,
-				8ABD12D322E06EDB00C62BB1 /* LaunchScreen.storyboard */,
 				8ABD12D622E06EDB00C62BB1 /* Info.plist */,
+				8AC9017A22F85E510084E493 /* SupportingFiles */,
+				8A66652F22F4280B00626DFF /* Keychain */,
+				8A70601C22E6066A0069F4EE /* Manager */,
+				8A16A57E22EF18F3007AE4EC /* Models */,
+				8AC9017822F85E1B0084E493 /* Controller */,
+				8AC9017922F85E300084E493 /* View */,
+				8AC9017B22F85E780084E493 /* Storyboard */,
 			);
 			path = "Waffle-Clone";
 			sourceTree = "<group>";
@@ -229,6 +226,41 @@
 				8A7E63D622F3121E00B54191 /* AuthConstants.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		8AC9017822F85E1B0084E493 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8ABD12CC22E06ED900C62BB1 /* RepositoryViewController.swift */,
+				8A7E63CC22F2E54800B54191 /* LoginViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		8AC9017922F85E300084E493 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8AC9017622F85A1F0084E493 /* TableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8AC9017A22F85E510084E493 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				8ABD12CA22E06ED900C62BB1 /* AppDelegate.swift */,
+				8ABD12D122E06EDB00C62BB1 /* Assets.xcassets */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		8AC9017B22F85E780084E493 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				8ABD12D322E06EDB00C62BB1 /* LaunchScreen.storyboard */,
+				8ABD12CE22E06ED900C62BB1 /* Main.storyboard */,
+			);
+			path = Storyboard;
 			sourceTree = "<group>";
 		};
 		8AC952BE22F18F2E002B4023 /* Authentication */ = {
@@ -316,7 +348,7 @@
 				8A70601F22E606920069F4EE /* RestManager.swift in Sources */,
 				8A66653822F4298100626DFF /* KeychainQueryable.swift in Sources */,
 				8A66653622F4295B00626DFF /* KeychainError.swift in Sources */,
-				8ABD12CD22E06ED900C62BB1 /* ViewController.swift in Sources */,
+				8ABD12CD22E06ED900C62BB1 /* RepositoryViewController.swift in Sources */,
 				8A16A58B22EF1AB8007AE4EC /* RepoCreator.swift in Sources */,
 				8A16A56A22EEE667007AE4EC /* GithubManager.swift in Sources */,
 				8A16A58522EF1A2C007AE4EC /* IssueLabel.swift in Sources */,

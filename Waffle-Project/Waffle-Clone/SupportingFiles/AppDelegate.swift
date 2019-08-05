@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                 manager.isValidToken() { (success) in
                                                     if success == true {
                                                         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                                                        if let vc = mainStoryboard.instantiateViewController(withIdentifier: "ViewController") as? ViewController {
+                                                        if let vc = mainStoryboard.instantiateViewController(withIdentifier: "RepoViewController") as? RepositoryViewController {
                                                             if let window = self.window {
                                                                 DispatchQueue.main.async {
                                                                     window.rootViewController = vc

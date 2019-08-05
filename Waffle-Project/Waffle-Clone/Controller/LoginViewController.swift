@@ -26,7 +26,7 @@ class LoginViewController: UIViewController {
         loginManager.isValidToken() { (success) in
             if success {
                 DispatchQueue.main.async {
-                    if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") as? ViewController {
+                    if let vc = self.storyboard?.instantiateViewController(withIdentifier: "RepoViewController") as? RepositoryViewController {
                         self.navigationController?.pushViewController(vc, animated: true)
                     }
                 }
