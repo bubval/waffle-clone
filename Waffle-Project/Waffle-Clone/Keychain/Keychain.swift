@@ -11,11 +11,9 @@ import Security
 
 public struct Keychain {
     let keychainQueryable: KeychainQueryable
-    private var delegate: AppDelegate
     
-    init(delegate: AppDelegate, keychainQueryable: KeychainQueryable) {
+    init(keychainQueryable: KeychainQueryable) {
         self.keychainQueryable = keychainQueryable
-        self.delegate = delegate
     }
     
     public func setValue(_ value: String, for userAccount: String) throws {

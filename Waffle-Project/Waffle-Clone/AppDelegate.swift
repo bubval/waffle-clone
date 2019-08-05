@@ -12,20 +12,11 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    private lazy var keychain: Keychain = {
-        let manager = Keychain(delegate: self, keychainQueryable: Queryable(service: "AccessToken"))
-        return manager
-    }()
-    
-     func getKeychain() -> Keychain {
-        return self.keychain
-    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
     }
-    
     
     internal func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         // Redirect URL (scheme://host)
@@ -44,17 +35,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                            clientSecret: AuthContants.clientSecret,
                                            code: code!,
                                            redirectURL: AuthContants.callbackUrl) { (response, error) in
+                                            
                                             if let response = response {
-                                                do {
-                                                    try self.keychain.setValue(response.accessToken, for: "accessToken")
-                                                } catch (let e) {
-                                                    print("Saving generic password failed with \(e.localizedDescription).")
+                                                LoginManager.AccessToken = response.accessToken
+                                            }
+                                            
+                                            // Changes VC if Access Token is Valid
+                                            manager.isValidToken() { (success) in
+                                                if success == true {
+                                                    let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                                                    if let vc = mainStoryboard.instantiateViewController(withIdentifier: "ViewController") as? ViewController {
+                                                        if let window = self.window {
+                                                            DispatchQueue.main.async {
+                                                                window.rootViewController = vc
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             }
-//                                            if let error = error {
-//                                                print(error.localizedDescription)
-//                                            }
-
                         print(response!)
                     }
                 }

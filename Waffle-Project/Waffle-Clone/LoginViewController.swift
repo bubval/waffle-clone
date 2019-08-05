@@ -12,18 +12,19 @@ class LoginViewController: UIViewController {
     
     // MARK: - Properties
     @IBOutlet weak var loginBtn: UIButton!
-
-    // MARK: - App Lifecycle
+    let loginManager = LoginManager()
     
+    // MARK: - App Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(getAccessToken())
+        validateAccessToken()
     }
     
     // MARK: - Actions
 
     @IBAction func loginBtnPressed(_ sender: UIButton) {
         if let authorizationUrl = URL(string: buildAuthorizationUrl()) {
+            print(authorizationUrl)
             UIApplication.shared.open(authorizationUrl)
         }
     }
@@ -39,16 +40,29 @@ class LoginViewController: UIViewController {
         url += "&allow_signup=true"
         return url
     }
+    private func buildURL(with scopes : [Scopes], allowSignup: Bool) -> URL {
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = "github.com"
+        urlComponents.path = "/login/oauth/authorize"
+        let scopeStrings = scopes.map { $0.rawValue }
+        let scopesQueryItem = URLQueryItem(name: "scope", value: scopeStrings.joined(separator: " "))
+        let redirectURIQueryItem = URLQueryItem(name: "redirect_uri", value: "\(redirectURL)")
+        let allowSignupQueryItem = URLQueryItem(name: "allow_signup", value: "\(allowSignup ? "true" : "false")")
+        let clientIDQueryItem = URLQueryItem(name: "client_id", value: clientID)
+        urlComponents.queryItems = [scopesQueryItem, redirectURIQueryItem, allowSignupQueryItem, clientIDQueryItem]
+        return urlComponents.url!
+    }
     
-    private func getAccessToken() -> String? {
-        do {
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-                let token = try appDelegate.getKeychain().getValue(for: "accessToken") {
-                return token
+    private func validateAccessToken() {
+        loginManager.isValidToken() { (success) in
+            if success == true {
+                DispatchQueue.main.async {
+                    if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") as? ViewController {
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                }
             }
-        } catch (let e) {
-            print("Reading token error \(e.localizedDescription)")
         }
-        return nil
     }
 }

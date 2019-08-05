@@ -24,21 +24,19 @@ class ViewController: UIViewController {
 
     // Just written for the purposes of testing
     public class testingRepositoryManager: GithubManager {
-        
-        let auth = Authentication(accessToken: "c603597becdf07dac7a17f7430d2fdc97c0d7b92")
 
         public func get(owner: String, repo: String, completion: @escaping(RepositoryResponse?, Error?) -> Void) {
             let path = "/repos/\(owner)/\(repo)"
             self.get(path: path, completion: completion)
         }
-        
+
         public func repositories(completion: @escaping([RepositoryResponse]?, Error?) -> Void) {
             let path = "/user/repos"
-           
+
             self.get(path: path, completion: completion)
         }
     }
-    
+
     
 }
 

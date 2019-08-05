@@ -17,9 +17,8 @@ class LoginManager: GithubManager {
         case redirectURL = "redirect_uri"
     }
     
-//    static var accessToken: String?
     
-    public func getAccessToken(clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping(AccessTokenResponse?, Error?) -> Void) {
+    func getAccessToken(clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping(AccessTokenResponse?, Error?) -> Void) {
         let url = "https://github.com/login/oauth/access_token"
         
         var parameters = [String : String]()
@@ -41,6 +40,49 @@ class LoginManager: GithubManager {
                 }
             } else {
                 completion(nil, error)
+            }
+        }
+    }
+    
+    func isValidToken(completion: @escaping (Bool) -> Void) {
+        if let accessToken = LoginManager.AccessToken {
+            let url = "https://api.github.com/user/repos"
+            let params = ["access_token" : accessToken]
+            
+            self.get(url: url, parameters: params, headers: nil) { (_, httpResponse, _) in
+                if let httpResponse = httpResponse as? HTTPURLResponse {
+                    if httpResponse.statusCode == 200 {
+                        completion(true)
+                    } else {
+                        completion(false)
+                    }
+                }
+            }
+        }
+    }
+}
+
+extension LoginManager {
+    
+    private static var keychain = Keychain(keychainQueryable: Queryable(service: "accessToken"))
+    
+    class var AccessToken: String? {
+        get {
+            do {
+                let token = try keychain.getValue(for: "accessToken")
+                return token
+            } catch (let e) {
+                print("Saving generic password failed with \(e.localizedDescription).")
+            }
+            return nil
+        }
+        set {
+            do {
+                if let newValue = newValue {
+                    try self.keychain.setValue(newValue, for: "accessToken")
+                }
+            } catch (let e) {
+                print("Saving generic password failed with \(e.localizedDescription).")
             }
         }
     }

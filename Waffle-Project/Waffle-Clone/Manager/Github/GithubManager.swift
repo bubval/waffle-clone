@@ -19,15 +19,15 @@ struct Constants {
 class GithubManager: RestManager {
     
     private let baseUrl = "https://api.github.com"
-    private var authentication: Authentication?
+    private var authentication: Authentication!
 
     public override init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
         super.init(session: session)
-        self.authentication = Authentication()
-    }
-    
-    func setAuthentication(authentication: Authentication) {
-        self.authentication = authentication
+        if let accessToken = LoginManager.AccessToken {
+            self.authentication = Authentication(accessToken: accessToken)
+        } else {
+            self.authentication = Authentication()
+        }
     }
     
     /// Used to retrieve information from GitHub. Using GET only retrieves data and has no effect on the data.

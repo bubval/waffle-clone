@@ -15,3 +15,5 @@ struct AuthContants {
     static let callbackHost = "gitlogin"
     static let callbackUrl = "\(AuthContants.callbackScheme)://\(AuthContants.callbackHost)"
 }
+
+
