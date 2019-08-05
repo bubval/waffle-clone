@@ -10,33 +10,62 @@ import UIKit
 
 class ViewController: UIViewController {
     let manager = testingRepositoryManager()
+    var repositories = [RepositoryResponse]()
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        manager.repositories { (response, error) in
-            if let response = response {
-                print(response)
-            } else {
-                print(error ?? "error")
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        getRepositories() { (successfullyLoaded) in
+            if successfullyLoaded {
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         }
     }
-
-    // Just written for the purposes of testing
-    public class testingRepositoryManager: GithubManager {
-
-        public func get(owner: String, repo: String, completion: @escaping(RepositoryResponse?, Error?) -> Void) {
-            let path = "/repos/\(owner)/\(repo)"
-            self.get(path: path, completion: completion)
-        }
-
-        public func repositories(completion: @escaping([RepositoryResponse]?, Error?) -> Void) {
-            let path = "/user/repos"
-
-            self.get(path: path, completion: completion)
+    
+    func getRepositories(completion: @escaping ((_ successfullyLoaded: Bool) ->())) {
+        manager.repositories { (response, error) in
+            if let response = response {
+                self.repositories = response
+                completion(true)
+            } else {
+                print(error ?? "error")
+                completion(false)
+            }
         }
     }
+}
+// MARK: - UITableView
 
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return repositories.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as! TableViewCell
+        cell.setRepository(repositories[indexPath.row])
+        return cell
+    }
+    
+}
+
+// Just written for the purposes of testing
+class testingRepositoryManager: GithubManager {
+    
+    public func get(owner: String, repo: String, completion: @escaping(RepositoryResponse?, Error?) -> Void) {
+        let path = "/repos/\(owner)/\(repo)"
+        self.get(path: path, completion: completion)
+    }
+    
+    public func repositories(completion: @escaping([RepositoryResponse]?, Error?) -> Void) {
+        let path = "/user/repos"
+        
+        self.get(path: path, completion: completion)
+    }
 }
 

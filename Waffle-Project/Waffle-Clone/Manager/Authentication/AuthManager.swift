@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import Foundation
 
-class LoginManager: GithubManager {
+class AuthenticationManager: GithubManager {
     enum Parameters: String {
         case clientID = "client_id"
         case clientSecret = "client_secret"
@@ -45,7 +44,7 @@ class LoginManager: GithubManager {
     }
     
     func isValidToken(completion: @escaping (Bool) -> Void) {
-        if let accessToken = LoginManager.AccessToken {
+        if let accessToken = AuthenticationManager.AccessToken {
             let url = "https://api.github.com/user/repos"
             let params = ["access_token" : accessToken]
             
@@ -62,7 +61,7 @@ class LoginManager: GithubManager {
     }
 }
 
-extension LoginManager {
+extension AuthenticationManager {
     
     private static var keychain = Keychain(keychainQueryable: Queryable(service: "accessToken"))
     
@@ -88,7 +87,7 @@ extension LoginManager {
     }
 }
 
-extension LoginManager {
+extension AuthenticationManager {
     func buildURL(with scopes : [Scopes], allowSignup: Bool) -> URL {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -96,9 +95,9 @@ extension LoginManager {
         urlComponents.path = "/login/oauth/authorize"
         let scopeStrings = scopes.map { $0.rawValue }
         let scopesQueryItem = URLQueryItem(name: "scope", value: scopeStrings.joined(separator: " "))
-        let redirectURIQueryItem = URLQueryItem(name: "redirect_uri", value: "\(AuthContants.callbackUrl)")
+        let redirectURIQueryItem = URLQueryItem(name: "redirect_uri", value: "\(AuthenticationConstants.redirectUrl)")
         let allowSignupQueryItem = URLQueryItem(name: "allow_signup", value: "\(allowSignup ? "true" : "false")")
-        let clientIDQueryItem = URLQueryItem(name: "client_id", value: "\(AuthContants.clientId)")
+        let clientIDQueryItem = URLQueryItem(name: "client_id", value: "\(AuthenticationConstants.clientId)")
         urlComponents.queryItems = [scopesQueryItem, redirectURIQueryItem, allowSignupQueryItem, clientIDQueryItem]
         return urlComponents.url!
     }
