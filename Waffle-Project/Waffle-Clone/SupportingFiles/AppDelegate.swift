@@ -39,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                 
                                                 if let response = response {
                                                     AuthenticationManager.AccessToken = response.accessToken
+                                                    print(response)
                                                 }
                                                 
                                                 manager.isValidToken() { (success) in
@@ -53,7 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                         }
                                                     }
                                                 }
-                                                print(response!)
                         }
                     }
                 }

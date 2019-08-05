@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TableViewCell: UITableViewCell {
+class RepositoryCell: UITableViewCell {
     @IBOutlet weak var repositoryName: UILabel!
     private var repository: RepositoryResponse! {
         didSet {

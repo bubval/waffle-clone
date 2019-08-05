@@ -47,11 +47,10 @@ extension RepositoryViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryCell") as! RepositoryCell
         cell.setRepository(repositories[indexPath.row])
         return cell
     }
-    
 }
 
 // Just written for the purposes of testing
