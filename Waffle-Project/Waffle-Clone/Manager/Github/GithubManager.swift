@@ -14,6 +14,7 @@ struct Constants {
         RequestHeaderFields.acceptEncoding.rawValue : "gzip",
         "Content-Type" : "application/json; charset=utf-8"
     ]
+    static var defaultParameters: [String : String] = [:]
 }
 
 class GithubManager: RestManager {
@@ -25,6 +26,7 @@ class GithubManager: RestManager {
         super.init(session: session)
         if let accessToken = AuthenticationManager.AccessToken {
             self.authentication = Authentication(accessToken: accessToken)
+            self.addAuthentication()
         } else {
             self.authentication = Authentication()
         }
@@ -37,9 +39,19 @@ class GithubManager: RestManager {
     ///   - parameters: URL query items specified in [name : value] pairs
     ///   - headers: HTTP metadata
     ///   - completion: Decodable object or Error
-    func get<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = Constants.defaultHeaders, completion: @escaping (T?, Error?) -> Swift.Void) {
-        let (newHeaders, newParameters) = self.addAuthenticationIfNeeded(headers, parameters: parameters)
-        self.get(url: self.baseUrl + path, parameters: newParameters, headers: newHeaders) { (data, response, error) in
+    func get<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, completion: @escaping (T?, Error?) -> Swift.Void) {
+        
+        var newParamters = Constants.defaultParameters
+        var newHeaders = Constants.defaultHeaders
+        
+        if let parameters = parameters {
+            newParamters.merge(dict: parameters)
+        }
+        if let headers = headers {
+            newHeaders.merge(dict: headers)
+        }
+        
+        self.get(url: self.baseUrl + path, parameters: newParamters, headers: newHeaders) { (data, response, error) in
             guard error == nil else {
                 return completion(nil, UnknownError.internalError(error: error!))
             }
@@ -68,8 +80,19 @@ class GithubManager: RestManager {
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
-    func post<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = Constants.defaultHeaders, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
-        self.post(url: self.baseUrl + path, parameters: parameters, headers: headers, body: body) { (data, response, error) in
+    func post<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
+        
+        var newParamters = Constants.defaultParameters
+        var newHeaders = Constants.defaultHeaders
+        
+        if let parameters = parameters {
+            newParamters.merge(dict: parameters)
+        }
+        if let headers = headers {
+            newHeaders.merge(dict: headers)
+        }
+        
+        self.post(url: self.baseUrl + path, parameters: newParamters, headers: newHeaders, body: body) { (data, response, error) in
             
             guard error == nil else {
                 return completion(nil, UnknownError.internalError(error: error!))
@@ -99,8 +122,19 @@ class GithubManager: RestManager {
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
-    func put<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = Constants.defaultHeaders, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
-        self.put(url: self.baseUrl + path, parameters: parameters, headers: headers, body: body) { (data, response, error) in
+    func put<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
+       
+        var newParamters = Constants.defaultParameters
+        var newHeaders = Constants.defaultHeaders
+        
+        if let parameters = parameters {
+            newParamters.merge(dict: parameters)
+        }
+        if let headers = headers {
+            newHeaders.merge(dict: headers)
+        }
+        
+        self.put(url: self.baseUrl + path, parameters: newParamters, headers: newHeaders, body: body) { (data, response, error) in
             
             guard error == nil else {
                 return completion(nil, UnknownError.internalError(error: error!))
@@ -130,8 +164,19 @@ class GithubManager: RestManager {
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
-    func delete<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = Constants.defaultHeaders, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
-        self.delete(url: self.baseUrl + path, parameters: parameters, headers: headers) { (data, response, error) in
+    func delete<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
+        
+        var newParamters = Constants.defaultParameters
+        var newHeaders = Constants.defaultHeaders
+        
+        if let parameters = parameters {
+            newParamters.merge(dict: parameters)
+        }
+        if let headers = headers {
+            newHeaders.merge(dict: headers)
+        }
+        
+        self.delete(url: self.baseUrl + path, parameters: newParamters, headers: newHeaders) { (data, response, error) in
             
             guard error == nil else {
                 return completion(nil, UnknownError.internalError(error: error!))
@@ -258,27 +303,23 @@ extension GithubManager {
 
 extension GithubManager {
     
-    func addAuthenticationIfNeeded(_ headers: [String : String]?, parameters: [String : String]?) -> (headers: [String : String]?, parameters: [String : String]?) {
-        var headers = headers
-        var parameters = parameters
+    func addAuthentication() {
         
         if let authentication = self.authentication {
             if authentication.type == .basic || authentication.type == .basicToken {
-                if headers == nil {
-                    headers = [String : String]()
-                }
-                headers!.updateValue(authentication.getValue(), forKey: authentication.getValue())
-                return (headers, parameters)
-
+                Constants.defaultHeaders.updateValue(authentication.getValue(), forKey: authentication.getValue())
             }
             if authentication.type == .accessToken {
-                if parameters == nil {
-                    parameters = [String : String]()
-                }
-                parameters!.updateValue(authentication.getValue(), forKey: authentication.getKey())
-                return (headers, parameters)
+                Constants.defaultParameters.updateValue(authentication.getValue(), forKey: authentication.getKey())
             }
         }
-        return (headers, parameters)
+    }
+}
+
+extension Dictionary {
+    mutating func merge(dict: [Key: Value]) {
+        for (k, v) in dict {
+            updateValue(v, forKey: k)
+        }
     }
 }
