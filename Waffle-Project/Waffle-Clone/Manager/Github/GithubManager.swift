@@ -205,7 +205,7 @@ extension GithubManager {
 }
 
 extension GithubManager {
-    private enum UnknownError: Swift.Error, CustomStringConvertible {
+    enum UnknownError: Swift.Error, CustomStringConvertible {
         case internalError(error: Error)
         
         public var description: String {
@@ -216,7 +216,7 @@ extension GithubManager {
         }
     }
     
-    private enum JsonError: Swift.Error, CustomStringConvertible {
+    enum JsonError: Swift.Error, CustomStringConvertible {
         case unparsableModel
         
         public var description: String {
@@ -227,7 +227,7 @@ extension GithubManager {
         }
     }
     
-    private enum NetworkError: Swift.Error, CustomStringConvertible {
+    enum NetworkError: Swift.Error, CustomStringConvertible {
         case status(code: Int)
         
         public var description: String {

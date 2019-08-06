@@ -14,6 +14,7 @@
 		8A16A58822EF1A71007AE4EC /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58722EF1A71007AE4EC /* UserResponse.swift */; };
 		8A16A58B22EF1AB8007AE4EC /* RepoCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58A22EF1AB8007AE4EC /* RepoCreator.swift */; };
 		8A16A58D22EF1ACF007AE4EC /* RepositoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58C22EF1ACF007AE4EC /* RepositoryResponse.swift */; };
+		8A3BAD3322F9A92C001A7910 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD3222F9A92C001A7910 /* Alert.swift */; };
 		8A66653622F4295B00626DFF /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653522F4295B00626DFF /* KeychainError.swift */; };
 		8A66653822F4298100626DFF /* KeychainQueryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653722F4298100626DFF /* KeychainQueryable.swift */; };
 		8A66653A22F429DA00626DFF /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653922F429DA00626DFF /* Keychain.swift */; };
@@ -44,6 +45,7 @@
 		8A16A58722EF1A71007AE4EC /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
 		8A16A58A22EF1AB8007AE4EC /* RepoCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoCreator.swift; sourceTree = "<group>"; };
 		8A16A58C22EF1ACF007AE4EC /* RepositoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryResponse.swift; sourceTree = "<group>"; };
+		8A3BAD3222F9A92C001A7910 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		8A66653522F4295B00626DFF /* KeychainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainError.swift; sourceTree = "<group>"; };
 		8A66653722F4298100626DFF /* KeychainQueryable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainQueryable.swift; sourceTree = "<group>"; };
 		8A66653922F429DA00626DFF /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
@@ -134,6 +136,14 @@
 			path = Enums;
 			sourceTree = "<group>";
 		};
+		8A3BAD3122F9A8FF001A7910 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				8A3BAD3222F9A92C001A7910 /* Alert.swift */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
 		8A66652F22F4280B00626DFF /* Keychain */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,7 +212,6 @@
 			children = (
 				8ABD12D622E06EDB00C62BB1 /* Info.plist */,
 				8AC9017A22F85E510084E493 /* SupportingFiles */,
-				8A66652F22F4280B00626DFF /* Keychain */,
 				8A70601C22E6066A0069F4EE /* Manager */,
 				8A16A57E22EF18F3007AE4EC /* Models */,
 				8AC9017822F85E1B0084E493 /* Controller */,
@@ -248,6 +257,8 @@
 		8AC9017A22F85E510084E493 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				8A66652F22F4280B00626DFF /* Keychain */,
+				8A3BAD3122F9A8FF001A7910 /* Alert */,
 				8ABD12CA22E06ED900C62BB1 /* AppDelegate.swift */,
 				8ABD12D122E06EDB00C62BB1 /* Assets.xcassets */,
 			);
@@ -348,6 +359,7 @@
 				8A70601F22E606920069F4EE /* RestManager.swift in Sources */,
 				8A66653822F4298100626DFF /* KeychainQueryable.swift in Sources */,
 				8A66653622F4295B00626DFF /* KeychainError.swift in Sources */,
+				8A3BAD3322F9A92C001A7910 /* Alert.swift in Sources */,
 				8ABD12CD22E06ED900C62BB1 /* RepositoryViewController.swift in Sources */,
 				8A16A58B22EF1AB8007AE4EC /* RepoCreator.swift in Sources */,
 				8A16A56A22EEE667007AE4EC /* GithubManager.swift in Sources */,

@@ -37,7 +37,17 @@ class AuthenticationManager: GithubManager {
         var headers = [String : String]()
         headers["Accept"] = "application/json"
         
-        self.get(url: url, parameters: parameters, headers: headers) { (data, _, error) in
+        self.get(url: url, parameters: parameters, headers: headers) { (data, response , error) in
+            guard error == nil else {
+                return completion(nil, UnknownError.internalError(error: error!))
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                guard response.statusCode >= 200 && response.statusCode <= 299 else {
+                    return completion(nil, NetworkError.status(code: response.statusCode))
+                }
+            }
+            
             if let data = data {
                 do {
                     let model = try JSONDecoder().decode(AccessTokenResponse.self, from: data)
@@ -45,8 +55,6 @@ class AuthenticationManager: GithubManager {
                 } catch {
                     completion(nil, error)
                 }
-            } else {
-                completion(nil, error)
             }
         }
     }
@@ -82,7 +90,7 @@ extension AuthenticationManager {
                 let token = try keychain.getValue(for: "accessToken")
                 return token
             } catch {
-                print(KeychainError.gettingError)
+                Alert.KeychainRetrivingAlert()
             }
             return nil
         }
@@ -92,7 +100,7 @@ extension AuthenticationManager {
                     try self.keychain.setValue(newValue, for: "accessToken")
                 }
             } catch {
-                print(KeychainError.savingError)
+                Alert.KeychainSavingAlert()
             }
         }
     }
