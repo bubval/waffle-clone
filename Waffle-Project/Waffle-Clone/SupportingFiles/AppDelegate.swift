@@ -12,10 +12,34 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    let authenticationManager = AuthenticationManager()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+        self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "LaunchViewController")
+        self.window?.makeKeyAndVisible()
+        
+        authenticateUser()
+    
         return true
+    }
+    
+    private func authenticateUser() {
+        authenticationManager.isValidToken() { (success) in
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if success {
+                DispatchQueue.main.async {
+                    self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "RepoViewController") as! RepositoryViewController
+                    self.window?.makeKeyAndVisible()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                    self.window?.makeKeyAndVisible()
+                }
+            }
+        }
     }
     
     internal func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -31,31 +55,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let code = queryItems[0].value
                     
                     if let code = code {
-                        let manager = AuthenticationManager()
-                        manager.getAccessToken(clientID: AuthenticationConstants.clientId,
+                        authenticationManager.getAccessToken(clientID: AuthenticationConstants.clientId,
                                                clientSecret: AuthenticationConstants.clientSecret,
                                                code: code,
                                                redirectURL: AuthenticationConstants.redirectUrl) { (response, error) in
                                                 
                                                 if let response = response {
-                                                    // Saves access code
                                                     AuthenticationManager.AccessToken = response.accessToken
-                                                    print(response)
-                                                    
-                                                    // Performs GET w/ access code
-                                                    // If status code = 200, then go to repository view controller
-                                                    manager.isValidToken() { (success) in
-                                                        if success == true {
-                                                            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                                                            if let vc = mainStoryboard.instantiateViewController(withIdentifier: "RepoViewController") as? RepositoryViewController {
-                                                                if let window = self.window {
-                                                                    DispatchQueue.main.async {
-                                                                        window.rootViewController = vc
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
+                                                    self.authenticateUser()
                                                 }
                         }
                     }

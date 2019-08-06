@@ -17,7 +17,6 @@ class AuthenticationManager: GithubManager {
         case redirectURL = "redirect_uri"
     }
     
-    
     /// Performs http GET under AccessTokenResponse model for purposes of authentication
     ///
     /// - Parameters:
@@ -55,7 +54,7 @@ class AuthenticationManager: GithubManager {
     /// Performs an http GET of the authenticated GitHub user.
     ///
     /// - Parameter completion: Returns true if status code = 200, otherwise returns false
-    func isValidToken(completion: @escaping (Bool) -> Void) {
+    func isValidToken(completion: @escaping (Bool) -> ()) {
         if let accessToken = AuthenticationManager.AccessToken {
             let url = "https://api.github.com/user/repos"
             let params = ["access_token" : accessToken]
