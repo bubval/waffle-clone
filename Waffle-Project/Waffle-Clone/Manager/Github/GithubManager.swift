@@ -8,27 +8,17 @@
 
 import Foundation
 
-struct Constants {
-    static var defaultHeaders = [
-        "Accept" : "application/vnd.github.v3+json",
-        RequestHeaderFields.acceptEncoding.rawValue : "gzip",
-        "Content-Type" : "application/json; charset=utf-8"
-    ]
-    static var defaultParameters: [String : String] = [:]
-}
-
 class GithubManager: RestManager {
     
     private let baseUrl = "https://api.github.com"
-    private var authentication: Authentication!
+    private var authentication: Authentication?
 
     public override init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
         super.init(session: session)
         if let accessToken = AuthenticationManager.AccessToken {
             self.authentication = Authentication(accessToken: accessToken)
-            self.addAuthentication()
         } else {
-            self.authentication = Authentication()
+            self.authentication = nil
         }
     }
     
@@ -40,7 +30,7 @@ class GithubManager: RestManager {
     ///   - headers: HTTP metadata
     ///   - completion: Decodable object or Error
     func get<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, completion: @escaping (T?, Error?) -> Swift.Void) {
-        let (newHeaders, newParameters) = updateQueryDefaults(headers, parameters)
+        let (newHeaders, newParameters) = generateQuery(headers, parameters)
         
         self.get(url: self.baseUrl + path, parameters: newParameters, headers: newHeaders) { (data, response, error) in
             guard error == nil else {
@@ -72,7 +62,7 @@ class GithubManager: RestManager {
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
     func post<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
-        let (newHeaders, newParameters) = updateQueryDefaults(headers, parameters)
+        let (newHeaders, newParameters) = generateQuery(headers, parameters)
 
         self.post(url: self.baseUrl + path, parameters: newParameters, headers: newHeaders, body: body) { (data, response, error) in
             
@@ -105,7 +95,7 @@ class GithubManager: RestManager {
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
     func put<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
-        let (newHeaders, newParameters) = updateQueryDefaults(headers, parameters)
+        let (newHeaders, newParameters) = generateQuery(headers, parameters)
 
         self.put(url: self.baseUrl + path, parameters: newParameters, headers: newHeaders, body: body) { (data, response, error) in
             
@@ -138,7 +128,7 @@ class GithubManager: RestManager {
     ///   - body: data bytes transmitted in an HTTP transaction message
     ///   - completion: Decodable object or Error
     func delete<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
-        let (newHeaders, newParameters) = updateQueryDefaults(headers, parameters)
+        let (newHeaders, newParameters) = generateQuery(headers, parameters)
 
         self.delete(url: self.baseUrl + path, parameters: newParameters, headers: newHeaders) { (data, response, error) in
             
@@ -267,29 +257,24 @@ extension GithubManager {
 
 extension GithubManager {
     
-    private func addAuthentication() {
-        
-        if let authentication = self.authentication {
-            if authentication.type == .basic || authentication.type == .basicToken {
-                Constants.defaultHeaders.updateValue(authentication.getValue(), forKey: authentication.getValue())
-            }
-            if authentication.type == .accessToken {
-                Constants.defaultParameters.updateValue(authentication.getValue(), forKey: authentication.getKey())
-            }
+    private func generateQuery(_ headers: [String : String]?, _ parameters: [String : String]?) -> (headers: [String : String]?, parameters: [String : String]?) {
+        var queryParamters: [String : String] = [:]
+        var queryHeaders = [
+            "Accept" : "application/vnd.github.v3+json",
+            RequestHeaderFields.acceptEncoding.rawValue : "gzip",
+            "Content-Type" : "application/json; charset=utf-8"
+        ]
+        if let authentication = authentication {
+            queryParamters.updateValue(authentication.getValue(), forKey: authentication.getKey())
         }
-    }
-    
-    private func updateQueryDefaults(_ headers: [String : String]?, _ parameters: [String : String]?) -> (headers: [String : String]?, parameters: [String : String]?) {
-        var newParamters = Constants.defaultParameters
-        var newHeaders = Constants.defaultHeaders
         
         if let parameters = parameters {
-            newParamters.merge(dict: parameters)
+            queryParamters.merge(dict: parameters)
         }
         if let headers = headers {
-            newHeaders.merge(dict: headers)
+            queryHeaders.merge(dict: headers)
         }
-        return (newHeaders, newParamters)
+        return (queryHeaders, queryParamters)
     }
 }
 
