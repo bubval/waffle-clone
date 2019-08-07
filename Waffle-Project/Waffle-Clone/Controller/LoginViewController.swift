@@ -17,7 +17,8 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginBtnPressed(_ sender: UIButton) {
-        let authorizationUrl = authenticationManager.buildLoginURL(with: Scopes.allCases , allowSignup: false)
-        UIApplication.shared.open(authorizationUrl)
+        if let authorizationUrl = authenticationManager.buildLoginURL(with: Scopes.allCases , allowSignup: false) {
+            UIApplication.shared.open(authorizationUrl)
+        }
     }
 }

@@ -62,20 +62,28 @@ class AuthenticationManager: GithubManager {
     /// Performs an http GET of the authenticated GitHub user.
     ///
     /// - Parameter completion: Returns true if status code = 200, otherwise returns false
-    func isValidToken(completion: @escaping (Bool) -> ()) {
+    func hasValidToken(completion: @escaping (Bool) -> ()) {
         if let accessToken = AuthenticationManager.AccessToken {
             let url = "https://api.github.com/user/repos"
             let params = ["access_token" : accessToken]
             
-            self.get(url: url, parameters: params, headers: nil) { (_, httpResponse, _) in
+            self.get(url: url, parameters: params, headers: nil) { (_, httpResponse, error) in
+                guard error == nil else {
+                    return completion(false)
+                }
+                
                 if let httpResponse = httpResponse as? HTTPURLResponse {
                     if httpResponse.statusCode == 200 {
                         completion(true)
                     } else {
                         completion(false)
                     }
+                } else {
+                    completion(false)
                 }
             }
+        } else {
+            completion(false)
         }
     }
 }
@@ -90,7 +98,7 @@ extension AuthenticationManager {
                 let token = try keychain.getValue(for: "accessToken")
                 return token
             } catch {
-                Alert.KeychainRetrivingAlert()
+                KeychainError.gettingError
             }
             return nil
         }
@@ -100,7 +108,7 @@ extension AuthenticationManager {
                     try self.keychain.setValue(newValue, for: "accessToken")
                 }
             } catch {
-                Alert.KeychainSavingAlert()
+                KeychainError.savingError
             }
         }
     }
@@ -111,10 +119,10 @@ extension AuthenticationManager {
     /// Builds github login url
     ///
     /// - Parameters:
-    ///   - scopes: Specifies the type of access
+    ///   - scopes: Scopes let you specify exactly what type of access you need. Scopes limit access for OAuth tokens. The scope attribute lists scopes attached to the token that were granted by the user.
     ///   - allowSignup: Specifies if the user should be allowed to sign up
     /// - Returns: URL with scopes, redirect url, client id which allows signup if specified
-    func buildLoginURL(with scopes : [Scopes], allowSignup: Bool) -> URL {
+    func buildLoginURL(with scopes : [Scopes], allowSignup: Bool) -> URL? {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "github.com"
@@ -125,6 +133,6 @@ extension AuthenticationManager {
         let allowSignupQueryItem = URLQueryItem(name: "allow_signup", value: "\(allowSignup ? "true" : "false")")
         let clientIDQueryItem = URLQueryItem(name: "client_id", value: "\(AuthenticationConstants.clientId)")
         urlComponents.queryItems = [scopesQueryItem, redirectURIQueryItem, allowSignupQueryItem, clientIDQueryItem]
-        return urlComponents.url!
+        return urlComponents.url
     }
 }

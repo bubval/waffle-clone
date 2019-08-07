@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func authenticateUser() {
-        authenticationManager.isValidToken() { (success) in
+        authenticationManager.hasValidToken() { (success) in
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             if success {
                 DispatchQueue.main.async {
