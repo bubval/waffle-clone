@@ -14,6 +14,8 @@ public struct IssueResponse: Codable {
     let title: String
     let body: String
     let labels: [IssueLabel]?
+    let state: String
+    let locked: String
     let comments: Int
     let createdAt: String
     let updatedAt: String
@@ -30,6 +32,8 @@ public struct IssueResponse: Codable {
         case body
         case labels
         case comments
+        case state
+        case locked
         case createdAt = "created_at"
         case updatedAt = "updated_at"
         case closedAt = "closed_at"
@@ -46,6 +50,8 @@ public struct IssueResponse: Codable {
         title = try values.decode(String.self, forKey: .title)
         body = try values.decode(String.self, forKey: .body)
         labels = try values.decodeIfPresent([IssueLabel].self, forKey: .labels)
+        state = try values.decode(String.self, forKey: .state)
+        locked = try values.decode(String.self, forKey: .state)
         comments = try values.decode(Int.self, forKey: .comments)
         createdAt = try values.decode(String.self, forKey: .createdAt)
         updatedAt = try values.decode(String.self, forKey: .updatedAt)
