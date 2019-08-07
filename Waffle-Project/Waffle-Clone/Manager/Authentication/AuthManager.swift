@@ -56,6 +56,7 @@ class AuthenticationManager: GithubManager {
     /// - Parameter completion: Returns true if HTTP respose status is 200. Otherwise, returns false and a String of text describing the error.
     func hasValidToken(completion: @escaping (Bool, String?) -> ()) {
         if let accessToken = AuthenticationManager.accessToken {
+            print(AuthenticationManager.accessToken)
             let url = "https://api.github.com/user/repos"
             let params = ["access_token" : accessToken]
             

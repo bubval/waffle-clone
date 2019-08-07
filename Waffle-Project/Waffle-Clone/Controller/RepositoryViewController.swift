@@ -9,35 +9,56 @@
 import UIKit
 
 class RepositoryViewController: UIViewController {
-    let manager = testingRepositoryManager()
-    var repositories = [RepositoryResponse]()
+    private let manager = RepositoryManager()
+    private var repositories = [RepositoryResponse]()
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        getRepositories() { (successfullyLoaded) in
+        getRepositories() { (successfullyLoaded, alert) in
             if successfullyLoaded {
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
-            }
-        }
-    }
-    
-    func getRepositories(completion: @escaping ((_ successfullyLoaded: Bool) ->())) {
-        manager.repositories { (response, error) in
-            if let response = response {
-                self.repositories = response
-                completion(true)
             } else {
-                print(error ?? "error")
-                completion(false)
+                DispatchQueue.main.async {
+                    if let alert = alert {
+                        self.present(alert, animated: true)
+                    }
+                }
             }
         }
     }
 }
+
+// MARK: - Networking
+
+extension RepositoryViewController {
+    
+    private func getRepositories(completion: @escaping ((_ successfullyLoaded: Bool,_ alert: UIAlertController?) ->())) {
+        manager.repositories { (response, error) in
+            
+            //Dido: could not use 'guard if' because it has to be in DispatchQueue
+            
+            if let response = response {
+                self.repositories = response
+                completion(true, nil)
+            } else {
+                DispatchQueue.main.async {
+                    let alert = Alert.showBasicAlert(with: "Error", message: "Repositories could not be loaded. You will be redirected to login") {_ in
+                        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+                            self.present(vc, animated: false, completion: nil)
+                        }
+                    }
+                    completion(false, alert)
+                }
+            }
+        }
+    }
+}
+
 // MARK: - UITableView
 
 extension RepositoryViewController: UITableViewDataSource, UITableViewDelegate {
@@ -52,13 +73,3 @@ extension RepositoryViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
 }
-
-// Just written for the purposes of testing
-class testingRepositoryManager: GithubManager {
-    
-    public func repositories(completion: @escaping([RepositoryResponse]?, Error?) -> Void) {
-        let path = "/user/repos"
-        self.get(path: path, completion: completion)
-    }
-}
-
