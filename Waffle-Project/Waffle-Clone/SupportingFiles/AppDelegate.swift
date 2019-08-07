@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func authenticateUser() {
-        authenticationManager.hasValidToken() { (success) in
+        authenticationManager.hasValidToken() { (success, errorDescription) in
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             if success {
                 DispatchQueue.main.async {
@@ -37,6 +37,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 DispatchQueue.main.async {
                     self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
                     self.window?.makeKeyAndVisible()
+                    if let errorDescription = errorDescription {
+                        let alert = Alert.showBasicAlert(with: "Error", message: errorDescription)
+                        self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+                    }
                 }
             }
         }
@@ -61,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                redirectURL: AuthenticationConstants.redirectUrl) { (response, error) in
                                                 
                                                 if let response = response {
-                                                    AuthenticationManager.AccessToken = response.accessToken
+                                                    AuthenticationManager.accessToken = response.accessToken
                                                     self.authenticateUser()
                                                 }
                         }

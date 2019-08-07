@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 class AuthenticationManager: GithubManager {
@@ -62,28 +63,28 @@ class AuthenticationManager: GithubManager {
     /// Performs an http GET of the authenticated GitHub user.
     ///
     /// - Parameter completion: Returns true if status code = 200, otherwise returns false
-    func hasValidToken(completion: @escaping (Bool) -> ()) {
-        if let accessToken = AuthenticationManager.AccessToken {
+    func hasValidToken(completion: @escaping (Bool, String?) -> ()) {
+        if let accessToken = AuthenticationManager.accessToken {
             let url = "https://api.github.com/user/repos"
             let params = ["access_token" : accessToken]
             
             self.get(url: url, parameters: params, headers: nil) { (_, httpResponse, error) in
                 guard error == nil else {
-                    return completion(false)
+                    return completion(false, error!.localizedDescription)
                 }
                 
                 if let httpResponse = httpResponse as? HTTPURLResponse {
                     if httpResponse.statusCode == 200 {
-                        completion(true)
+                        completion(true, nil)
                     } else {
-                        completion(false)
+                        completion(false, "Authenticated failed.")
                     }
                 } else {
-                    completion(false)
+                    completion(false, "Github response failed.")
                 }
             }
         } else {
-            completion(false)
+            completion(false, "Sing in could not be completed.")
         }
     }
 }
@@ -92,7 +93,7 @@ extension AuthenticationManager {
     
     private static var keychain = Keychain(keychainQueryable: Queryable(service: "accessToken"))
     
-    class var AccessToken: String? {
+    class var accessToken: String? {
         get {
             do {
                 let token = try keychain.getValue(for: "accessToken")

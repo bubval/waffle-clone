@@ -15,7 +15,7 @@ class GithubManager: RestManager {
 
     public override init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
         super.init(session: session)
-        if let accessToken = AuthenticationManager.AccessToken {
+        if let accessToken = AuthenticationManager.accessToken {
             self.authentication = Authentication(accessToken: accessToken)
         } else {
             self.authentication = nil
