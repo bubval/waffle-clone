@@ -9,6 +9,7 @@
 import Foundation
 import Security
 
+/// A simple wrapper for the iOS Keychain to allow you to use it in a similar fashion to User Defaults
 public struct Keychain {
     let keychainQueryable: KeychainQueryable
     

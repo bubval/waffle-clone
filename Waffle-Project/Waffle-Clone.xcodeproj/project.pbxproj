@@ -20,7 +20,6 @@
 		8A66653A22F429DA00626DFF /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653922F429DA00626DFF /* Keychain.swift */; };
 		8A70601F22E606920069F4EE /* RestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70601E22E606920069F4EE /* RestManager.swift */; };
 		8A70602622E6082D0069F4EE /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70602522E6082D0069F4EE /* RequestMethod.swift */; };
-		8A70602822E6084C0069F4EE /* RequestHeaderFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70602722E6084C0069F4EE /* RequestHeaderFields.swift */; };
 		8A70602A22E60D7D0069F4EE /* CharacterSetExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70602922E60D7D0069F4EE /* CharacterSetExt.swift */; };
 		8A7E63CD22F2E54800B54191 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E63CC22F2E54800B54191 /* LoginViewController.swift */; };
 		8A7E63D122F2EFE900B54191 /* AccessTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E63D022F2EFE900B54191 /* AccessTokenResponse.swift */; };
@@ -51,7 +50,6 @@
 		8A66653922F429DA00626DFF /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		8A70601E22E606920069F4EE /* RestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestManager.swift; sourceTree = "<group>"; };
 		8A70602522E6082D0069F4EE /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
-		8A70602722E6084C0069F4EE /* RequestHeaderFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHeaderFields.swift; sourceTree = "<group>"; };
 		8A70602922E60D7D0069F4EE /* CharacterSetExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSetExt.swift; sourceTree = "<group>"; };
 		8A7E63CC22F2E54800B54191 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8A7E63D022F2EFE900B54191 /* AccessTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenResponse.swift; sourceTree = "<group>"; };
@@ -131,7 +129,6 @@
 			isa = PBXGroup;
 			children = (
 				8A70602522E6082D0069F4EE /* RequestMethod.swift */,
-				8A70602722E6084C0069F4EE /* RequestHeaderFields.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -372,7 +369,6 @@
 				8AC952C022F18F4F002B4023 /* Authentication.swift in Sources */,
 				8AC9017122F855780084E493 /* Scopes.swift in Sources */,
 				8A7E63D722F3121E00B54191 /* AuthConstants.swift in Sources */,
-				8A70602822E6084C0069F4EE /* RequestHeaderFields.swift in Sources */,
 				8A70602622E6082D0069F4EE /* RequestMethod.swift in Sources */,
 				8A70602A22E60D7D0069F4EE /* CharacterSetExt.swift in Sources */,
 				8A7E63D122F2EFE900B54191 /* AccessTokenResponse.swift in Sources */,

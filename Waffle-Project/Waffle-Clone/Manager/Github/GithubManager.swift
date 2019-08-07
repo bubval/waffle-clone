@@ -15,6 +15,7 @@ class GithubManager: RestManager {
 
     public override init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
         super.init(session: session)
+        // Sets access token if present in keychain.
         if let accessToken = AuthenticationManager.accessToken {
             self.authentication = Authentication(accessToken: accessToken)
         } else {
@@ -194,6 +195,47 @@ extension GithubManager {
     }
 }
 
+// MARK: - Authentication
+
+extension GithubManager {
+    
+    /// Takes headers and parameters passed by the user. If authentication is present, adds authentication to parameters. Adds encoding and content-type to headers.
+    ///
+    /// - Parameters:
+    ///   - headers: Headers passed by the user.
+    ///   - parameters: Parameters passed by the user.
+    /// - Returns: New headers and parameters consisting of the ones passed by the user, authentication, content-type and encoding.
+    private func generateQuery(_ headers: [String : String]?, _ parameters: [String : String]?) -> (headers: [String : String]?, parameters: [String : String]?) {
+        var queryParamters: [String : String] = [:]
+        var queryHeaders = [
+            "Accept" : "application/vnd.github.v3+json",
+            "Accept-Encoding" : "gzip",
+            "Content-Type" : "application/json; charset=utf-8"
+        ]
+        if let authentication = authentication {
+            queryParamters.updateValue(authentication.getValue(), forKey: authentication.getKey())
+        }
+        
+        if let parameters = parameters {
+            queryParamters.merge(dict: parameters)
+        }
+        if let headers = headers {
+            queryHeaders.merge(dict: headers)
+        }
+        return (queryHeaders, queryParamters)
+    }
+}
+
+extension Dictionary {
+    mutating func merge(dict: [Key: Value]) {
+        for (k, v) in dict {
+            updateValue(v, forKey: k)
+        }
+    }
+}
+
+// MARK: - Error Handing
+
 extension GithubManager {
     enum UnknownError: Swift.Error, CustomStringConvertible {
         case internalError(error: Error)
@@ -249,39 +291,6 @@ extension GithubManager {
                 }
                 return "Not an client or server error"
             }
-        }
-    }
-}
-
-// MARK: - Authentication
-
-extension GithubManager {
-    
-    private func generateQuery(_ headers: [String : String]?, _ parameters: [String : String]?) -> (headers: [String : String]?, parameters: [String : String]?) {
-        var queryParamters: [String : String] = [:]
-        var queryHeaders = [
-            "Accept" : "application/vnd.github.v3+json",
-            RequestHeaderFields.acceptEncoding.rawValue : "gzip",
-            "Content-Type" : "application/json; charset=utf-8"
-        ]
-        if let authentication = authentication {
-            queryParamters.updateValue(authentication.getValue(), forKey: authentication.getKey())
-        }
-        
-        if let parameters = parameters {
-            queryParamters.merge(dict: parameters)
-        }
-        if let headers = headers {
-            queryHeaders.merge(dict: headers)
-        }
-        return (queryHeaders, queryParamters)
-    }
-}
-
-extension Dictionary {
-    mutating func merge(dict: [Key: Value]) {
-        for (k, v) in dict {
-            updateValue(v, forKey: k)
         }
     }
 }

@@ -11,29 +11,20 @@ import UIKit
 
 
 class AuthenticationManager: GithubManager {
-    enum Parameters: String {
-        case clientID = "client_id"
-        case clientSecret = "client_secret"
-        case code
-        case redirectURL = "redirect_uri"
-    }
     
     /// Performs http GET under AccessTokenResponse model for purposes of authentication
     ///
     /// - Parameters:
-    ///   - clientID: App specific client id
-    ///   - clientSecret: App specific client secret
-    ///   - code: Identifies user after login
-    ///   - redirectURL: App specific redirect url
-    ///   - completion: Returns AccessTokenResponse containing access token, scope and user type. Othewise, returns error.
-    func getAccessToken(clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping(AccessTokenResponse?, Error?) -> Void) {
+    ///   - code: Token identifying user identity derived from UIApplication
+    ///   - completion: Returns AccessTokenResponse (access token, scope and user type) or error.
+    func getAccessToken(code: String, completion: @escaping(AccessTokenResponse?, Error?) -> Void) {
         let url = "https://github.com/login/oauth/access_token"
         
         var parameters = [String : String]()
-        parameters[Parameters.clientID.rawValue] = clientID
-        parameters[Parameters.clientSecret.rawValue] = clientSecret
-        parameters[Parameters.code.rawValue] = code
-        parameters[Parameters.redirectURL.rawValue] = redirectURL
+        parameters["client_id"] = AuthenticationConstants.clientId
+        parameters["client_secret"] = AuthenticationConstants.clientSecret
+        parameters["code"] = code
+        parameters["redirect_url"] = AuthenticationConstants.redirectUrl
         
         var headers = [String : String]()
         headers["Accept"] = "application/json"
@@ -60,9 +51,9 @@ class AuthenticationManager: GithubManager {
         }
     }
     
-    /// Performs an http GET of the authenticated GitHub user.
+    /// Performs GET to an authenticated user's repositories. Checks for successful HTTP response status.
     ///
-    /// - Parameter completion: Returns true if status code = 200, otherwise returns false
+    /// - Parameter completion: Returns true if HTTP respose status is 200. Otherwise, returns false and a String of text describing the error.
     func hasValidToken(completion: @escaping (Bool, String?) -> ()) {
         if let accessToken = AuthenticationManager.accessToken {
             let url = "https://api.github.com/user/repos"
@@ -84,32 +75,33 @@ class AuthenticationManager: GithubManager {
                 }
             }
         } else {
-            completion(false, "Sing in could not be completed.")
+            completion(false, "Automatic sign in could not be completed.")
         }
     }
 }
 
 extension AuthenticationManager {
     
-    private static var keychain = Keychain(keychainQueryable: Queryable(service: "accessToken"))
+    private static var keychain = Keychain(keychainQueryable: Queryable(service: AuthenticationConstants.accessTokenKey))
     
+    /// Provides access to keychain containing the access token.
     class var accessToken: String? {
         get {
             do {
-                let token = try keychain.getValue(for: "accessToken")
+                let token = try keychain.getValue(for: AuthenticationConstants.accessTokenKey)
                 return token
             } catch {
-                KeychainError.gettingError
+                print(KeychainError.gettingError.description)
             }
             return nil
         }
         set {
             do {
                 if let newValue = newValue {
-                    try self.keychain.setValue(newValue, for: "accessToken")
+                    try self.keychain.setValue(newValue, for: AuthenticationConstants.accessTokenKey)
                 }
             } catch {
-                KeychainError.savingError
+                print(KeychainError.savingError.description)
             }
         }
     }
@@ -122,8 +114,8 @@ extension AuthenticationManager {
     /// - Parameters:
     ///   - scopes: Scopes let you specify exactly what type of access you need. Scopes limit access for OAuth tokens. The scope attribute lists scopes attached to the token that were granted by the user.
     ///   - allowSignup: Specifies if the user should be allowed to sign up
-    /// - Returns: URL with scopes, redirect url, client id which allows signup if specified
-    func buildLoginURL(with scopes : [Scopes], allowSignup: Bool) -> URL? {
+    /// - Returns: URL with scopes, redirect url, client id, and signup
+    func buildLoginURL(with scopes : [Scopes], allowSignup: Bool = false) -> URL? {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "github.com"

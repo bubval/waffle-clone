@@ -24,7 +24,7 @@ extension URLRequest {
             return URL(string: url)
         }
         
-        // Builds urlRequest from url w/ headers, http method and body
+        // Builds urlRequest from url with headers, http method and body.
         if let url = url {
             var request = URLRequest(url: url)
             if let headers = headers {

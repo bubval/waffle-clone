@@ -15,28 +15,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let authenticationManager = AuthenticationManager()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Initial root view controller is set to Launch Screen.
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "LaunchViewController")
         self.window?.makeKeyAndVisible()
         
+        // Root view controller is changed depending on authentication.
         authenticateUser()
     
         return true
     }
     
+    /// If keychain contains a valid access token the user is sent to Repository View Controller. Otherwise, user is shown an error and sent to Login View Controller.
     private func authenticateUser() {
         authenticationManager.hasValidToken() { (success, errorDescription) in
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             if success {
+                // Changes root view controller to Repository View Controller.
                 DispatchQueue.main.async {
                     self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "RepoViewController") as! RepositoryViewController
                     self.window?.makeKeyAndVisible()
                 }
             } else {
+                // Changes root view contoller to Login View Controller.
                 DispatchQueue.main.async {
                     self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
                     self.window?.makeKeyAndVisible()
+                    // Displays alert describing why the user was unable to authenticate and sign in.
                     if let errorDescription = errorDescription {
                         let alert = Alert.showBasicAlert(with: "Error", message: errorDescription)
                         self.window?.rootViewController?.present(alert, animated: true, completion: nil)
@@ -47,27 +53,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     internal func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        // Redirect URL (scheme://host)
-        if url.scheme == "waffleclone" {
-            if url.host == "gitlogin" {
-                // Redirect URL + with query items
+        // Accessed from UIApplication.
+        // Checks if call is coming from Login View Controller by comparing the redirection url scheme and host (scheme://host).
+        if url.scheme == AuthenticationConstants.callbackScheme {
+            if url.host == AuthenticationConstants.callbackHost {
+                // Consists of redirect URL (scheme://host) AND query items
                 if let urlComponents = URLComponents(string: url.absoluteString),
-                    // query items:
-                    // 1. code - identifying user
-                    // 2. state - used to protect against cross-site request forgery attacks)
-                    let queryItems = urlComponents.queryItems {
-                    let code = queryItems[0].value
-                    
-                    if let code = code {
-                        authenticationManager.getAccessToken(clientID: AuthenticationConstants.clientId,
-                                               clientSecret: AuthenticationConstants.clientSecret,
-                                               code: code,
-                                               redirectURL: AuthenticationConstants.redirectUrl) { (response, error) in
-                                                
-                                                if let response = response {
-                                                    AuthenticationManager.accessToken = response.accessToken
-                                                    self.authenticateUser()
-                                                }
+                    // Query items consists of code (token identifying user) and state (protection against cross-site request forgery attacks)
+                    let queryItems = urlComponents.queryItems,
+                    // Specifies user identity
+                    let code = queryItems[0].value{
+                    authenticationManager.getAccessToken(code: code) { (response, error) in
+                        if let response = response {
+                            // Saves access token to keychain.
+                            AuthenticationManager.accessToken = response.accessToken
+                            // Checks validity of access token and transfers user to appropriate view controller.
+                            self.authenticateUser()
                         }
                     }
                 }
