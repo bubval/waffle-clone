@@ -85,13 +85,13 @@ extension AuthenticationManager {
     private static var keychain = Keychain(keychainQueryable: Queryable(service: AuthenticationConstants.accessTokenKey))
     
     /// Provides access to keychain containing the access token.
-    class var accessToken: String? {
+    static var accessToken: String? {
         get {
             do {
                 let token = try keychain.getValue(for: AuthenticationConstants.accessTokenKey)
                 return token
             } catch {
-                print(KeychainError.gettingError.description)
+                print("KeychainError::", KeychainError.gettingError.description)
             }
             return nil
         }
@@ -101,7 +101,7 @@ extension AuthenticationManager {
                     try self.keychain.setValue(newValue, for: AuthenticationConstants.accessTokenKey)
                 }
             } catch {
-                print(KeychainError.savingError.description)
+                print("KeychainError::", KeychainError.savingError.description)
             }
         }
     }

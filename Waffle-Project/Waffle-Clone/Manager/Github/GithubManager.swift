@@ -12,7 +12,7 @@ class GithubManager: RestManager {
     
     private let baseUrl = "https://api.github.com"
     private var authentication: Authentication?
-
+    
     public override init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
         super.init(session: session)
         // Sets access token if present in keychain.
@@ -64,7 +64,7 @@ class GithubManager: RestManager {
     ///   - completion: Decodable object or Error
     func post<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
         let (newHeaders, newParameters) = generateQuery(headers, parameters)
-
+        
         self.post(url: self.baseUrl + path, parameters: newParameters, headers: newHeaders, body: body) { (data, response, error) in
             
             guard error == nil else {
@@ -97,7 +97,7 @@ class GithubManager: RestManager {
     ///   - completion: Decodable object or Error
     func put<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
         let (newHeaders, newParameters) = generateQuery(headers, parameters)
-
+        
         self.put(url: self.baseUrl + path, parameters: newParameters, headers: newHeaders, body: body) { (data, response, error) in
             
             guard error == nil else {
@@ -130,7 +130,7 @@ class GithubManager: RestManager {
     ///   - completion: Decodable object or Error
     func delete<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
         let (newHeaders, newParameters) = generateQuery(headers, parameters)
-
+        
         self.delete(url: self.baseUrl + path, parameters: newParameters, headers: newHeaders) { (data, response, error) in
             
             guard error == nil else {
@@ -236,61 +236,60 @@ extension Dictionary {
 
 // MARK: - Error Handing
 
-extension GithubManager {
-    enum UnknownError: Swift.Error, CustomStringConvertible {
-        case internalError(error: Error)
-        
-        public var description: String {
-            switch self {
-            case .internalError(let error):
-                return error.localizedDescription
-            }
-        }
-    }
+enum UnknownError: Swift.Error, CustomStringConvertible {
+    case internalError(error: Error)
     
-    enum JsonError: Swift.Error, CustomStringConvertible {
-        case unparsableModel
-        
-        public var description: String {
-            switch self {
-            case .unparsableModel:
-                return "Unable to parse JSON response to model."
-            }
-        }
-    }
-    
-    enum NetworkError: Swift.Error, CustomStringConvertible {
-        case status(code: Int)
-        
-        public var description: String {
-            switch self {
-            case .status(let code):
-                if code >= 400 && code < 600 {
-                    switch code {
-                    case 400:
-                        return "\(code) Bad Request"
-                    case 401:
-                        return "\(code) Unauthorized"
-                    case 403:
-                        return "\(code) Forbidden"
-                    case 404:
-                        return "\(code) Not Found"
-                    case 406:
-                        return "\(code) Not Accessible"
-                    case 500:
-                        return "\(code) Internal Server Error"
-                    case 501:
-                        return "\(code) Not Implemented"
-                    case 502:
-                        return "\(code) Bad Gateway"
-                    case 503:
-                        return "\(code) Service Unavailable"
-                    default:
-                        return "\(code) Undefined HTTP error"
-                    }
-                }
-                return "Not an client or server error"
-            }
+    public var description: String {
+        switch self {
+        case .internalError(let error):
+            return error.localizedDescription
         }
     }
 }
+
+enum JsonError: Swift.Error, CustomStringConvertible {
+    case unparsableModel
+    
+    public var description: String {
+        switch self {
+        case .unparsableModel:
+            return "Unable to parse JSON response to model."
+        }
+    }
+}
+
+enum NetworkError: Swift.Error, CustomStringConvertible {
+    case status(code: Int)
+    
+    public var description: String {
+        switch self {
+        case .status(let code):
+            if code >= 400 && code < 600 {
+                switch code {
+                case 400:
+                    return "\(code) Bad Request"
+                case 401:
+                    return "\(code) Unauthorized"
+                case 403:
+                    return "\(code) Forbidden"
+                case 404:
+                    return "\(code) Not Found"
+                case 406:
+                    return "\(code) Not Accessible"
+                case 500:
+                    return "\(code) Internal Server Error"
+                case 501:
+                    return "\(code) Not Implemented"
+                case 502:
+                    return "\(code) Bad Gateway"
+                case 503:
+                    return "\(code) Service Unavailable"
+                default:
+                    return "\(code) Undefined HTTP error"
+                }
+            }
+            return "Not an client or server error"
+        }
+    }
+}
+
