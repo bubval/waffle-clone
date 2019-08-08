@@ -17,16 +17,20 @@ class RepositoryViewController: UIViewController {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        getRepositories() { (successfullyLoaded, alert) in
-            if successfullyLoaded {
+        getRepositories() { (repositories) in
+            if let repositories = repositories {
+                self.repositories = repositories
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
             } else {
-                DispatchQueue.main.async {
-                    if let alert = alert {
-                        self.present(alert, animated: true)
+                let alert = Alert.showBasicAlert(with: "Error", message: "Repositories could not be loaded. You will be redirected to login") {_ in
+                    if let vc = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+                        self.present(vc, animated: false, completion: nil)
                     }
+                }
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
         }
@@ -37,23 +41,16 @@ class RepositoryViewController: UIViewController {
 
 extension RepositoryViewController {
     
-    private func getRepositories(completion: @escaping ((_ successfullyLoaded: Bool,_ alert: UIAlertController?) ->())) {
+    private func getRepositories(completion: @escaping (( _ repositories: [RepositoryResponse]?) ->())) {
         manager.repositories { (response, error) in
-            
-            //Dido: could not use 'guard if' because it has to be in DispatchQueue
+            guard error != nil else {
+                return completion(nil)
+            }
             
             if let response = response {
-                self.repositories = response
-                completion(true, nil)
+                completion(response)
             } else {
-                DispatchQueue.main.async {
-                    let alert = Alert.showBasicAlert(with: "Error", message: "Repositories could not be loaded. You will be redirected to login") {_ in
-                        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-                            self.present(vc, animated: false, completion: nil)
-                        }
-                    }
-                    completion(false, alert)
-                }
+                completion(nil)
             }
         }
     }

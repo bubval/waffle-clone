@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct RepoCreator: Codable {
+public struct BasicUserResponse: Codable {
     let login: String
     let id: Int
     let avatarUrl: String

@@ -18,8 +18,8 @@ public struct RepositoryResponse: Codable {
     let hasIssues: Bool
     let homepage: String?
     let isPrivate: Bool
-    let owner: RepoCreator?
-    let organization: RepoCreator?
+    let owner: BasicUserResponse?
+    let organization: BasicUserResponse?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -46,7 +46,7 @@ public struct RepositoryResponse: Codable {
         hasIssues = try values.decode(Bool.self, forKey: .hasIssues)
         homepage = try values.decodeIfPresent(String.self, forKey: .homepage)
         isPrivate = try values.decode(Bool.self, forKey: .isPrivate)
-        owner = try values.decodeIfPresent(RepoCreator.self, forKey: .owner)
-        organization = try values.decodeIfPresent(RepoCreator.self, forKey: .organization)
+        owner = try values.decodeIfPresent(BasicUserResponse.self, forKey: .owner)
+        organization = try values.decodeIfPresent(BasicUserResponse.self, forKey: .organization)
     }
 }

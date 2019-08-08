@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct UserResponse: Codable {
+public struct FullUserResponse: Codable {
     let login: String
     let id: Int
     let avatarUrl: String

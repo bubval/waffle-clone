@@ -10,7 +10,7 @@ import Foundation
 
 class RepositoryManager: GithubManager {
     
-    public func repositories(completion: @escaping([RepositoryResponse]?, Error?) -> Void) {
+    func repositories(completion: @escaping([RepositoryResponse]?, Error?) -> Void) {
         let path = "/user/repos"
         self.get(path: path, completion: completion)
     }
