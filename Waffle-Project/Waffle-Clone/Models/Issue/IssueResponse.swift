@@ -12,7 +12,7 @@ public struct IssueResponse: Codable {
     let id: Int
     let number: Int
     let title: String
-    let body: String
+    let body: String?
     let labels: [LabelResponse]?
     let state: String
     let locked: String
@@ -48,7 +48,7 @@ public struct IssueResponse: Codable {
         id = try values.decode(Int.self, forKey: .id)
         number = try values.decode(Int.self, forKey: .number)
         title = try values.decode(String.self, forKey: .title)
-        body = try values.decode(String.self, forKey: .body)
+        body = try values.decodeIfPresent(String.self, forKey: .body)
         labels = try values.decodeIfPresent([LabelResponse].self, forKey: .labels)
         state = try values.decode(String.self, forKey: .state)
         locked = try values.decode(String.self, forKey: .state)

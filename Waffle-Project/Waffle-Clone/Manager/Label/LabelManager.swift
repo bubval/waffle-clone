@@ -19,8 +19,14 @@ class LabelManager: GithubManager {
         self.get(path: path, completion: completion)
     }
     
-    func post(owner: String, repository: String, label:LabelResponse, completion: @escaping(LabelResponse?, Error?) -> Void) {
+    func post(owner: String, repository: String, label: LabelResponse, completion: @escaping(LabelResponse?, Error?) -> Void) {
         let path = "/repos/\(owner)/\(repository)/labels"
         self.post(path: path, body: try? JSONEncoder().encode(label), completion: completion)
     }
+    
+    func patch(owner: String, repository: String, label: LabelResponse, completion: @escaping(LabelResponse?, Error?) -> Void) {
+        let path = "/repos/\(owner)/\(repository)/labels"
+        self.patch(path: path, body: try? JSONEncoder().encode(label), completion: completion)
+    }
+    
 }

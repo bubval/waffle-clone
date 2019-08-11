@@ -10,7 +10,7 @@ import Foundation
 
 public struct LabelResponse: Codable {
     let name: String
-    let description: String
+    let description: String?
     let color: String
     
     enum CodingKeys: String, CodingKey {
@@ -28,7 +28,7 @@ public struct LabelResponse: Codable {
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         name = try values.decode(String.self, forKey: .name)
-        description = try values.decode(String.self, forKey: .description)
+        description = try values.decodeIfPresent(String.self, forKey: .description)
         color = try values.decode(String.self, forKey: .color)
     }
 }

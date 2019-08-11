@@ -19,6 +19,9 @@
 		8A3BAD4222FB1BD3001A7910 /* IssueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4122FB1BD3001A7910 /* IssueManager.swift */; };
 		8A3BAD4622FBF84F001A7910 /* LabelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4522FBF84F001A7910 /* LabelManager.swift */; };
 		8A3BAD4822FBFAB5001A7910 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4722FBFAB5001A7910 /* Issue.swift */; };
+		8A3BAD4C23003891001A7910 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4B23003891001A7910 /* UserManager.swift */; };
+		8A3BAD4E230040A4001A7910 /* RepoIssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4D230040A4001A7910 /* RepoIssuesViewController.swift */; };
+		8A3BAD502300411C001A7910 /* IssueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4F2300411C001A7910 /* IssueTableViewCell.swift */; };
 		8A66653622F4295B00626DFF /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653522F4295B00626DFF /* KeychainError.swift */; };
 		8A66653822F4298100626DFF /* KeychainQueryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653722F4298100626DFF /* KeychainQueryable.swift */; };
 		8A66653A22F429DA00626DFF /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653922F429DA00626DFF /* Keychain.swift */; };
@@ -53,6 +56,9 @@
 		8A3BAD4122FB1BD3001A7910 /* IssueManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManager.swift; sourceTree = "<group>"; };
 		8A3BAD4522FBF84F001A7910 /* LabelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelManager.swift; sourceTree = "<group>"; };
 		8A3BAD4722FBFAB5001A7910 /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
+		8A3BAD4B23003891001A7910 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		8A3BAD4D230040A4001A7910 /* RepoIssuesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoIssuesViewController.swift; sourceTree = "<group>"; };
+		8A3BAD4F2300411C001A7910 /* IssueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTableViewCell.swift; sourceTree = "<group>"; };
 		8A66653522F4295B00626DFF /* KeychainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainError.swift; sourceTree = "<group>"; };
 		8A66653722F4298100626DFF /* KeychainQueryable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainQueryable.swift; sourceTree = "<group>"; };
 		8A66653922F429DA00626DFF /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
@@ -182,6 +188,14 @@
 			path = Label;
 			sourceTree = "<group>";
 		};
+		8A3BAD4A2300387F001A7910 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				8A3BAD4B23003891001A7910 /* UserManager.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		8A66652F22F4280B00626DFF /* Keychain */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +209,7 @@
 		8A70601C22E6066A0069F4EE /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				8A3BAD4A2300387F001A7910 /* User */,
 				8A3BAD4322FBF83E001A7910 /* Label */,
 				8A3BAD4022FB1B78001A7910 /* Issue */,
 				8A3BAD3C22FAF8A4001A7910 /* Repository */,
@@ -281,6 +296,7 @@
 		8AC9017822F85E1B0084E493 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8A3BAD4D230040A4001A7910 /* RepoIssuesViewController.swift */,
 				8ABD12CC22E06ED900C62BB1 /* RepositoryViewController.swift */,
 				8A7E63CC22F2E54800B54191 /* LoginViewController.swift */,
 			);
@@ -291,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				8AC9017622F85A1F0084E493 /* RepositoryCell.swift */,
+				8A3BAD4F2300411C001A7910 /* IssueTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -398,18 +415,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A70601F22E606920069F4EE /* RestManager.swift in Sources */,
+				8A3BAD502300411C001A7910 /* IssueTableViewCell.swift in Sources */,
 				8A66653822F4298100626DFF /* KeychainQueryable.swift in Sources */,
 				8A66653622F4295B00626DFF /* KeychainError.swift in Sources */,
 				8A3BAD3322F9A92C001A7910 /* Alert.swift in Sources */,
 				8ABD12CD22E06ED900C62BB1 /* RepositoryViewController.swift in Sources */,
 				8A16A58B22EF1AB8007AE4EC /* BasicUserResponse.swift in Sources */,
 				8A16A56A22EEE667007AE4EC /* GithubManager.swift in Sources */,
+				8A3BAD4C23003891001A7910 /* UserManager.swift in Sources */,
 				8A16A58522EF1A2C007AE4EC /* LabelResponse.swift in Sources */,
 				8A16A58D22EF1ACF007AE4EC /* RepositoryResponse.swift in Sources */,
 				8A3BAD3E22FAF8AD001A7910 /* RepositoryManager.swift in Sources */,
 				8A3BAD4822FBFAB5001A7910 /* Issue.swift in Sources */,
 				8A66653A22F429DA00626DFF /* Keychain.swift in Sources */,
 				8AC9017722F85A1F0084E493 /* RepositoryCell.swift in Sources */,
+				8A3BAD4E230040A4001A7910 /* RepoIssuesViewController.swift in Sources */,
 				8A16A58822EF1A71007AE4EC /* FullUserResponse.swift in Sources */,
 				8A16A58322EF1A16007AE4EC /* IssueUser.swift in Sources */,
 				8AC952C022F18F4F002B4023 /* Authentication.swift in Sources */,

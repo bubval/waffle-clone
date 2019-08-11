@@ -31,16 +31,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func authenticateUser() {
         authenticationManager.hasValidToken() { (success, errorDescription) in
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let navigation = UINavigationController()
             if success {
                 // Changes root view controller to Repository View Controller.
                 DispatchQueue.main.async {
-                    self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "RepoViewController") as! RepositoryViewController
+                    let repoViewController = storyboard.instantiateViewController(withIdentifier: "RepoViewController") as! RepositoryViewController
+                    navigation.viewControllers = [repoViewController]
+                    self.window?.rootViewController = navigation
                     self.window?.makeKeyAndVisible()
                 }
             } else {
                 // Changes root view contoller to Login View Controller.
                 DispatchQueue.main.async {
-                    self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                    let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                    navigation.viewControllers = [loginViewController]
+                    self.window?.rootViewController = navigation
                     self.window?.makeKeyAndVisible()
                     // Displays alert describing why the user was unable to authenticate and sign in.
                     if let errorDescription = errorDescription {
