@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="203" translatesAutoresizingMaskIntoConstraints="NO" id="I4e-fW-8zH">
-                                <rect key="frame" x="88" y="223" width="238" height="504.5"/>
+                                <rect key="frame" x="88" y="201" width="238" height="504.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="1gz-5F-04C">
                                         <rect key="frame" x="0.0" y="0.0" width="238" height="241.5"/>
@@ -80,7 +80,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T1f-9r-zrC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="94.20289855072464" y="63.616071428571423"/>
+            <point key="canvasLocation" x="1532" y="68"/>
         </scene>
         <!--Repository View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -91,7 +91,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ton-7U-Jcp">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RepositoryCell" id="Yp0-gG-3gb" customClass="RepositoryCell" customModule="Waffle_Clone" customModuleProvider="target">
@@ -136,7 +136,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1957.9710144927537" y="67.633928571428569"/>
+            <point key="canvasLocation" x="2248" y="68"/>
         </scene>
         <!--Repo Issues View Controller-->
         <scene sceneID="M45-BS-DON">
@@ -193,42 +193,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DzZ-X6-V9k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4165" y="68"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="h1n-MX-ocK">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5A6-OI-LQr" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="sOa-GK-7XZ">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="1F5-Qu-Qsi" kind="relationship" relationship="rootViewController" id="lxr-T0-K1M"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8Gg-xD-QRv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-815.94202898550736" y="63.616071428571423"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="8zh-0w-2cI">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4It-Sr-r5s" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DYe-wg-rUS">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="pLU-88-Mal"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="huJ-E3-9Ma" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1047.8260869565217" y="67.633928571428569"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ewy-dM-hvf">
