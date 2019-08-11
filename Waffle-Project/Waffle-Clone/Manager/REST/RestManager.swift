@@ -73,7 +73,25 @@ class RestManager {
             completion?(nil, nil, RequestError.unableToBuildRequest)
         }
     }
-
+    
+    /// Partially replaces the current representations of the target resource with the uploaded content.
+    ///
+    /// - Parameters:
+    ///   - url: HTTP address
+    ///   - parameters: URL query items specified in [name : value] pairs
+    ///   - headers: HTTP metadata
+    ///   - body: data bytes transmitted in an HTTP transaction message
+    ///   - completion: Data, URLResponse, Error
+    func patch(url: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: RestManagerCompletion? = nil) {
+        let urlRequest = URLRequest.init(url: url, method: .PATCH, parameters: parameters, headers: headers, body: body)
+        if let urlRequest = urlRequest,
+            let completion = completion {
+            let task = session.dataTask(with: urlRequest, completionHandler: completion)
+            task.resume()
+        } else {
+            completion?(nil, nil, RequestError.unableToBuildRequest)
+        }
+    }
     /// Removes all current representations of the target resource given by URL.
     ///
     /// - Parameters:
