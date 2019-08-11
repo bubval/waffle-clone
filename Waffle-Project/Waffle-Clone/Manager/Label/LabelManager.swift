@@ -9,6 +9,7 @@
 import Foundation
 
 class LabelManager: GithubManager {
+   
     func get(owner: String, repository: String, completion: @escaping([LabelResponse]?, Error?) -> Void) {
         let path = "/repos/\(owner)/\(repository)/labels"
         self.get(path: path, completion: completion)
@@ -28,5 +29,4 @@ class LabelManager: GithubManager {
         let path = "/repos/\(owner)/\(repository)/labels"
         self.patch(path: path, body: try? JSONEncoder().encode(label), completion: completion)
     }
-    
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 class UserManager: GithubManager {
+   
     func getBasic(completion: @escaping(BasicUserResponse?, Error?) -> Void) {
         let path = "/user"
         self.get(path: path, completion: completion)

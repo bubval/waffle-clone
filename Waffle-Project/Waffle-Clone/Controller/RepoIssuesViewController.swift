@@ -33,6 +33,7 @@ class RepoIssuesViewController: UIViewController {
 }
 
 extension RepoIssuesViewController {
+    
     private func getIssues(completion: @escaping ((_ issue: [IssueResponse]?) ->())) {
         issueManager.get(owner: self.user, repository: self.repository) { (response, error) in
             
@@ -50,6 +51,7 @@ extension RepoIssuesViewController {
 }
 
 extension RepoIssuesViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return issues.count
     }
@@ -60,5 +62,7 @@ extension RepoIssuesViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(self.issues[indexPath.row].title)
+    }
 }
