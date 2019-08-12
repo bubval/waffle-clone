@@ -11,15 +11,13 @@ import Foundation
 class GithubManager: RestManager {
     
     private let baseUrl = "https://api.github.com"
-    private var authentication: Authentication?
-    
+    private var authentication: Authentication!
+
     public override init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
         super.init(session: session)
         // Sets access token if present in keychain.
         if let accessToken = AuthenticationManager.accessToken {
             self.authentication = Authentication(accessToken: accessToken)
-        } else {
-            self.authentication = nil
         }
     }
     
@@ -90,7 +88,7 @@ class GithubManager: RestManager {
     /// Replaces all the current representations of the target resource with the uploaded content.
     ///
     /// - Parameters:
-    ///   - url: HTTP address
+    ///   - path: HTTP address
     ///   - parameters: URL query items specified in [name : value] pairs
     ///   - headers: HTTP metadata
     ///   - body: data bytes transmitted in an HTTP transaction message
@@ -99,6 +97,39 @@ class GithubManager: RestManager {
         let (newHeaders, newParameters) = generateQuery(headers, parameters)
         
         self.put(url: self.baseUrl + path, parameters: newParameters, headers: newHeaders, body: body) { (data, response, error) in
+            
+            guard error == nil else {
+                return completion(nil, UnknownError.internalError(error: error!))
+            }
+            if let response = response as? HTTPURLResponse {
+                guard response.statusCode >= 200 && response.statusCode <= 299 else {
+                    return completion(nil, NetworkError.status(code: response.statusCode))
+                }
+            }
+            
+            if let data = data {
+                do {
+                    let model = try GithubManager.decoder.decode(T.self, from: data)
+                    completion(model, nil)
+                } catch {
+                    completion(nil, JsonError.unparsableModel)
+                }
+            }
+        }
+    }
+    
+    /// Partially replaces the current representations of the target resource with the uploaded content.
+    ///
+    /// - Parameters:
+    ///   - path: HTTP address
+    ///   - parameters: URL query items specified in [name : value] pairs
+    ///   - headers: HTTP metadata
+    ///   - body: data bytes transmitted in an HTTP transaction message
+    ///   - completion: Decodable object or Error
+    func patch<T:Decodable>(path: String, parameters: [String : String]? = nil, headers: [String: String]? = nil, body: Data?, completion: @escaping (T?, Error?) -> Swift.Void) {
+        let (newHeaders, newParameters) = generateQuery(headers, parameters)
+        
+        self.patch(url: self.baseUrl + path, parameters: newParameters, headers: newHeaders, body: body) { (data, response, error) in
             
             guard error == nil else {
                 return completion(nil, UnknownError.internalError(error: error!))

@@ -21,6 +21,7 @@ struct AuthenticationConstants {
     static let redirectUrl = "\(AuthenticationConstants.callbackScheme)://\(AuthenticationConstants.callbackHost)"
     /// Key used for keychain containing access token
     static let accessTokenKey = "accessToken"
+    static let userNameKey = "userName"
 }
 
 

@@ -12,8 +12,10 @@ public struct IssueResponse: Codable {
     let id: Int
     let number: Int
     let title: String
-    let body: String
-    let labels: [IssueLabel]?
+    let body: String?
+    let labels: [LabelResponse]?
+    let state: String
+    let locked: String
     let comments: Int
     let createdAt: String
     let updatedAt: String
@@ -30,6 +32,8 @@ public struct IssueResponse: Codable {
         case body
         case labels
         case comments
+        case state
+        case locked
         case createdAt = "created_at"
         case updatedAt = "updated_at"
         case closedAt = "closed_at"
@@ -44,8 +48,10 @@ public struct IssueResponse: Codable {
         id = try values.decode(Int.self, forKey: .id)
         number = try values.decode(Int.self, forKey: .number)
         title = try values.decode(String.self, forKey: .title)
-        body = try values.decode(String.self, forKey: .body)
-        labels = try values.decodeIfPresent([IssueLabel].self, forKey: .labels)
+        body = try values.decodeIfPresent(String.self, forKey: .body)
+        labels = try values.decodeIfPresent([LabelResponse].self, forKey: .labels)
+        state = try values.decode(String.self, forKey: .state)
+        locked = try values.decode(String.self, forKey: .state)
         comments = try values.decode(Int.self, forKey: .comments)
         createdAt = try values.decode(String.self, forKey: .createdAt)
         updatedAt = try values.decode(String.self, forKey: .updatedAt)

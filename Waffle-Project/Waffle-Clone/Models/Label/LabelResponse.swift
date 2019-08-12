@@ -8,24 +8,27 @@
 
 import Foundation
 
-public struct IssueLabel: Codable {
-    let id: Int
+public struct LabelResponse: Codable {
     let name: String
-    let description: String
+    let description: String?
     let color: String
     
     enum CodingKeys: String, CodingKey {
-        case id
         case name
         case description
         case color
     }
     
+    public init(name: String, description: String, color: String) {
+        self.name = name
+        self.description = description
+        self.color = color
+    }
+    
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decode(Int.self, forKey: .id)
         name = try values.decode(String.self, forKey: .name)
-        description = try values.decode(String.self, forKey: .description)
+        description = try values.decodeIfPresent(String.self, forKey: .description)
         color = try values.decode(String.self, forKey: .color)
     }
 }

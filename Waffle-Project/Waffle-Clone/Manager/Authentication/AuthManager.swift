@@ -54,41 +54,65 @@ class AuthenticationManager: GithubManager {
     /// Performs GET to an authenticated user's repositories. Checks for successful HTTP response status.
     ///
     /// - Parameter completion: Returns true if HTTP respose status is 200. Otherwise, returns false and a String of text describing the error.
-    func hasValidToken(completion: @escaping (Bool, String?) -> ()) {
+    func hasValidToken(completion: @escaping (Bool) -> ()) {
         if let accessToken = AuthenticationManager.accessToken {
-            let url = "https://api.github.com/user/repos"
+            print(AuthenticationManager.accessToken)
+
+            let userManager = UserManager()
             let params = ["access_token" : accessToken]
-            
-            self.get(url: url, parameters: params, headers: nil) { (_, httpResponse, error) in
+
+            userManager.get(parameters: params, headers: nil) { (response, error) in
                 guard error == nil else {
-                    return completion(false, error!.localizedDescription)
+                    return completion(false)
                 }
                 
-                if let httpResponse = httpResponse as? HTTPURLResponse {
-                    if httpResponse.statusCode == 200 {
-                        completion(true, nil)
-                    } else {
-                        completion(false, "Authenticated failed.")
-                    }
+                if let response = response {
+                    AuthenticationManager.username = response.login
+                    completion(true)
                 } else {
-                    completion(false, "Github response failed.")
+                    completion(false)
                 }
             }
         } else {
-            completion(false, "Automatic sign in could not be completed.")
+            completion(false)
+        }
+    }
+}
+
+extension AuthenticationManager {
+    private static var userNameKeychain = Keychain(keychainQueryable: Queryable(service: AuthenticationConstants.userNameKey))
+    
+    class var username: String? {
+        get {
+            do {
+                let username = try userNameKeychain.getValue(for: AuthenticationConstants.userNameKey)
+                return username
+            } catch {
+                print(KeychainError.gettingError.description)
+            }
+            return nil
+        }
+        set {
+            do {
+                if let newValue = newValue {
+                    try self.userNameKeychain.setValue(newValue, for: AuthenticationConstants.userNameKey)
+                }
+            } catch {
+                print(KeychainError.savingError.description)
+            }
         }
     }
 }
 
 extension AuthenticationManager {
     
-    private static var keychain = Keychain(keychainQueryable: Queryable(service: AuthenticationConstants.accessTokenKey))
+    private static var accessTokenKeychain = Keychain(keychainQueryable: Queryable(service: AuthenticationConstants.accessTokenKey))
     
     /// Provides access to keychain containing the access token.
     static var accessToken: String? {
         get {
             do {
-                let token = try keychain.getValue(for: AuthenticationConstants.accessTokenKey)
+                let token = try accessTokenKeychain.getValue(for: AuthenticationConstants.accessTokenKey)
                 return token
             } catch {
                 print("KeychainError::", KeychainError.gettingError.description)
@@ -98,7 +122,7 @@ extension AuthenticationManager {
         set {
             do {
                 if let newValue = newValue {
-                    try self.keychain.setValue(newValue, for: AuthenticationConstants.accessTokenKey)
+                    try self.accessTokenKeychain.setValue(newValue, for: AuthenticationConstants.accessTokenKey)
                 }
             } catch {
                 print("KeychainError::", KeychainError.savingError.description)

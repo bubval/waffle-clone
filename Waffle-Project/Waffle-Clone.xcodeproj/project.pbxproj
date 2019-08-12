@@ -10,11 +10,17 @@
 		8A16A56A22EEE667007AE4EC /* GithubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A56922EEE667007AE4EC /* GithubManager.swift */; };
 		8A16A58122EF19FC007AE4EC /* IssueResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58022EF19FC007AE4EC /* IssueResponse.swift */; };
 		8A16A58322EF1A16007AE4EC /* IssueUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58222EF1A16007AE4EC /* IssueUser.swift */; };
-		8A16A58522EF1A2C007AE4EC /* IssueLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58422EF1A2C007AE4EC /* IssueLabel.swift */; };
+		8A16A58522EF1A2C007AE4EC /* LabelResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58422EF1A2C007AE4EC /* LabelResponse.swift */; };
 		8A16A58822EF1A71007AE4EC /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58722EF1A71007AE4EC /* UserResponse.swift */; };
-		8A16A58B22EF1AB8007AE4EC /* RepoCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58A22EF1AB8007AE4EC /* RepoCreator.swift */; };
 		8A16A58D22EF1ACF007AE4EC /* RepositoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58C22EF1ACF007AE4EC /* RepositoryResponse.swift */; };
 		8A3BAD3322F9A92C001A7910 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD3222F9A92C001A7910 /* Alert.swift */; };
+		8A3BAD3E22FAF8AD001A7910 /* RepositoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD3D22FAF8AD001A7910 /* RepositoryManager.swift */; };
+		8A3BAD4222FB1BD3001A7910 /* IssueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4122FB1BD3001A7910 /* IssueManager.swift */; };
+		8A3BAD4622FBF84F001A7910 /* LabelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4522FBF84F001A7910 /* LabelManager.swift */; };
+		8A3BAD4822FBFAB5001A7910 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4722FBFAB5001A7910 /* Issue.swift */; };
+		8A3BAD4C23003891001A7910 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4B23003891001A7910 /* UserManager.swift */; };
+		8A3BAD4E230040A4001A7910 /* RepoIssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4D230040A4001A7910 /* RepoIssuesViewController.swift */; };
+		8A3BAD502300411C001A7910 /* IssueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4F2300411C001A7910 /* IssueTableViewCell.swift */; };
 		8A66653622F4295B00626DFF /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653522F4295B00626DFF /* KeychainError.swift */; };
 		8A66653822F4298100626DFF /* KeychainQueryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653722F4298100626DFF /* KeychainQueryable.swift */; };
 		8A66653A22F429DA00626DFF /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653922F429DA00626DFF /* Keychain.swift */; };
@@ -40,11 +46,17 @@
 		8A16A56922EEE667007AE4EC /* GithubManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubManager.swift; sourceTree = "<group>"; };
 		8A16A58022EF19FC007AE4EC /* IssueResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueResponse.swift; sourceTree = "<group>"; };
 		8A16A58222EF1A16007AE4EC /* IssueUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueUser.swift; sourceTree = "<group>"; };
-		8A16A58422EF1A2C007AE4EC /* IssueLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabel.swift; sourceTree = "<group>"; };
+		8A16A58422EF1A2C007AE4EC /* LabelResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelResponse.swift; sourceTree = "<group>"; };
 		8A16A58722EF1A71007AE4EC /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
-		8A16A58A22EF1AB8007AE4EC /* RepoCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoCreator.swift; sourceTree = "<group>"; };
 		8A16A58C22EF1ACF007AE4EC /* RepositoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryResponse.swift; sourceTree = "<group>"; };
 		8A3BAD3222F9A92C001A7910 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		8A3BAD3D22FAF8AD001A7910 /* RepositoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryManager.swift; sourceTree = "<group>"; };
+		8A3BAD4122FB1BD3001A7910 /* IssueManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManager.swift; sourceTree = "<group>"; };
+		8A3BAD4522FBF84F001A7910 /* LabelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelManager.swift; sourceTree = "<group>"; };
+		8A3BAD4722FBFAB5001A7910 /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
+		8A3BAD4B23003891001A7910 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		8A3BAD4D230040A4001A7910 /* RepoIssuesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoIssuesViewController.swift; sourceTree = "<group>"; };
+		8A3BAD4F2300411C001A7910 /* IssueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTableViewCell.swift; sourceTree = "<group>"; };
 		8A66653522F4295B00626DFF /* KeychainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainError.swift; sourceTree = "<group>"; };
 		8A66653722F4298100626DFF /* KeychainQueryable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainQueryable.swift; sourceTree = "<group>"; };
 		8A66653922F429DA00626DFF /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
@@ -90,6 +102,7 @@
 		8A16A57E22EF18F3007AE4EC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8A3BAD4922FC0916001A7910 /* Label */,
 				8A16A58922EF1AA8007AE4EC /* Repository */,
 				8A16A58622EF1A68007AE4EC /* User */,
 				8A16A57F22EF18FA007AE4EC /* Issue */,
@@ -103,7 +116,7 @@
 			children = (
 				8A16A58022EF19FC007AE4EC /* IssueResponse.swift */,
 				8A16A58222EF1A16007AE4EC /* IssueUser.swift */,
-				8A16A58422EF1A2C007AE4EC /* IssueLabel.swift */,
+				8A3BAD4722FBFAB5001A7910 /* Issue.swift */,
 			);
 			path = Issue;
 			sourceTree = "<group>";
@@ -120,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				8A16A58C22EF1ACF007AE4EC /* RepositoryResponse.swift */,
-				8A16A58A22EF1AB8007AE4EC /* RepoCreator.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -141,6 +153,46 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
+		8A3BAD3C22FAF8A4001A7910 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				8A3BAD3D22FAF8AD001A7910 /* RepositoryManager.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		8A3BAD4022FB1B78001A7910 /* Issue */ = {
+			isa = PBXGroup;
+			children = (
+				8A3BAD4122FB1BD3001A7910 /* IssueManager.swift */,
+			);
+			path = Issue;
+			sourceTree = "<group>";
+		};
+		8A3BAD4322FBF83E001A7910 /* Label */ = {
+			isa = PBXGroup;
+			children = (
+				8A3BAD4522FBF84F001A7910 /* LabelManager.swift */,
+			);
+			path = Label;
+			sourceTree = "<group>";
+		};
+		8A3BAD4922FC0916001A7910 /* Label */ = {
+			isa = PBXGroup;
+			children = (
+				8A16A58422EF1A2C007AE4EC /* LabelResponse.swift */,
+			);
+			path = Label;
+			sourceTree = "<group>";
+		};
+		8A3BAD4A2300387F001A7910 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				8A3BAD4B23003891001A7910 /* UserManager.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		8A66652F22F4280B00626DFF /* Keychain */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +206,10 @@
 		8A70601C22E6066A0069F4EE /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				8A3BAD4A2300387F001A7910 /* User */,
+				8A3BAD4322FBF83E001A7910 /* Label */,
+				8A3BAD4022FB1B78001A7910 /* Issue */,
+				8A3BAD3C22FAF8A4001A7910 /* Repository */,
 				8AC952BE22F18F2E002B4023 /* Authentication */,
 				8A16A56822EEE656007AE4EC /* Github */,
 				8A70601D22E606720069F4EE /* REST */,
@@ -237,6 +293,7 @@
 		8AC9017822F85E1B0084E493 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8A3BAD4D230040A4001A7910 /* RepoIssuesViewController.swift */,
 				8ABD12CC22E06ED900C62BB1 /* RepositoryViewController.swift */,
 				8A7E63CC22F2E54800B54191 /* LoginViewController.swift */,
 			);
@@ -247,6 +304,7 @@
 			isa = PBXGroup;
 			children = (
 				8AC9017622F85A1F0084E493 /* RepositoryCell.swift */,
+				8A3BAD4F2300411C001A7910 /* IssueTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -354,16 +412,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A70601F22E606920069F4EE /* RestManager.swift in Sources */,
+				8A3BAD502300411C001A7910 /* IssueTableViewCell.swift in Sources */,
 				8A66653822F4298100626DFF /* KeychainQueryable.swift in Sources */,
 				8A66653622F4295B00626DFF /* KeychainError.swift in Sources */,
 				8A3BAD3322F9A92C001A7910 /* Alert.swift in Sources */,
 				8ABD12CD22E06ED900C62BB1 /* RepositoryViewController.swift in Sources */,
-				8A16A58B22EF1AB8007AE4EC /* RepoCreator.swift in Sources */,
 				8A16A56A22EEE667007AE4EC /* GithubManager.swift in Sources */,
-				8A16A58522EF1A2C007AE4EC /* IssueLabel.swift in Sources */,
+				8A3BAD4C23003891001A7910 /* UserManager.swift in Sources */,
+				8A16A58522EF1A2C007AE4EC /* LabelResponse.swift in Sources */,
 				8A16A58D22EF1ACF007AE4EC /* RepositoryResponse.swift in Sources */,
+				8A3BAD3E22FAF8AD001A7910 /* RepositoryManager.swift in Sources */,
+				8A3BAD4822FBFAB5001A7910 /* Issue.swift in Sources */,
 				8A66653A22F429DA00626DFF /* Keychain.swift in Sources */,
 				8AC9017722F85A1F0084E493 /* RepositoryCell.swift in Sources */,
+				8A3BAD4E230040A4001A7910 /* RepoIssuesViewController.swift in Sources */,
 				8A16A58822EF1A71007AE4EC /* UserResponse.swift in Sources */,
 				8A16A58322EF1A16007AE4EC /* IssueUser.swift in Sources */,
 				8AC952C022F18F4F002B4023 /* Authentication.swift in Sources */,
@@ -373,6 +435,8 @@
 				8A70602A22E60D7D0069F4EE /* CharacterSetExt.swift in Sources */,
 				8A7E63D122F2EFE900B54191 /* AccessTokenResponse.swift in Sources */,
 				8A7E63CD22F2E54800B54191 /* LoginViewController.swift in Sources */,
+				8A3BAD4622FBF84F001A7910 /* LabelManager.swift in Sources */,
+				8A3BAD4222FB1BD3001A7910 /* IssueManager.swift in Sources */,
 				8A7E63D322F2F01300B54191 /* AuthManager.swift in Sources */,
 				8ABD12CB22E06ED900C62BB1 /* AppDelegate.swift in Sources */,
 				8A16A58122EF19FC007AE4EC /* IssueResponse.swift in Sources */,

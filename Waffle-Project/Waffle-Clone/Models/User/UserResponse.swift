@@ -8,14 +8,14 @@
 
 import Foundation
 
-public struct UserResponse: Codable {
+struct UserResponse: Codable {
     let login: String
     let id: Int
     let avatarUrl: String
-    let name: String
-    let email: String
+    let name: String?
+    let email: String?
     let bio: String?
-    let createdAt: String
+    let createdAt: String?
     
     enum CodingKeys: String, CodingKey {
         case login
@@ -32,9 +32,9 @@ public struct UserResponse: Codable {
         login = try values.decode(String.self, forKey: .login)
         id = try values.decode(Int.self, forKey: .id)
         avatarUrl = try values.decode(String.self, forKey: .avatarUrl)
-        name = try values.decode(String.self, forKey: .name)
-        email = try values.decode(String.self, forKey: .email)
+        name = try values.decodeIfPresent(String.self, forKey: .name)
+        email = try values.decodeIfPresent(String.self, forKey: .email)
         bio = try values.decodeIfPresent(String.self, forKey: .bio)
-        createdAt = try values.decode(String.self, forKey: .createdAt)
+        createdAt = try values.decodeIfPresent(String.self, forKey: .createdAt)
     }
 }
