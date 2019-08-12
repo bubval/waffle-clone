@@ -9,11 +9,11 @@
 import UIKit
 
 class RepoIssuesViewController: UIViewController {
-
+    
     @IBOutlet weak var tableView: UITableView!
     private let issueManager = IssueManager()
     private var issues = [IssueResponse]()
-    var user: String!
+    private var username: String!
     var repository: String!
     
     override func viewDidLoad() {
@@ -21,11 +21,29 @@ class RepoIssuesViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+        if let username = AuthenticationManager.username {
+            self.username = username
+        } else {
+            let alert = Alert.showBasicAlert(with: "Error", message: "Issues could not be loaded. You will be redirected to repositories.") { _ in
+                self.navigationController?.popViewController(animated: true)
+            }
+            DispatchQueue.main.async {
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        
         getIssues() { (issues) in
             if let issues = issues {
                 self.issues = issues
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                }
+            } else {
+                let alert = Alert.showBasicAlert(with: "Error", message: "Issues could not be loaded. You will be redirected to repositories.") { _ in
+                    self.navigationController?.popViewController(animated: true)
+                }
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
         }
@@ -35,7 +53,7 @@ class RepoIssuesViewController: UIViewController {
 extension RepoIssuesViewController {
     
     private func getIssues(completion: @escaping ((_ issue: [IssueResponse]?) ->())) {
-        issueManager.get(owner: self.user, repository: self.repository) { (response, error) in
+        issueManager.get(owner: self.username, repository: self.repository) { (response, error) in
             
             guard error == nil else {
                 return completion(nil)

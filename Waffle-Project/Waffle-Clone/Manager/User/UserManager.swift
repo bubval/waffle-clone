@@ -9,13 +9,13 @@
 import Foundation
 class UserManager: GithubManager {
    
-    func getBasic(completion: @escaping(BasicUserResponse?, Error?) -> Void) {
+    func getBasic(parameters: [String : String]? = nil, headers: [String : String]? = nil, completion: @escaping(BasicUserResponse?, Error?) -> Void) {
         let path = "/user"
-        self.get(path: path, completion: completion)
+        self.get(path: path, parameters: parameters, headers: headers, completion: completion)
     }
     
-    func getFull(completion: @escaping(FullUserResponse?, Error?) -> Void) {
+    func getFull(parameters: [String : String]? = nil, headers: [String : String]? = nil, completion: @escaping(FullUserResponse?, Error?) -> Void) {
         let path = "/user"
-        self.get(path: path, completion: completion)
+        self.get(path: path, parameters: parameters, headers: headers, completion: completion)
     }
 }
