@@ -31,7 +31,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func authenticateUser() {
         authenticationManager.hasValidToken() { (success) in
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let navigationController = storyboard.instantiateViewController(withIdentifier: "NavigationController") as! UINavigationController
+            var navigationController = UINavigationController()
+            
+            DispatchQueue.main.async {
+                navigationController = storyboard.instantiateViewController(withIdentifier: "NavigationController") as! UINavigationController
+                self.window?.rootViewController = navigationController
+                self.window?.makeKeyAndVisible()
+            }
             
             if success {
                 // Changes root view controller to Repository View Controller.
@@ -45,11 +51,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
                     navigationController.pushViewController(loginViewController, animated: true)
                 }
-            }
-            
-            DispatchQueue.main.async {
-                self.window?.rootViewController = navigationController
-                self.window?.makeKeyAndVisible()
             }
         }
     }
