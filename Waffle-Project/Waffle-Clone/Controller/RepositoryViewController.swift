@@ -78,7 +78,7 @@ extension RepositoryViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "RepoIssuesViewController") as? RepoIssuesViewController {
-            vc.repository = self.repositories[indexPath.row].name
+            vc.setRepository(to: self.repositories[indexPath.row].name)
             navigationController!.pushViewController(vc, animated: true)
         }
     }

@@ -11,7 +11,6 @@ import UIKit
 class RepoIssuesViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    private let issueManager = IssueManager()
     private var issues: [IssueResponse] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -19,7 +18,7 @@ class RepoIssuesViewController: UIViewController {
             }
         }
     }
-    var repository: String!
+    private var repository: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,14 +40,17 @@ class RepoIssuesViewController: UIViewController {
             }
         }
     }
+    
+    func setRepository(to repository: String) {
+        self.repository = repository
+    }
 }
 
 extension RepoIssuesViewController {
     
     private func getIssues(completion: @escaping ((_ issue: [IssueResponse]?) ->())) {
         if let username = AuthenticationManager.username {
-            issueManager.get(issueManager: self.issueManager ,owner: username, repository: self.repository) { (response, error) in
-                
+            IssueManager(owner: username, repository: self.repository).get() { (response, error) in
                 guard error == nil else {
                     return completion(nil)
                 }
@@ -60,14 +62,7 @@ extension RepoIssuesViewController {
                 }
             }
         } else {
-            let alert = Alert.showBasicAlert(with: "Error", message: "Issues could not be loaded. You will be redirected to repositories.") { _ in
-                DispatchQueue.main.async {
-                    self.navigationController?.popViewController(animated: true)
-                }
-            }
-            DispatchQueue.main.async {
-                self.present(alert, animated: true, completion: nil)
-            }
+            completion(nil)
         }
     }
 }

@@ -9,6 +9,13 @@
 import Foundation
 
 class IssueManager: GithubManager {
+    private var user: String
+    private var repository: String
+    
+    init(owner: String, repository: String) {
+        self.user = owner
+        self.repository = repository
+    }
     
     /// List of issues for a repository
     ///
@@ -16,8 +23,8 @@ class IssueManager: GithubManager {
     ///   - owner: Creator of repository
     ///   - repository: Repository name
     ///   - completion: Returns IssueResponse if successful, otherwise returns an error
-    func get(issueManager: IssueManager, owner: String, repository: String, completion: @escaping([IssueResponse]?, Error?) -> Void) {
-        let path = "/repos/\(owner)/\(repository)/issues"
+    func get(completion: @escaping([IssueResponse]?, Error?) -> Void) {
+        let path = "/repos/\(user)/\(repository)/issues"
         self.get(path: path, completion: completion)
     }
     
@@ -28,8 +35,8 @@ class IssueManager: GithubManager {
     ///   - owner: Creator of repository
     ///   - repository: Repository name
     ///   - completion: Returns IssueResponse if successful, otherwise returns an error
-    func get(issueManager: IssueManager, number: Int, owner: String, repository: String, completion: @escaping(IssueResponse?, Error?) -> Void) {
-        let path = "/repos/\(owner)/\(repository)/issues/\(number)"
+    func get(number: Int, completion: @escaping(IssueResponse?, Error?) -> Void) {
+        let path = "/repos/\(user)/\(repository)/issues/\(number)"
         self.get(path: path, completion: completion)
     }
     
@@ -40,8 +47,8 @@ class IssueManager: GithubManager {
     ///   - repository: Repository name
     ///   - issue: Issue object intended to be created
     ///   - completion: Returns IssueResponse if successful, otherwise returns error
-    func post(issueManager: IssueManager, owner: String, repository: String, issue: Issue, completion: @escaping(IssueResponse?, Error?) -> Void) {
-        let path = "/repos/\(owner)/\(repository)/issues"
+    func post(issue: Issue, completion: @escaping(IssueResponse?, Error?) -> Void) {
+        let path = "/repos/\(user)/\(repository)/issues"
         self.post(path: path, body: try? JSONEncoder().encode(issue), completion: completion)
     }
     
@@ -52,8 +59,8 @@ class IssueManager: GithubManager {
     ///   - repository: Repository name
     ///   - issue: Issue object intended to be created
     ///   - completion: Returns IssueResponse if successful, otherwise returns error
-    func patch(issueManager: IssueManager, owner: String, repository: String, number: Int, issue: Issue, completion: @escaping(IssueResponse?, Error?) -> Void)  {
-        let path = "/repos/\(owner)/\(repository)/issues/\(number)"
+    func patch(number: Int, issue: Issue, completion: @escaping(IssueResponse?, Error?) -> Void)  {
+        let path = "/repos/\(user)/\(repository)/issues/\(number)"
         self.patch(path: path, body: try? JSONEncoder().encode(issue), completion: completion)
     }
 }
