@@ -27,7 +27,9 @@ class RepositoryViewController: UIViewController {
             } else {
                 let alert = Alert.showBasicAlert(with: "Error", message: "Repositories could not be loaded. You will be redirected to login") {_ in
                     if let vc = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-                        self.present(vc, animated: false, completion: nil)
+                        DispatchQueue.main.async {
+                            self.present(vc, animated: false, completion: nil)
+                        }
                     }
                 }
                 DispatchQueue.main.async {

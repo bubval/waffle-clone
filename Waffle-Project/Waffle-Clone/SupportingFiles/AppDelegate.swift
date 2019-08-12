@@ -29,30 +29,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     /// If keychain contains a valid access token the user is sent to Repository View Controller. Otherwise, user is shown an error and sent to Login View Controller.
     private func authenticateUser() {
-        authenticationManager.hasValidToken() { (success, errorDescription) in
+        authenticationManager.hasValidToken() { (success) in
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let navigation = UINavigationController()
+            let navigationController = storyboard.instantiateViewController(withIdentifier: "NavigationController") as! UINavigationController
+            
             if success {
                 // Changes root view controller to Repository View Controller.
                 DispatchQueue.main.async {
                     let repoViewController = storyboard.instantiateViewController(withIdentifier: "RepoViewController") as! RepositoryViewController
-                    navigation.viewControllers = [repoViewController]
-                    self.window?.rootViewController = navigation
-                    self.window?.makeKeyAndVisible()
+                    navigationController.pushViewController(repoViewController, animated: true)
                 }
             } else {
                 // Changes root view contoller to Login View Controller.
                 DispatchQueue.main.async {
                     let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-                    navigation.viewControllers = [loginViewController]
-                    self.window?.rootViewController = navigation
-                    self.window?.makeKeyAndVisible()
-                    // Displays alert describing why the user was unable to authenticate and sign in.
-                    if let errorDescription = errorDescription {
-                        let alert = Alert.showBasicAlert(with: "Error", message: errorDescription)
-                        self.window?.rootViewController?.present(alert, animated: true, completion: nil)
-                    }
+                    navigationController.pushViewController(loginViewController, animated: true)
                 }
+            }
+            
+            DispatchQueue.main.async {
+                self.window?.rootViewController = navigationController
+                self.window?.makeKeyAndVisible()
             }
         }
     }

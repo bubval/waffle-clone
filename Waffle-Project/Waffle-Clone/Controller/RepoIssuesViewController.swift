@@ -13,25 +13,13 @@ class RepoIssuesViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private let issueManager = IssueManager()
     private var issues = [IssueResponse]()
-    private var username: String!
     var repository: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
-        if let username = AuthenticationManager.username {
-            self.username = username
-        } else {
-            let alert = Alert.showBasicAlert(with: "Error", message: "Issues could not be loaded. You will be redirected to repositories.") { _ in
-                self.navigationController?.popViewController(animated: true)
-            }
-            DispatchQueue.main.async {
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
-        
+       
         getIssues() { (issues) in
             if let issues = issues {
                 self.issues = issues
@@ -40,7 +28,9 @@ class RepoIssuesViewController: UIViewController {
                 }
             } else {
                 let alert = Alert.showBasicAlert(with: "Error", message: "Issues could not be loaded. You will be redirected to repositories.") { _ in
-                    self.navigationController?.popViewController(animated: true)
+                    DispatchQueue.main.async {
+                        self.navigationController?.popViewController(animated: true)
+                    }
                 }
                 DispatchQueue.main.async {
                     self.present(alert, animated: true, completion: nil)
@@ -53,16 +43,27 @@ class RepoIssuesViewController: UIViewController {
 extension RepoIssuesViewController {
     
     private func getIssues(completion: @escaping ((_ issue: [IssueResponse]?) ->())) {
-        issueManager.get(owner: self.username, repository: self.repository) { (response, error) in
-            
-            guard error == nil else {
-                return completion(nil)
+        if let username = AuthenticationManager.username {
+            issueManager.get(issueManager: self.issueManager ,owner: username, repository: self.repository) { (response, error) in
+                
+                guard error == nil else {
+                    return completion(nil)
+                }
+                
+                if let response = response {
+                    completion(response)
+                } else {
+                    completion(nil)
+                }
             }
-            
-            if let response = response {
-                completion(response)
-            } else {
-                completion(nil)
+        } else {
+            let alert = Alert.showBasicAlert(with: "Error", message: "Issues could not be loaded. You will be redirected to repositories.") { _ in
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+            DispatchQueue.main.async {
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }

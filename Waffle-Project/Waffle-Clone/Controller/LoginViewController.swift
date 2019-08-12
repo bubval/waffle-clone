@@ -14,6 +14,13 @@ class LoginViewController: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        // If user has never logged in
+        if AuthenticationManager.accessToken != nil {
+            let alert = Alert.showBasicAlert(with: "Error", message: "Authentication failed.")
+            DispatchQueue.main.async {
+                self.present(alert, animated: true)
+            }
+        }
     }
     
     @IBAction func loginBtnPressed(_ sender: UIButton) {

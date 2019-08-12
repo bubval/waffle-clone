@@ -11,8 +11,7 @@
 		8A16A58122EF19FC007AE4EC /* IssueResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58022EF19FC007AE4EC /* IssueResponse.swift */; };
 		8A16A58322EF1A16007AE4EC /* IssueUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58222EF1A16007AE4EC /* IssueUser.swift */; };
 		8A16A58522EF1A2C007AE4EC /* LabelResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58422EF1A2C007AE4EC /* LabelResponse.swift */; };
-		8A16A58822EF1A71007AE4EC /* FullUserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58722EF1A71007AE4EC /* FullUserResponse.swift */; };
-		8A16A58B22EF1AB8007AE4EC /* BasicUserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58A22EF1AB8007AE4EC /* BasicUserResponse.swift */; };
+		8A16A58822EF1A71007AE4EC /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58722EF1A71007AE4EC /* UserResponse.swift */; };
 		8A16A58D22EF1ACF007AE4EC /* RepositoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58C22EF1ACF007AE4EC /* RepositoryResponse.swift */; };
 		8A3BAD3322F9A92C001A7910 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD3222F9A92C001A7910 /* Alert.swift */; };
 		8A3BAD3E22FAF8AD001A7910 /* RepositoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD3D22FAF8AD001A7910 /* RepositoryManager.swift */; };
@@ -48,8 +47,7 @@
 		8A16A58022EF19FC007AE4EC /* IssueResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueResponse.swift; sourceTree = "<group>"; };
 		8A16A58222EF1A16007AE4EC /* IssueUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueUser.swift; sourceTree = "<group>"; };
 		8A16A58422EF1A2C007AE4EC /* LabelResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelResponse.swift; sourceTree = "<group>"; };
-		8A16A58722EF1A71007AE4EC /* FullUserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullUserResponse.swift; sourceTree = "<group>"; };
-		8A16A58A22EF1AB8007AE4EC /* BasicUserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicUserResponse.swift; sourceTree = "<group>"; };
+		8A16A58722EF1A71007AE4EC /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
 		8A16A58C22EF1ACF007AE4EC /* RepositoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryResponse.swift; sourceTree = "<group>"; };
 		8A3BAD3222F9A92C001A7910 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		8A3BAD3D22FAF8AD001A7910 /* RepositoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryManager.swift; sourceTree = "<group>"; };
@@ -126,8 +124,7 @@
 		8A16A58622EF1A68007AE4EC /* User */ = {
 			isa = PBXGroup;
 			children = (
-				8A16A58A22EF1AB8007AE4EC /* BasicUserResponse.swift */,
-				8A16A58722EF1A71007AE4EC /* FullUserResponse.swift */,
+				8A16A58722EF1A71007AE4EC /* UserResponse.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -420,7 +417,6 @@
 				8A66653622F4295B00626DFF /* KeychainError.swift in Sources */,
 				8A3BAD3322F9A92C001A7910 /* Alert.swift in Sources */,
 				8ABD12CD22E06ED900C62BB1 /* RepositoryViewController.swift in Sources */,
-				8A16A58B22EF1AB8007AE4EC /* BasicUserResponse.swift in Sources */,
 				8A16A56A22EEE667007AE4EC /* GithubManager.swift in Sources */,
 				8A3BAD4C23003891001A7910 /* UserManager.swift in Sources */,
 				8A16A58522EF1A2C007AE4EC /* LabelResponse.swift in Sources */,
@@ -430,7 +426,7 @@
 				8A66653A22F429DA00626DFF /* Keychain.swift in Sources */,
 				8AC9017722F85A1F0084E493 /* RepositoryCell.swift in Sources */,
 				8A3BAD4E230040A4001A7910 /* RepoIssuesViewController.swift in Sources */,
-				8A16A58822EF1A71007AE4EC /* FullUserResponse.swift in Sources */,
+				8A16A58822EF1A71007AE4EC /* UserResponse.swift in Sources */,
 				8A16A58322EF1A16007AE4EC /* IssueUser.swift in Sources */,
 				8AC952C022F18F4F002B4023 /* Authentication.swift in Sources */,
 				8AC9017122F855780084E493 /* Scopes.swift in Sources */,

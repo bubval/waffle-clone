@@ -8,13 +8,8 @@
 
 import Foundation
 class UserManager: GithubManager {
-   
-    func getBasic(parameters: [String : String]? = nil, headers: [String : String]? = nil, completion: @escaping(BasicUserResponse?, Error?) -> Void) {
-        let path = "/user"
-        self.get(path: path, parameters: parameters, headers: headers, completion: completion)
-    }
     
-    func getFull(parameters: [String : String]? = nil, headers: [String : String]? = nil, completion: @escaping(FullUserResponse?, Error?) -> Void) {
+    func get(parameters: [String : String]? = nil, headers: [String : String]? = nil, completion: @escaping(UserResponse?, Error?) -> Void) {
         let path = "/user"
         self.get(path: path, parameters: parameters, headers: headers, completion: completion)
     }

@@ -54,27 +54,27 @@ class AuthenticationManager: GithubManager {
     /// Performs GET to an authenticated user's repositories. Checks for successful HTTP response status.
     ///
     /// - Parameter completion: Returns true if HTTP respose status is 200. Otherwise, returns false and a String of text describing the error.
-    func hasValidToken(completion: @escaping (Bool, String?) -> ()) {
+    func hasValidToken(completion: @escaping (Bool) -> ()) {
         if let accessToken = AuthenticationManager.accessToken {
             print(AuthenticationManager.accessToken)
 
             let userManager = UserManager()
             let params = ["access_token" : accessToken]
 
-            userManager.getBasic(parameters: params, headers: nil) { (response, error) in
+            userManager.get(parameters: params, headers: nil) { (response, error) in
                 guard error == nil else {
-                    return completion(false, error!.localizedDescription)
+                    return completion(false)
                 }
                 
                 if let response = response {
                     AuthenticationManager.username = response.login
-                    completion(true, nil)
+                    completion(true)
                 } else {
-                    completion(false, "Github response failed.")
+                    completion(false)
                 }
             }
         } else {
-            completion(false, "Automatic sign in could not be completed")
+            completion(false)
         }
     }
 }
