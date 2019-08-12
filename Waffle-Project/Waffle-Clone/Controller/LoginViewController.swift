@@ -17,9 +17,7 @@ class LoginViewController: UIViewController {
         // If user has never logged in
         if AuthenticationManager.accessToken != nil {
             let alert = Alert.showBasicAlert(with: "Error", message: "Authentication failed.")
-            DispatchQueue.main.async {
-                self.present(alert, animated: true)
-            }
+            self.present(alert, animated: true)
         }
     }
     

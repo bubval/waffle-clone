@@ -12,20 +12,23 @@ class RepoIssuesViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     private let issueManager = IssueManager()
-    private var issues = [IssueResponse]()
+    private var issues: [IssueResponse] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
     var repository: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
-       
+        
         getIssues() { (issues) in
             if let issues = issues {
                 self.issues = issues
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
             } else {
                 let alert = Alert.showBasicAlert(with: "Error", message: "Issues could not be loaded. You will be redirected to repositories.") { _ in
                     DispatchQueue.main.async {

@@ -10,7 +10,13 @@ import UIKit
 
 class RepositoryViewController: UIViewController {
     private let repoManager = RepositoryManager()
-    private var repositories = [RepositoryResponse]()
+    private var repositories: [RepositoryResponse] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -21,9 +27,6 @@ class RepositoryViewController: UIViewController {
         getRepositories() { (repositories) in
             if let repositories = repositories {
                 self.repositories = repositories
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
             } else {
                 let alert = Alert.showBasicAlert(with: "Error", message: "Repositories could not be loaded. You will be redirected to login") {_ in
                     if let vc = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
