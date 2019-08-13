@@ -10,20 +10,19 @@ import UIKit
 
 class RepoIssuesViewController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     private var issues: [IssueResponse] = [] {
         didSet {
             DispatchQueue.main.async {
-                self.tableView.reloadData()
+                self.collectionView.reloadData()
             }
         }
     }
     private var repository: String!
+    private let colums = ["bug", "design", "feature", "networking"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
         
         getIssues() { (issues) in
             if let issues = issues {
@@ -65,21 +64,46 @@ extension RepoIssuesViewController {
             completion(nil)
         }
     }
+    
+    private func getIssue(with label: String) -> [IssueResponse] {
+        var outputArray: [IssueResponse] = []
+        
+        // For each issues in repository
+        for issue in issues {
+            // Checks if issue has labels
+            if let issueResponse = issue.labels {
+                // Itterates through labels
+                for issueLabel in issueResponse {
+                    // If label is as specified in function call
+                    if issueLabel.name == label {
+                        // Adds to array
+                        outputArray.append(issue)
+                    }
+                }
+            }
+        }
+
+        return outputArray
+    }
 }
 
-extension RepoIssuesViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return issues.count
+extension RepoIssuesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return colums.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "IssueCell") as! IssueTableViewCell
-        cell.setIssue(issues[indexPath.row])
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
+        cell.labelName.text = colums[indexPath.row]
+        cell.setIssues(issuesArray: getIssue(with: colums[indexPath.row]))
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(self.issues[indexPath.row].title)
+}
+
+extension RepoIssuesViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let frame = self.view.safeAreaLayoutGuide.layoutFrame
+        return CGSize(width: frame.width, height: frame.height)
     }
 }

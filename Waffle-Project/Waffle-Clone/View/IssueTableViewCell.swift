@@ -9,15 +9,17 @@
 import UIKit
 
 class IssueTableViewCell: UITableViewCell {
-    @IBOutlet weak var issueTitle: UILabel!
+
     private var issue: IssueResponse! {
         didSet {
             issueTitle.text = issue.title
         }
     }
+    @IBOutlet weak var issueTitle: UILabel!
     
     func setIssue(_ issue: IssueResponse) {
         self.issue = issue
+        print(issue)
     }
 
 }
