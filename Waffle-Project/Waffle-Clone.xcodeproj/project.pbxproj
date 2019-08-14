@@ -308,9 +308,9 @@
 		8AC9017922F85E300084E493 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				8AC9017622F85A1F0084E493 /* RepositoryCell.swift */,
 				8A3BAD4F2300411C001A7910 /* ProjectIssueCell.swift */,
 				8AA11CC42302D35F00B20DB2 /* ProjectCardCell.swift */,
+				8AC9017622F85A1F0084E493 /* RepositoryCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

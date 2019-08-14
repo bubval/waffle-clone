@@ -9,6 +9,7 @@
 import UIKit
 
 class RepositoryCell: UITableViewCell {
+    
     @IBOutlet weak var repositoryName: UILabel!
     private var repository: RepositoryResponse! {
         didSet {

@@ -19,6 +19,7 @@ class ProjectViewController: UIViewController {
         }
     }
     private var repository: String!
+    // This is just a placeholder variable to control the number and type of project cards
     private let columns = ["bug", "design", "feature", "networking"]
     
     override func viewDidLoad() {
@@ -72,12 +73,12 @@ extension ProjectViewController {
                 outputArray.append(issue)
             }
         }
-        
         return outputArray
     }
 }
 
 extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return columns.count
     }
@@ -94,10 +95,10 @@ extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataS
         let frame = self.view.safeAreaLayoutGuide.layoutFrame
         return CGSize(width: frame.width, height: frame.height)
     }
-    
 }
 
-extension ProjectViewController: CollectionViewCellDelegate {
+extension ProjectViewController: ProjectCardDelegate {
+    
     func didPressCell(_ issue: IssueResponse) {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "IssueViewController") as? IssueViewController {
             vc.setIssue(to: issue)

@@ -7,11 +7,12 @@
 //
 
 import UIKit
-protocol CollectionViewCellDelegate: class {
+protocol ProjectCardDelegate: class {
     func didPressCell(_ issue: IssueResponse)
 }
 
-class ProjectCardCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource {
+class ProjectCardCell: UICollectionViewCell {
+    
     @IBOutlet weak var labelName: UILabel!
     @IBOutlet weak var tableView: UITableView! {
         didSet {
@@ -21,17 +22,19 @@ class ProjectCardCell: UICollectionViewCell, UITableViewDelegate, UITableViewDat
             }
         }
     }
-    weak var delegate: CollectionViewCellDelegate?
-    
     private var issueArray: [IssueResponse]! {
         didSet {
             tableView.reloadData()
         }
     }
+    weak var delegate: ProjectCardDelegate?
     
     func setIssues(issuesArray:[IssueResponse]) {
         self.issueArray = issuesArray
     }
+}
+
+extension ProjectCardCell: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return issueArray.count
