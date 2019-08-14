@@ -19,7 +19,7 @@ class RepoIssuesViewController: UIViewController {
         }
     }
     private var repository: String!
-    private let colums = ["bug", "design", "feature", "networking"]
+    private let columns = ["bug", "design", "feature", "networking"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,43 +67,41 @@ extension RepoIssuesViewController {
     
     private func getIssue(with label: String) -> [IssueResponse] {
         var outputArray: [IssueResponse] = []
-        
-        // For each issues in repository
-        for issue in issues {
-            // Checks if issue has labels
-            if let issueResponse = issue.labels {
-                // Itterates through labels
-                for issueLabel in issueResponse {
-                    // If label is as specified in function call
-                    if issueLabel.name == label {
-                        // Adds to array
-                        outputArray.append(issue)
-                    }
-                }
+        for issue in issues where issue.labels != nil{
+            for issueLabel in issue.labels! where issueLabel.name == label {
+                outputArray.append(issue)
             }
         }
-
+        
         return outputArray
     }
 }
 
-extension RepoIssuesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension RepoIssuesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return colums.count
+        return columns.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
-        cell.labelName.text = colums[indexPath.row]
-        cell.setIssues(issuesArray: getIssue(with: colums[indexPath.row]))
+        cell.labelName.text = columns[indexPath.row]
+        cell.delegate = self
+        cell.setIssues(issuesArray: getIssue(with: columns[indexPath.row]))
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let frame = self.view.safeAreaLayoutGuide.layoutFrame
+        return CGSize(width: frame.width, height: frame.height)
     }
     
 }
 
-extension RepoIssuesViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let frame = self.view.safeAreaLayoutGuide.layoutFrame
-        return CGSize(width: frame.width, height: frame.height)
+extension RepoIssuesViewController: CollectionViewCellDelegate {
+    func didPressCell(_ issue: IssueResponse) {
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "IssueViewController") as? IssueViewController {
+            vc.setIssue(to: issue)
+            navigationController!.pushViewController(vc, animated: true)
+        }
     }
 }

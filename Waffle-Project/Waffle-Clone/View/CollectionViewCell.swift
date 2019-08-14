@@ -7,6 +7,9 @@
 //
 
 import UIKit
+protocol CollectionViewCellDelegate: class {
+    func didPressCell(_ issue: IssueResponse)
+}
 
 class CollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var labelName: UILabel!
@@ -18,6 +21,7 @@ class CollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITableView
             }
         }
     }
+    weak var delegate: CollectionViewCellDelegate?
     
     private var issueArray: [IssueResponse]! {
         didSet {
@@ -39,4 +43,7 @@ class CollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITableView
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.delegate?.didPressCell(issueArray[indexPath.row])
+    }
 }
