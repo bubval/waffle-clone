@@ -93,7 +93,12 @@ extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let frame = self.view.safeAreaLayoutGuide.layoutFrame
-        return CGSize(width: frame.width, height: frame.height)
+        
+        if UIApplication.shared.statusBarOrientation.isPortrait {
+            return CGSize(width: frame.width, height: frame.height)
+        } else {
+            return CGSize(width: frame.width/2, height: frame.height/1)
+        }
     }
 }
 
