@@ -21,7 +21,7 @@
 		8A3BAD4822FBFAB5001A7910 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4722FBFAB5001A7910 /* Issue.swift */; };
 		8A3BAD4C23003891001A7910 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4B23003891001A7910 /* UserManager.swift */; };
 		8A3BAD4E230040A4001A7910 /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4D230040A4001A7910 /* ProjectViewController.swift */; };
-		8A3BAD502300411C001A7910 /* IssueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4F2300411C001A7910 /* IssueTableViewCell.swift */; };
+		8A3BAD502300411C001A7910 /* ProjectIssueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3BAD4F2300411C001A7910 /* ProjectIssueCell.swift */; };
 		8A66653622F4295B00626DFF /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653522F4295B00626DFF /* KeychainError.swift */; };
 		8A66653822F4298100626DFF /* KeychainQueryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653722F4298100626DFF /* KeychainQueryable.swift */; };
 		8A66653A22F429DA00626DFF /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66653922F429DA00626DFF /* Keychain.swift */; };
@@ -32,7 +32,7 @@
 		8A7E63D122F2EFE900B54191 /* AccessTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E63D022F2EFE900B54191 /* AccessTokenResponse.swift */; };
 		8A7E63D322F2F01300B54191 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E63D222F2F01300B54191 /* AuthManager.swift */; };
 		8A7E63D722F3121E00B54191 /* AuthConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E63D622F3121E00B54191 /* AuthConstants.swift */; };
-		8AA11CC52302D35F00B20DB2 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA11CC42302D35F00B20DB2 /* CollectionViewCell.swift */; };
+		8AA11CC52302D35F00B20DB2 /* ProjectCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA11CC42302D35F00B20DB2 /* ProjectCardCell.swift */; };
 		8ABD12CB22E06ED900C62BB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABD12CA22E06ED900C62BB1 /* AppDelegate.swift */; };
 		8ABD12CD22E06ED900C62BB1 /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABD12CC22E06ED900C62BB1 /* RepositoryViewController.swift */; };
 		8ABD12D022E06ED900C62BB1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8ABD12CE22E06ED900C62BB1 /* Main.storyboard */; };
@@ -59,7 +59,7 @@
 		8A3BAD4722FBFAB5001A7910 /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
 		8A3BAD4B23003891001A7910 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		8A3BAD4D230040A4001A7910 /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
-		8A3BAD4F2300411C001A7910 /* IssueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTableViewCell.swift; sourceTree = "<group>"; };
+		8A3BAD4F2300411C001A7910 /* ProjectIssueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectIssueCell.swift; sourceTree = "<group>"; };
 		8A66653522F4295B00626DFF /* KeychainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainError.swift; sourceTree = "<group>"; };
 		8A66653722F4298100626DFF /* KeychainQueryable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainQueryable.swift; sourceTree = "<group>"; };
 		8A66653922F429DA00626DFF /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
@@ -70,7 +70,7 @@
 		8A7E63D022F2EFE900B54191 /* AccessTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenResponse.swift; sourceTree = "<group>"; };
 		8A7E63D222F2F01300B54191 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		8A7E63D622F3121E00B54191 /* AuthConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConstants.swift; sourceTree = "<group>"; };
-		8AA11CC42302D35F00B20DB2 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		8AA11CC42302D35F00B20DB2 /* ProjectCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCardCell.swift; sourceTree = "<group>"; };
 		8ABD12C722E06ED900C62BB1 /* Waffle-Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Waffle-Clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ABD12CA22E06ED900C62BB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8ABD12CC22E06ED900C62BB1 /* RepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
@@ -309,8 +309,8 @@
 			isa = PBXGroup;
 			children = (
 				8AC9017622F85A1F0084E493 /* RepositoryCell.swift */,
-				8A3BAD4F2300411C001A7910 /* IssueTableViewCell.swift */,
-				8AA11CC42302D35F00B20DB2 /* CollectionViewCell.swift */,
+				8A3BAD4F2300411C001A7910 /* ProjectIssueCell.swift */,
+				8AA11CC42302D35F00B20DB2 /* ProjectCardCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -418,7 +418,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A70601F22E606920069F4EE /* RestManager.swift in Sources */,
-				8A3BAD502300411C001A7910 /* IssueTableViewCell.swift in Sources */,
+				8A3BAD502300411C001A7910 /* ProjectIssueCell.swift in Sources */,
 				8A66653822F4298100626DFF /* KeychainQueryable.swift in Sources */,
 				8A66653622F4295B00626DFF /* KeychainError.swift in Sources */,
 				8A3BAD3322F9A92C001A7910 /* Alert.swift in Sources */,
@@ -431,7 +431,7 @@
 				8A3BAD4822FBFAB5001A7910 /* Issue.swift in Sources */,
 				8A66653A22F429DA00626DFF /* Keychain.swift in Sources */,
 				8AC9017722F85A1F0084E493 /* RepositoryCell.swift in Sources */,
-				8AA11CC52302D35F00B20DB2 /* CollectionViewCell.swift in Sources */,
+				8AA11CC52302D35F00B20DB2 /* ProjectCardCell.swift in Sources */,
 				8A3BAD4E230040A4001A7910 /* ProjectViewController.swift in Sources */,
 				8A16A58822EF1A71007AE4EC /* UserResponse.swift in Sources */,
 				8A16A58322EF1A16007AE4EC /* IssueUser.swift in Sources */,

@@ -83,7 +83,7 @@ extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProjectCardCell", for: indexPath) as! ProjectCardCell
         cell.labelName.text = columns[indexPath.row]
         cell.delegate = self
         cell.setIssues(issuesArray: getIssue(with: columns[indexPath.row]))

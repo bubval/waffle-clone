@@ -11,7 +11,7 @@ protocol CollectionViewCellDelegate: class {
     func didPressCell(_ issue: IssueResponse)
 }
 
-class CollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource {
+class ProjectCardCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var labelName: UILabel!
     @IBOutlet weak var tableView: UITableView! {
         didSet {
@@ -38,7 +38,7 @@ class CollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "IssueTableViewCell") as! IssueTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectIssueCell") as! ProjectIssueCell
         cell.setIssue(issueArray[indexPath.row])
         return cell
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IssueTableViewCell: UITableViewCell {
+class ProjectIssueCell: UITableViewCell {
 
     private var issue: IssueResponse! {
         didSet {
