@@ -21,10 +21,10 @@ class ProjectViewController: UIViewController {
     private var repository: String!
     // This is just a placeholder variable to control the number and type of project cards
     private let columns = ["bug", "design", "feature", "networking"]
+    private let colums = ["bug" : [IssueResponse](), "design" : [IssueResponse](), "feature" : [IssueResponse](), "networking" : [IssueResponse]()]
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         getIssues() { (issues) in
             if let issues = issues {
                 self.issues = issues
@@ -39,6 +39,25 @@ class ProjectViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        collectionView.prefetchDataSource = self
+    }
+    
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        flowLayout.invalidateLayout()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
     }
     
     func setRepository(to repository: String) {
@@ -66,18 +85,18 @@ extension ProjectViewController {
         }
     }
     
-    private func getIssue(with label: String) -> [IssueResponse] {
+    private func getIssue(with label: String, completion: @escaping ((_ repositories: [IssueResponse]) ->())){
         var outputArray: [IssueResponse] = []
         for issue in issues where issue.labels != nil{
             for issueLabel in issue.labels! where issueLabel.name == label {
                 outputArray.append(issue)
             }
         }
-        return outputArray
+        completion(outputArray)
     }
 }
 
-extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDataSourcePrefetching {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return columns.count
@@ -87,17 +106,31 @@ extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataS
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProjectCardCell", for: indexPath) as! ProjectCardCell
         cell.labelName.text = columns[indexPath.row]
         cell.delegate = self
-        cell.setIssues(issuesArray: getIssue(with: columns[indexPath.row]))
+        getIssue(with: columns[indexPath.row]) { (issues) in
+            cell.setIssues(issuesArray: issues)
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let frame = self.view.safeAreaLayoutGuide.layoutFrame
+        let screenSize = UIScreen.main.bounds.size
+        let navigationControllerSize = navigationController?.navigationBar.frame.size
         
-        if UIApplication.shared.statusBarOrientation.isPortrait {
-            return CGSize(width: frame.width, height: frame.height)
+        if let navigationControllerSize = navigationControllerSize {
+            // Places collection view on the bottom of navigation controller and adds readability space
+            return CGSize(width: screenSize.width, height: (screenSize.height - navigationControllerSize.height - 20))
         } else {
-            return CGSize(width: frame.width/2, height: frame.height/1)
+            // If navigation controller not present place collection view on bounds of screen
+            return CGSize(width: screenSize.width, height: screenSize.height)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            getIssue(with: columns[indexPath.row]) { (issues) in
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProjectCardCell", for: indexPath) as! ProjectCardCell
+                cell.setIssues(issuesArray: issues)
+            }
         }
     }
 }
