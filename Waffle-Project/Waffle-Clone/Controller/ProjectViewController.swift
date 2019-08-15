@@ -10,6 +10,8 @@ import UIKit
 
 class ProjectViewController: UIViewController {
     
+    // MARK: - Properties
+    
     @IBOutlet weak var collectionView: UICollectionView!
     private var issues: [IssueResponse] = [] {
         didSet {
@@ -22,8 +24,12 @@ class ProjectViewController: UIViewController {
     // This is just a placeholder variable to control the number and type of project cards
     private let columns = ["bug", "design", "feature", "networking"]
     
+    // MARK: - App Lifecycle
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // TODO: Consult Dido about networking in viewWillAppear vs viewDidLoad
         
         getIssues() { (issues) in
             if let issues = issues {
@@ -46,7 +52,6 @@ class ProjectViewController: UIViewController {
         self.title = "Project Cards"
     }
     
-    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
@@ -54,22 +59,24 @@ class ProjectViewController: UIViewController {
         }
         flowLayout.invalidateLayout()
     }
-    
-    var isViewDidLayoutCallFirstTime = true
+
+    private var firstViewDidLayoutCall = true
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if isViewDidLayoutCallFirstTime {
+        if firstViewDidLayoutCall {
             UIView.animate(withDuration: 2, animations:  {
                 self.collectionView.moveToFrame(contentOffset: 30)
             })
         }
-        isViewDidLayoutCallFirstTime = false
+        firstViewDidLayoutCall = false
     }
     
     func setRepository(to repository: String) {
         self.repository = repository
     }
 }
+
+// MARK: - Networking
 
 extension ProjectViewController {
     
@@ -102,6 +109,8 @@ extension ProjectViewController {
     }
 }
 
+// MARK: - Collection View
+
 extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDataSourcePrefetching {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -124,6 +133,8 @@ extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataS
         return CGSize(width: safeArea.width, height: safeArea.height)
     }
     
+    // TODO: Consult Dido about prefetch
+    
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
             getIssue(with: columns[indexPath.row]) { (issues) in
@@ -134,6 +145,8 @@ extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
 }
 
+// MARK: - ProjectCardDelegate
+
 extension ProjectViewController: ProjectCardDelegate {
     
     func didPressCell(_ issue: IssueResponse) {
@@ -143,6 +156,8 @@ extension ProjectViewController: ProjectCardDelegate {
         }
     }
 }
+
+// MARK: - Extensions
 
 extension UICollectionView {
     func moveToFrame(contentOffset : CGFloat) {

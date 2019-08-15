@@ -20,8 +20,6 @@ class IssueManager: GithubManager {
     /// List of issues for a repository
     ///
     /// - Parameters:
-    ///   - owner: Creator of repository
-    ///   - repository: Repository name
     ///   - completion: Returns IssueResponse if successful, otherwise returns an error
     func get(completion: @escaping([IssueResponse]?, Error?) -> Void) {
         let path = "/repos/\(user)/\(repository)/issues"
@@ -32,8 +30,6 @@ class IssueManager: GithubManager {
     ///
     /// - Parameters:
     ///   - number: Issue identifier
-    ///   - owner: Creator of repository
-    ///   - repository: Repository name
     ///   - completion: Returns IssueResponse if successful, otherwise returns an error
     func get(number: Int, completion: @escaping(IssueResponse?, Error?) -> Void) {
         let path = "/repos/\(user)/\(repository)/issues/\(number)"
@@ -43,8 +39,6 @@ class IssueManager: GithubManager {
     /// Creates an issue
     ///
     /// - Parameters:
-    ///   - owner: Creator of repository
-    ///   - repository: Repository name
     ///   - issue: Issue object intended to be created
     ///   - completion: Returns IssueResponse if successful, otherwise returns error
     func post(issue: Issue, completion: @escaping(IssueResponse?, Error?) -> Void) {
@@ -55,8 +49,7 @@ class IssueManager: GithubManager {
     /// Partially update an issue
     ///
     /// - Parameters:
-    ///   - owner: Creator of repository
-    ///   - repository: Repository name
+    ///   - number: Issue identifier
     ///   - issue: Issue object intended to be created
     ///   - completion: Returns IssueResponse if successful, otherwise returns error
     func patch(number: Int, issue: Issue, completion: @escaping(IssueResponse?, Error?) -> Void)  {

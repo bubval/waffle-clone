@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 protocol ProjectCardDelegate: class {
     func didPressCell(_ issue: IssueResponse)
 }
@@ -34,6 +35,8 @@ class ProjectCardCell: UICollectionViewCell {
     }
 }
 
+// MARK: - Table View
+
 extension ProjectCardCell: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -47,6 +50,8 @@ extension ProjectCardCell: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.delegate?.didPressCell(issueArray[indexPath.row])
+        if let delegate = self.delegate {
+            delegate.didPressCell(issueArray[indexPath.row])
+        }
     }
 }

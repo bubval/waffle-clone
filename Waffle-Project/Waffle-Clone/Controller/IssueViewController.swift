@@ -9,7 +9,7 @@
 import UIKit
 
 class IssueViewController: UIViewController {
-    
+        
     @IBOutlet weak var authorImage: UIImageView! {
         didSet {
             if let url = URL(string: issue.user.avatarUrl),
@@ -47,12 +47,13 @@ class IssueViewController: UIViewController {
             self.issueBody.text = issue.body
         }
     }
+    // Converts issue creation date to specified date format.
     private var creation: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let date = dateFormatter.date(from: issue.createdAt)!
         dateFormatter.dateFormat = dateFormat
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.locale = Locale(identifier: Locale.current.identifier)
         let dateString = dateFormatter.string(from: date)
         return dateString
     }
