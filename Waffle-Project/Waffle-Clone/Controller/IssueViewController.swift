@@ -43,7 +43,7 @@ class IssueViewController: UIViewController {
     }
     @IBOutlet weak var issueBody: UITextView! {
         didSet {
-            self.issueBody.isEditable = false
+//            self.issueBody.isEditable = false
             self.issueBody.text = issue.body
         }
     }
@@ -59,14 +59,66 @@ class IssueViewController: UIViewController {
     }
     private let dateFormat = "yyyy-MM-dd"
     private var issue: IssueResponse!
+    
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "\(issue.title)"
+        self.issueBody.isUserInteractionEnabled = false
+        let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonTapped))
+        self.navigationItem.rightBarButtonItem = editButton
     }
     
     func setIssue(to issue: IssueResponse) {
         self.issue = issue
+    }
+    
+    @objc private func editButtonTapped() {
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
+        self.navigationItem.rightBarButtonItem = saveButton
+        self.issueBody.isUserInteractionEnabled = true
+    }
+    
+    @objc private func saveButtonTapped() {
+        print("SAVED")
+       
+        let newIssue = Issue(title: issue.title, body: self.issueBody.text, labels: getLabels(from: self.issue), assignees: getAssignees(from: self.issue))
+        let issueManager = IssueManager(owner: "bubval", repository: "waffle-clone")
+        issueManager.patch(number: self.issue.number, issue: newIssue) { (response, error) in
+            guard error == nil else {
+                print("ERROR")
+                return
+            }
+            guard response == nil else {
+                print("SUCESS")
+                self.issue = response
+                return
+            }
+        }
+        
+        let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonTapped))
+        self.navigationItem.rightBarButtonItem = editButton
+        self.issueBody.isUserInteractionEnabled = false
+    }
+    
+    private func getLabels(from issue: IssueResponse) -> [String]? {
+        var output: [String]?
+        if let issueLabels = issue.labels {
+            for label in issueLabels {
+                output?.append(label.name)
+            }
+        }
+        return output
+    }
+    
+    private func getAssignees(from issue: IssueResponse) -> [String]? {
+        var output: [String]?
+        if let issueAssignees = issue.assignees {
+            for assignee in issueAssignees {
+                output?.append(assignee.login)
+            }
+        }
+        return output
     }
 }
