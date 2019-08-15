@@ -52,6 +52,10 @@ extension ProjectCardCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let delegate = self.delegate {
             delegate.didPressCell(issueArray[indexPath.row])
+            DispatchQueue.main.async {
+                print("TABLE VIEW RELOADED")
+                self.tableView.reloadData()
+            }
         }
     }
 }

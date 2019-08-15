@@ -34,6 +34,10 @@ class ProjectViewController: UIViewController {
         getIssues() { (issues) in
             if let issues = issues {
                 self.issues = issues
+                print(self.issues)
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
             } else {
                 let alert = Alert.showBasicAlert(with: "Error", message: "Issues could not be loaded. You will be redirected to repositories.") { _ in
                     DispatchQueue.main.async {
