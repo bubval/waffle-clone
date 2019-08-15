@@ -57,10 +57,12 @@ class IssueViewController: UIViewController {
         let dateString = dateFormatter.string(from: date)
         return dateString
     }
+    
     private let dateFormat = "yyyy-MM-dd"
     private var issue: IssueResponse!
+    @IBOutlet weak var labelCollectionView: UICollectionView!
+    @IBOutlet weak var labelCollectionViewLayout: UICollectionViewFlowLayout!
     
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +70,15 @@ class IssueViewController: UIViewController {
         self.issueBody.isUserInteractionEnabled = false
         let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonTapped))
         self.navigationItem.rightBarButtonItem = editButton
+        
+        // UICollectionView cell self sizing
+        if let flowLayout = labelCollectionViewLayout,
+            let labelCollectionView = labelCollectionView {
+            // Subtract out 20 points from the margins around the cell
+            let width = labelCollectionView.frame.width - 20
+            // Need to set estimatedItemSize to toggle self sizing
+            flowLayout.estimatedItemSize = CGSize(width: width, height: 22)
+        }
     }
     
     func setIssue(to issue: IssueResponse) {
@@ -121,4 +132,18 @@ class IssueViewController: UIViewController {
         }
         return output
     }
+}
+
+extension IssueViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.issue.labels?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "IssueLabelCell", for: indexPath) as! IssueLabelCell
+        // Force unwrap because if labels == nil then CollectionView has 0 sections
+        cell.setLabel(to: issue.labels![indexPath.row])
+        return cell
+    }
+    
 }

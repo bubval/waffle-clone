@@ -42,6 +42,7 @@
 		8AC9017722F85A1F0084E493 /* RepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC9017622F85A1F0084E493 /* RepositoryCell.swift */; };
 		8AC952C022F18F4F002B4023 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC952BF22F18F4F002B4023 /* Authentication.swift */; };
 		8AE9AA1422EB0887006D2F95 /* URLRequestExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE9AA1322EB0887006D2F95 /* URLRequestExt.swift */; };
+		8AF7A35C230567AF00A0300C /* IssueLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF7A35B230567AF00A0300C /* IssueLabelCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		8AC9017622F85A1F0084E493 /* RepositoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCell.swift; sourceTree = "<group>"; };
 		8AC952BF22F18F4F002B4023 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		8AE9AA1322EB0887006D2F95 /* URLRequestExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestExt.swift; sourceTree = "<group>"; };
+		8AF7A35B230567AF00A0300C /* IssueLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabelCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -308,6 +310,7 @@
 		8AC9017922F85E300084E493 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8AF7A35B230567AF00A0300C /* IssueLabelCell.swift */,
 				8A3BAD4F2300411C001A7910 /* ProjectIssueCell.swift */,
 				8AA11CC42302D35F00B20DB2 /* ProjectCardCell.swift */,
 				8AC9017622F85A1F0084E493 /* RepositoryCell.swift */,
@@ -420,6 +423,7 @@
 				8A70601F22E606920069F4EE /* RestManager.swift in Sources */,
 				8A3BAD502300411C001A7910 /* ProjectIssueCell.swift in Sources */,
 				8A66653822F4298100626DFF /* KeychainQueryable.swift in Sources */,
+				8AF7A35C230567AF00A0300C /* IssueLabelCell.swift in Sources */,
 				8A66653622F4295B00626DFF /* KeychainError.swift in Sources */,
 				8A3BAD3322F9A92C001A7910 /* Alert.swift in Sources */,
 				8ABD12CD22E06ED900C62BB1 /* RepositoryViewController.swift in Sources */,
