@@ -23,6 +23,7 @@ class RepositoryViewController: UIViewController {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.title = "Repositories"
        
         getRepositories() { (repositories) in
             if let repositories = repositories {

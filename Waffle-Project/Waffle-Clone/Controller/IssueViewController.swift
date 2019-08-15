@@ -62,6 +62,7 @@ class IssueViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "\(issue.title)"
     }
     
     func setIssue(to issue: IssueResponse) {

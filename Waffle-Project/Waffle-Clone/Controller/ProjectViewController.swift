@@ -21,10 +21,10 @@ class ProjectViewController: UIViewController {
     private var repository: String!
     // This is just a placeholder variable to control the number and type of project cards
     private let columns = ["bug", "design", "feature", "networking"]
-    private let colums = ["bug" : [IssueResponse](), "design" : [IssueResponse](), "feature" : [IssueResponse](), "networking" : [IssueResponse]()]
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         getIssues() { (issues) in
             if let issues = issues {
                 self.issues = issues
@@ -43,7 +43,7 @@ class ProjectViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.prefetchDataSource = self
+        self.title = "Project Cards"
     }
     
     
@@ -55,9 +55,15 @@ class ProjectViewController: UIViewController {
         flowLayout.invalidateLayout()
     }
     
+    var isViewDidLayoutCallFirstTime = true
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+        if isViewDidLayoutCallFirstTime {
+            UIView.animate(withDuration: 2, animations:  {
+                self.collectionView.moveToFrame(contentOffset: 30)
+            })
+        }
+        isViewDidLayoutCallFirstTime = false
     }
     
     func setRepository(to repository: String) {
@@ -113,16 +119,9 @@ extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let screenSize = UIScreen.main.bounds.size
-        let navigationControllerSize = navigationController?.navigationBar.frame.size
         
-        if let navigationControllerSize = navigationControllerSize {
-            // Places collection view on the bottom of navigation controller and adds readability space
-            return CGSize(width: screenSize.width, height: (screenSize.height - navigationControllerSize.height - 20))
-        } else {
-            // If navigation controller not present place collection view on bounds of screen
-            return CGSize(width: screenSize.width, height: screenSize.height)
-        }
+        let safeArea = self.view.safeAreaFrame
+        return CGSize(width: safeArea.width, height: safeArea.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
@@ -142,5 +141,20 @@ extension ProjectViewController: ProjectCardDelegate {
             vc.setIssue(to: issue)
             navigationController!.pushViewController(vc, animated: true)
         }
+    }
+}
+
+extension UICollectionView {
+    func moveToFrame(contentOffset : CGFloat) {
+        self.setContentOffset(CGPoint(x: contentOffset, y: self.contentOffset.y), animated: false)
+    }
+}
+
+extension UIView {
+    public var safeAreaFrame: CGRect {
+        if #available(iOS 11, *) {
+            return safeAreaLayoutGuide.layoutFrame
+        }
+        return bounds
     }
 }
