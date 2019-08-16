@@ -18,12 +18,18 @@ class RepositoryViewController: UIViewController {
         }
     }
     @IBOutlet weak var tableView: UITableView!
+    lazy private var signOutButton: UIBarButtonItem = { [unowned self] in
+        return UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signOutButtonTapped))
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.title = "Repositories"
+        self.navigationItem.leftBarButtonItem = signOutButton
+
+        
        
         getRepositories() { (repositories) in
             if let repositories = repositories {
@@ -36,6 +42,27 @@ class RepositoryViewController: UIViewController {
                         }
                     }
                 }
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    @objc private func signOutButtonTapped() {
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+            let accessTokenKeychain = Keychain(keychainQueryable: Queryable(service: AuthenticationConstants.accessTokenKey))
+            try? accessTokenKeychain.removeAllValues()
+            
+            if AuthenticationManager.accessToken == nil {
+                if let navigationController = self.navigationController {
+                    navigationController.viewControllers.removeAll()
+                    DispatchQueue.main.async {
+                        navigationController.pushViewController(vc, animated: true)
+                    }
+                }
+            } else {
+                let alert = Alert.showBasicAlert(with: "Error", message: "Could not log out.")
                 DispatchQueue.main.async {
                     self.present(alert, animated: true, completion: nil)
                 }
