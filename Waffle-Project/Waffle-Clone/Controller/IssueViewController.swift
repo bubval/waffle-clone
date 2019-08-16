@@ -66,6 +66,7 @@ class IssueViewController: UIViewController {
         self.issueTitle.text = "\(issue.title) #\(issue.number)"
         self.issuePublisher.text = "\(issue.user.login) opened this issue on \(creation)"
         self.issueBody.text = issue.body
+        print("no user interaction")
         self.issueBody.isUserInteractionEnabled = false
 
         // UIImage
@@ -85,6 +86,7 @@ class IssueViewController: UIViewController {
     @objc private func saveButtonTapped() {
         
         self.navigationItem.rightBarButtonItem = editBarButton
+        self.showSpinner(onView: self.view)
         
         let issue = Issue(title: self.issue.title,
                           body: self.issueBody.text,
@@ -93,20 +95,29 @@ class IssueViewController: UIViewController {
         
         // owner and repostiory hardcoded for purposes of testing
         // TODO: Ask Dido how am I supposed to deal with these 2 variable if they're used in 3 or 4 controllers? Passed them around, keep them as globals, keep them in UD/KC?
+        updateIssue(issue: issue) { issueResponse in
+            if let issueResponse = issueResponse {
+                DispatchQueue.main.async {
+                    self.setUpOutlets(to: issueResponse)
+                }
+            }
+            self.removeSpinner()
+        }
+    }
+    
+    private func updateIssue(issue: Issue, completion: @escaping ((_ issue: IssueResponse?) ->())) {
         let issueManager = IssueManager(owner: "bubval", repository: "waffle-clone")
         issueManager.patch(number: self.issue.number, issue: issue) { (issue, error) in
             guard error != nil else {
+                completion(nil)
                 return
             }
             
             if let issue = issue {
                 self.issue = issue
-                DispatchQueue.main.async {
-                    self.setUpOutlets(to: issue)
-                }
+                completion(issue)
             }
         }
-
     }
 
     // Function written for purposes of testing. In future I will implement tap to select issues from collection view.

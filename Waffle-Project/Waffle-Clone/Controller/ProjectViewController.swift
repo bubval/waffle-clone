@@ -102,7 +102,7 @@ extension ProjectViewController {
         }
     }
     
-    private func getIssue(with label: String, completion: @escaping ((_ repositories: [IssueResponse]) ->())){
+    private func getIssues(with label: String, completion: @escaping ((_ repositories: [IssueResponse]) ->())) {
         var outputArray: [IssueResponse] = []
         for issue in issues where issue.labels != nil{
             for issueLabel in issue.labels! where issueLabel.name == label {
@@ -110,6 +110,25 @@ extension ProjectViewController {
             }
         }
         completion(outputArray)
+    }
+    
+    private func getIssue(with id: Int, completion: @escaping ((_ issue: IssueResponse?) ->())) {
+        if let username = AuthenticationManager.username {
+            IssueManager(owner: username, repository: self.repository).get(number: id) { (response, error) in
+                guard error == nil else {
+                    return completion(nil)
+                }
+                
+                if let response = response {
+                    completion(response)
+                } else {
+                    completion(nil)
+                }
+                
+            }
+        } else {
+            completion(nil)
+        }
     }
 }
 
@@ -123,9 +142,10 @@ extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProjectCardCell", for: indexPath) as! ProjectCardCell
+        
         cell.labelName.text = columns[indexPath.row]
         cell.delegate = self
-        getIssue(with: columns[indexPath.row]) { (issues) in
+        getIssues(with: columns[indexPath.row]) { (issues) in
             cell.setIssues(issuesArray: issues)
         }
         return cell
@@ -141,7 +161,7 @@ extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            getIssue(with: columns[indexPath.row]) { (issues) in
+            getIssues(with: columns[indexPath.row]) { (issues) in
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProjectCardCell", for: indexPath) as! ProjectCardCell
                 cell.setIssues(issuesArray: issues)
             }
@@ -155,8 +175,14 @@ extension ProjectViewController: ProjectCardDelegate {
     
     func didPressCell(_ issue: IssueResponse) {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "IssueViewController") as? IssueViewController {
-            vc.setIssue(to: issue)
-            navigationController!.pushViewController(vc, animated: true)
+            getIssue(with: issue.number) { response in
+                if let response = response {
+                    vc.setIssue(to: response)
+                    DispatchQueue.main.async {
+                        self.navigationController!.pushViewController(vc, animated: true)
+                    }
+                }
+            }
         }
     }
 }

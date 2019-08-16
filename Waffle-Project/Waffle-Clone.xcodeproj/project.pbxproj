@@ -43,6 +43,7 @@
 		8AC952C022F18F4F002B4023 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC952BF22F18F4F002B4023 /* Authentication.swift */; };
 		8AE9AA1422EB0887006D2F95 /* URLRequestExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE9AA1322EB0887006D2F95 /* URLRequestExt.swift */; };
 		8AF7A35C230567AF00A0300C /* IssueLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF7A35B230567AF00A0300C /* IssueLabelCell.swift */; };
+		8AF7A35F23059A2C00A0300C /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF7A35E23059A2C00A0300C /* Spinner.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +85,7 @@
 		8AC952BF22F18F4F002B4023 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		8AE9AA1322EB0887006D2F95 /* URLRequestExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestExt.swift; sourceTree = "<group>"; };
 		8AF7A35B230567AF00A0300C /* IssueLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabelCell.swift; sourceTree = "<group>"; };
+		8AF7A35E23059A2C00A0300C /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,6 +323,7 @@
 		8AC9017A22F85E510084E493 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				8AF7A35D23059A1E00A0300C /* Spinner */,
 				8A66652F22F4280B00626DFF /* Keychain */,
 				8A3BAD3122F9A8FF001A7910 /* Alert */,
 				8ABD12CA22E06ED900C62BB1 /* AppDelegate.swift */,
@@ -347,6 +350,14 @@
 				8A7E63D222F2F01300B54191 /* AuthManager.swift */,
 			);
 			path = Authentication;
+			sourceTree = "<group>";
+		};
+		8AF7A35D23059A1E00A0300C /* Spinner */ = {
+			isa = PBXGroup;
+			children = (
+				8AF7A35E23059A2C00A0300C /* Spinner.swift */,
+			);
+			path = Spinner;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -453,6 +464,7 @@
 				8ABD12CB22E06ED900C62BB1 /* AppDelegate.swift in Sources */,
 				8A16A58122EF19FC007AE4EC /* IssueResponse.swift in Sources */,
 				8AE9AA1422EB0887006D2F95 /* URLRequestExt.swift in Sources */,
+				8AF7A35F23059A2C00A0300C /* Spinner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
