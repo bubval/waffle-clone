@@ -78,7 +78,7 @@ extension UIColor {
         return nil
     }
     
-    // Some people report that 0.7 is best. I suggest to find out for yourself.
+    // Threshold works good anywhere between 0.5 and 0.7
     // A nil value is returned if the lightness couldn't be determined.
     func isLight(threshold: Float = 0.5) -> Bool? {
         

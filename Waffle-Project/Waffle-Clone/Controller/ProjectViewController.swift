@@ -10,7 +10,7 @@ import UIKit
 
 class ProjectViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: - Properties & Outlets
     
     @IBOutlet weak var collectionView: UICollectionView!
     private var issues: [IssueResponse] = [] {
@@ -24,28 +24,33 @@ class ProjectViewController: UIViewController {
     // This is just a placeholder variable to control the number and type of project cards
     private let columns = ["bug", "design", "feature", "networking"]
     
+    
     // MARK: - App Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.showSpinner(onView: self.view)
         
         // TODO: Consult Dido about networking in viewWillAppear vs viewDidLoad
-        
         getIssues() { (issues) in
-            if let issues = issues {
-                self.issues = issues
-                print(self.issues)
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
-            } else {
+            guard issues != nil else {
                 let alert = Alert.showBasicAlert(with: "Error", message: "Issues could not be loaded. You will be redirected to repositories.") { _ in
                     DispatchQueue.main.async {
                         self.navigationController?.popViewController(animated: true)
                     }
                 }
                 DispatchQueue.main.async {
+                    self.removeSpinner()
                     self.present(alert, animated: true, completion: nil)
+                }
+                return
+            }
+            
+            if let issues = issues {
+                self.issues = issues
+                DispatchQueue.main.async {
+                    self.removeSpinner()
+                    self.collectionView.reloadData()
                 }
             }
         }
@@ -74,6 +79,8 @@ class ProjectViewController: UIViewController {
         }
         firstViewDidLayoutCall = false
     }
+    
+    // MARK: - Public Functions
     
     func setRepository(to repository: String) {
         self.repository = repository
@@ -124,7 +131,6 @@ extension ProjectViewController {
                 } else {
                     completion(nil)
                 }
-                
             }
         } else {
             completion(nil)
@@ -175,9 +181,22 @@ extension ProjectViewController: ProjectCardDelegate {
     
     func didPressCell(_ issue: IssueResponse) {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "IssueViewController") as? IssueViewController {
+        
+            self.showSpinner(onView: self.view)
+            
             getIssue(with: issue.number) { response in
+                guard response != nil else {
+                    let alert = Alert.showBasicAlert(with: "Error", message: "Could not load issue.")
+                    DispatchQueue.main.async {
+                        self.removeSpinner()
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    return
+                }
+                
                 if let response = response {
                     vc.setIssue(to: response)
+                    self.removeSpinner()
                     DispatchQueue.main.async {
                         self.navigationController!.pushViewController(vc, animated: true)
                     }

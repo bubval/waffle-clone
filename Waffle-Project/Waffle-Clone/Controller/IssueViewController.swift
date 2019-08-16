@@ -9,7 +9,9 @@
 import UIKit
 
 class IssueViewController: UIViewController {
-        
+    
+    // MARK: - Outlets & Properties
+    
     @IBOutlet weak var authorImage: UIImageView!
     @IBOutlet weak var issueTitle: UILabel!
     @IBOutlet weak var issuePublisher: UILabel!
@@ -29,14 +31,25 @@ class IssueViewController: UIViewController {
         let dateString = dateFormatter.string(from: date)
         return dateString
     }
-    
+    private var textViewIsActive: Bool = false {
+        didSet {
+            if self.textViewIsActive {
+                self.issueBody.isEditable = true
+                self.issueBody.isScrollEnabled = true
+            } else {
+                self.issueBody.isEditable = false
+                self.issueBody.isScrollEnabled = true
+            }
+        }
+    }
     lazy private var editBarButton: UIBarButtonItem = { [unowned self] in
         return UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonTapped))
     }()
     lazy private var saveBarButton: UIBarButtonItem = { [unowned self] in
         return UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
     }()
-
+    
+    // MARK: - App Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,10 +67,15 @@ class IssueViewController: UIViewController {
         }
     }
     
+    // MARK: - Public Functions
+    
     func setIssue(to issue: IssueResponse) {
         self.issue = issue
     }
     
+    // MARK: - Private Functions
+    
+    //TODO: Ask Dido if this can be done in issue didSet
     private func setUpOutlets(to issue: IssueResponse) {
 
         self.title = "\(issue.title)"
@@ -66,8 +84,6 @@ class IssueViewController: UIViewController {
         self.issueTitle.text = "\(issue.title) #\(issue.number)"
         self.issuePublisher.text = "\(issue.user.login) opened this issue on \(creation)"
         self.issueBody.text = issue.body
-        print("no user interaction")
-        self.issueBody.isUserInteractionEnabled = false
 
         // UIImage
         if let url = URL(string: issue.user.avatarUrl),
@@ -75,48 +91,6 @@ class IssueViewController: UIViewController {
             self.authorImage.image = UIImage(data: data)
         } else {
             self.authorImage.image = UIImage(named: "githubLogo")
-        }
-    }
-
-    @objc private func editButtonTapped() {
-        self.navigationItem.rightBarButtonItem = saveBarButton
-        self.issueBody.isUserInteractionEnabled = true
-    }
-
-    @objc private func saveButtonTapped() {
-        
-        self.navigationItem.rightBarButtonItem = editBarButton
-        self.showSpinner(onView: self.view)
-        
-        let issue = Issue(title: self.issue.title,
-                          body: self.issueBody.text,
-                          labels: getLabels(from: self.issue),
-                          assignees: getAssignees(from: self.issue))
-        
-        // owner and repostiory hardcoded for purposes of testing
-        // TODO: Ask Dido how am I supposed to deal with these 2 variable if they're used in 3 or 4 controllers? Passed them around, keep them as globals, keep them in UD/KC?
-        updateIssue(issue: issue) { issueResponse in
-            if let issueResponse = issueResponse {
-                DispatchQueue.main.async {
-                    self.setUpOutlets(to: issueResponse)
-                }
-            }
-            self.removeSpinner()
-        }
-    }
-    
-    private func updateIssue(issue: Issue, completion: @escaping ((_ issue: IssueResponse?) ->())) {
-        let issueManager = IssueManager(owner: "bubval", repository: "waffle-clone")
-        issueManager.patch(number: self.issue.number, issue: issue) { (issue, error) in
-            guard error != nil else {
-                completion(nil)
-                return
-            }
-            
-            if let issue = issue {
-                self.issue = issue
-                completion(issue)
-            }
         }
     }
 
@@ -141,7 +115,50 @@ class IssueViewController: UIViewController {
         }
         return output
     }
+    
+    //MARK: - Navigation bar buttons
+    
+    @objc private func editButtonTapped() {
+        self.navigationItem.rightBarButtonItem = saveBarButton
+        self.textViewIsActive = true
+    }
+    
+    @objc private func saveButtonTapped() {
+        
+        self.navigationItem.rightBarButtonItem = editBarButton
+        self.showSpinner(onView: self.view)
+        self.textViewIsActive = false
+        
+        let issue = Issue(title: self.issue.title,
+                          body: self.issueBody.text,
+                          labels: getLabels(from: self.issue),
+                          assignees: getAssignees(from: self.issue))
+        
+        update(to: issue) { issue in
+            // Checks for error
+            if issue == nil {
+                let alert = Alert.showBasicAlert(with: "Error", message: "Could not update issue.") { _ in
+                    DispatchQueue.main.async {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+            
+            if let issue = issue {
+                DispatchQueue.main.async {
+                    self.setUpOutlets(to: issue)
+                }
+            }
+            
+            self.removeSpinner()
+        }
+    }
 }
+
+// MARK: - Collection View
 
 extension IssueViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -154,5 +171,30 @@ extension IssueViewController: UICollectionViewDelegate, UICollectionViewDataSou
             cell.setLabel(to: issueLabels[indexPath.row])
         }
         return cell
+    }
+}
+
+// MARK: - Networking
+
+extension IssueViewController {
+    
+    // repostiory hardcoded for purposes of testing
+    // TODO: Ask Dido how am I supposed to deal with these 2 variable if they're used in 3 or 4 controllers? Passed them around, keep them as globals, keep them in UD/KC?
+    private func update(to issue: Issue, completion: @escaping ((_ issue: IssueResponse?) ->())) {
+        if let username = AuthenticationManager.username {
+            IssueManager(owner: username, repository: "waffle-clone").patch(number: self.issue.number, issue: issue) { (issue, error) in
+                guard error == nil else {
+                    completion(nil)
+                    return
+                }
+                
+                if let issue = issue {
+                    self.issue = issue
+                    completion(issue)
+                }
+            }
+        } else {
+            completion(nil)
+        }
     }
 }
