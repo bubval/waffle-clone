@@ -20,14 +20,12 @@ class IssueViewController: UIViewController {
     @IBOutlet weak var labelCollectionViewLayout: UICollectionViewFlowLayout!
     private var issue: IssueResponse!
     
-    private let dateFormat = "yyyy-MM-dd"
     // Converts issue creation date to specified date format.
     private var creation: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let date = dateFormatter.date(from: issue.createdAt)!
-        dateFormatter.dateFormat = dateFormat
-        dateFormatter.locale = Locale(identifier: Locale.current.identifier)
+        dateFormatter.dateFormat = "dd-MM-yyyy"
         let dateString = dateFormatter.string(from: date)
         return dateString
     }

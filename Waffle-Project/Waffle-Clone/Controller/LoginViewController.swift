@@ -14,9 +14,8 @@ class LoginViewController: UIViewController {
    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        authenticateUser()
+        authenticateUser()	
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +30,6 @@ class LoginViewController: UIViewController {
         if let authorizationUrl = authenticationManager.buildLoginURL(with: Scopes.allCases) {
             UIApplication.shared.open(authorizationUrl)
         }
-        authenticateUser()
     }
     
     /// If keychain contains a valid access token the user is sent to Repository View Controller. Otherwise, user is shown an error and sent to Login View Controller.
