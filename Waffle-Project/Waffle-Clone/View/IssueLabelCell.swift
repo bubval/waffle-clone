@@ -13,9 +13,9 @@ class IssueLabelCell: UICollectionViewCell {
     private var label: LabelResponse! {
         didSet {
             issueLabel.text = self.label.name
-
-            if let issueColor = UIColor.init(hex: "#" + self.label.color + "ff"),
-                let isLight = issueColor.isLight(){
+            let issueColor = UIColor(hex: self.label.color)
+            
+            if let isLight = issueColor.isLight() {
                 self.backgroundColor = issueColor
                 if isLight {
                     issueLabel.textColor = UIColor.black
@@ -52,30 +52,18 @@ class IssueLabelCell: UICollectionViewCell {
 }
 
 extension UIColor {
-    public convenience init?(hex: String) {
-        let r, g, b, a: CGFloat
-        
-        if hex.hasPrefix("#") {
-            let start = hex.index(hex.startIndex, offsetBy: 1)
-            let hexColor = String(hex[start...])
-            
-            if hexColor.count == 8 {
-                let scanner = Scanner(string: hexColor)
-                var hexNumber: UInt64 = 0
-                
-                if scanner.scanHexInt64(&hexNumber) {
-                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
-                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
-                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
-                    a = CGFloat(hexNumber & 0x000000ff) / 255
-                    
-                    self.init(red: r, green: g, blue: b, alpha: a)
-                    return
-                }
-            }
-        }
-        
-        return nil
+    
+    convenience init(hex: String) {
+        var hexInt: UInt32 = 0
+        let scanner = Scanner(string: hex)
+        scanner.charactersToBeSkipped = CharacterSet(charactersIn: "#")
+        scanner.scanHexInt32(&hexInt)
+        self.init(
+            red: CGFloat((hexInt & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((hexInt & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(hexInt & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
     }
     
     // Threshold works good anywhere between 0.5 and 0.7
@@ -91,7 +79,7 @@ extension UIColor {
             return nil
         }
         
-        let brightness = Float(((components[0] * 299) + (components[1] * 587) + (components[2] * 114)) / 1000)
-        return (brightness > threshold)
+        let lightness = Float(((components[0] * 299) + (components[1] * 587) + (components[2] * 114)) / 1000)
+        return (lightness > threshold)
     }
 }
