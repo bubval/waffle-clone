@@ -13,47 +13,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     let authenticationManager = AuthenticationManager()
-    
+//
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Initial root view controller is set to Launch Screen.
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
-        self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "LaunchViewController")
-        self.window?.makeKeyAndVisible()
-        
-        // Root view controller is changed depending on authentication.
-        authenticateUser()
+//        // Initial root view controller is set to Launch Screen.
+//        self.window = UIWindow(frame: UIScreen.main.bounds)
+//        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+//        self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "LaunchViewController")
+//        self.window?.makeKeyAndVisible()
+//
+//        // Root view controller is changed depending on authentication.
+//        authenticateUser()
     
         return true
     }
     
-    /// If keychain contains a valid access token the user is sent to Repository View Controller. Otherwise, user is shown an error and sent to Login View Controller.
-    private func authenticateUser() {
-        authenticationManager.hasValidToken() { (success) in
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            var navigationController = UINavigationController()
-            
-            DispatchQueue.main.async {
-                navigationController = storyboard.instantiateViewController(withIdentifier: "NavigationController") as! UINavigationController
-                self.window?.rootViewController = navigationController
-                self.window?.makeKeyAndVisible()
-            }
-            
-            if success {
-                // Changes root view controller to Repository View Controller.
-                DispatchQueue.main.async {
-                    let repoViewController = storyboard.instantiateViewController(withIdentifier: "RepoViewController") as! RepositoryViewController
-                    navigationController.pushViewController(repoViewController, animated: true)
-                }
-            } else {
-                // Changes root view contoller to Login View Controller.
-                DispatchQueue.main.async {
-                    let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-                    navigationController.pushViewController(loginViewController, animated: true)
-                }
-            }
-        }
-    }
+//    /// If keychain contains a valid access token the user is sent to Repository View Controller. Otherwise, user is shown an error and sent to Login View Controller.
+//    private func authenticateUser() {
+//        authenticationManager.hasValidToken() { (success) in
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            var navigationController = UINavigationController()
+//
+//            DispatchQueue.main.async {
+//                navigationController = storyboard.instantiateViewController(withIdentifier: "NavigationController") as! UINavigationController
+//                self.window?.rootViewController = navigationController
+//                self.window?.makeKeyAndVisible()
+//            }
+//
+//            if success {
+//                // Changes root view controller to Repository View Controller.
+//                DispatchQueue.main.async {
+//                    let repoViewController = storyboard.instantiateViewController(withIdentifier: "RepoViewController") as! RepositoryViewController
+//                    navigationController.pushViewController(repoViewController, animated: true)
+//                }
+//            } else {
+//                // Changes root view contoller to Login View Controller.
+//                DispatchQueue.main.async {
+//                    let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+//                    navigationController.pushViewController(loginViewController, animated: true)
+//                }
+//            }
+//        }
+//    }
     
     internal func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         // Accessed from UIApplication.
@@ -69,9 +69,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     authenticationManager.getAccessToken(code: code) { (response, error) in
                         if let response = response {
                             // Saves access token to keychain.
+                            print(response.accessToken)
                             AuthenticationManager.accessToken = response.accessToken
-                            // Checks validity of access token and transfers user to appropriate view controller.
-                            self.authenticateUser()
                         }
                     }
                 }

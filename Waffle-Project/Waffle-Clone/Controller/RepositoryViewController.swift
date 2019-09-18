@@ -50,22 +50,18 @@ class RepositoryViewController: UIViewController {
     }
     
     @objc private func signOutButtonTapped() {
-        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-            let accessTokenKeychain = Keychain(keychainQueryable: Queryable(service: AuthenticationConstants.accessTokenKey))
-            try? accessTokenKeychain.removeAllValues()
-            
-            if AuthenticationManager.accessToken == nil {
-                if let navigationController = self.navigationController {
-                    navigationController.viewControllers.removeAll()
-                    DispatchQueue.main.async {
-                        navigationController.pushViewController(vc, animated: true)
-                    }
-                }
-            } else {
-                let alert = Alert.showBasicAlert(with: "Error", message: "Could not log out.")
-                DispatchQueue.main.async {
-                    self.present(alert, animated: true, completion: nil)
-                }
+        
+        let accessTokenKeychain = Keychain(keychainQueryable: Queryable(service: AuthenticationConstants.accessTokenKey))
+        try? accessTokenKeychain.removeAllValues()
+        
+        if AuthenticationManager.accessToken == nil {
+            DispatchQueue.main.async {
+                self.navigationController!.popViewController(animated: true)
+            }
+        } else {
+            let alert = Alert.showBasicAlert(with: "Error", message: "Could not log out.")
+            DispatchQueue.main.async {
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
