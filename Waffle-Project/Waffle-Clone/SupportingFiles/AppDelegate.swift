@@ -13,6 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     let authenticationManager = AuthenticationManager()
+    let loginManager = LoginManager()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         return true
@@ -29,17 +30,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let queryItems = urlComponents.queryItems,
                     // Specifies user identity
                     let code = queryItems[0].value{
-                    authenticationManager.getAccessToken(code: code) { (response, error) in
-                        if let response = response {
-                            // Saves access token to keychain.
-                            print(response.accessToken)
-                            AuthenticationManager.accessToken = response.accessToken
+                    getToken(code: code) { (success) in
+                        if success {
+                            DispatchQueue.main.async {
+                                let rootViewController = self.window!.rootViewController as! UINavigationController
+                                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                                let vc = mainStoryboard.instantiateViewController(withIdentifier: "RepoViewController") as! RepositoryViewController
+                                rootViewController.pushViewController(vc, animated: true)
+                            }
                         }
                     }
                 }
             }
         }
         return true
+    }
+    
+    private func getToken(code: String, completion: @escaping(Bool) -> ()) {
+        authenticationManager.getAccessToken(code: code) { (response, error) in
+            if let response = response {
+                // Saves access token to keychain.
+                print(response.accessToken)
+                AuthenticationManager.accessToken = response.accessToken
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

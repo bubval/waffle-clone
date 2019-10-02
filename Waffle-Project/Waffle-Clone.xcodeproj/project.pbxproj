@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		155CD6C92344C6D000534583 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155CD6C82344C6D000534583 /* LoginManager.swift */; };
 		8A16A56A22EEE667007AE4EC /* GithubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A56922EEE667007AE4EC /* GithubManager.swift */; };
 		8A16A58122EF19FC007AE4EC /* IssueResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58022EF19FC007AE4EC /* IssueResponse.swift */; };
 		8A16A58322EF1A16007AE4EC /* IssueUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58222EF1A16007AE4EC /* IssueUser.swift */; };
@@ -47,6 +48,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		155CD6C82344C6D000534583 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		8A16A56922EEE667007AE4EC /* GithubManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubManager.swift; sourceTree = "<group>"; };
 		8A16A58022EF19FC007AE4EC /* IssueResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueResponse.swift; sourceTree = "<group>"; };
 		8A16A58222EF1A16007AE4EC /* IssueUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueUser.swift; sourceTree = "<group>"; };
@@ -99,6 +101,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		155CD6C72344C6BB00534583 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				155CD6C82344C6D000534583 /* LoginManager.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		8A16A56822EEE656007AE4EC /* Github */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +224,7 @@
 		8A70601C22E6066A0069F4EE /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				155CD6C72344C6BB00534583 /* Login */,
 				8A3BAD4A2300387F001A7910 /* User */,
 				8A3BAD4322FBF83E001A7910 /* Label */,
 				8A3BAD4022FB1B78001A7910 /* Issue */,
@@ -461,6 +472,7 @@
 				8A3BAD4222FB1BD3001A7910 /* IssueManager.swift in Sources */,
 				8A7E63D322F2F01300B54191 /* AuthManager.swift in Sources */,
 				8A1F42992302FA430084BFF1 /* IssueViewController.swift in Sources */,
+				155CD6C92344C6D000534583 /* LoginManager.swift in Sources */,
 				8ABD12CB22E06ED900C62BB1 /* AppDelegate.swift in Sources */,
 				8A16A58122EF19FC007AE4EC /* IssueResponse.swift in Sources */,
 				8AE9AA1422EB0887006D2F95 /* URLRequestExt.swift in Sources */,
