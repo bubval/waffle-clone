@@ -20,7 +20,7 @@ class RepositoryViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     lazy private var signOutButton: UIBarButtonItem = { [unowned self] in
         return UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signOutButtonTapped))
-    }()
+        }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,9 +28,7 @@ class RepositoryViewController: UIViewController {
         self.tableView.dataSource = self
         self.title = "Repositories"
         self.navigationItem.leftBarButtonItem = signOutButton
-
         
-       
         getRepositories() { (repositories) in
             if let repositories = repositories {
                 self.repositories = repositories

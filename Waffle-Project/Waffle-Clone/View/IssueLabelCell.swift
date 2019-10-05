@@ -38,7 +38,7 @@ class IssueLabelCell: UICollectionViewCell {
         // Toggle auto layout
         setNeedsLayout()
         layoutIfNeeded()
-
+        
         // Fits contentView to the target size in layoutAttributes
         let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
         

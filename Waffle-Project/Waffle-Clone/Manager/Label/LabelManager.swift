@@ -9,7 +9,7 @@
 import Foundation
 
 class LabelManager: GithubManager {
-   
+    
     func get(owner: String, repository: String, completion: @escaping([LabelResponse]?, Error?) -> Void) {
         let path = "/repos/\(owner)/\(repository)/labels"
         self.get(path: path, completion: completion)

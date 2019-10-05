@@ -34,19 +34,19 @@ class IssueViewController: UIViewController {
     
     lazy private var editBarButton: UIBarButtonItem = { [unowned self] in
         return UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonTapped))
-    }()
+        }()
     lazy private var saveBarButton: UIBarButtonItem = { [unowned self] in
         return UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
-    }()
+        }()
     
     // MARK: - App Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setUpOutlets(to: self.issue)
         self.navigationItem.rightBarButtonItem = editBarButton
-
+        
         // UICollectionView cell self sizing
         if let flowLayout = labelCollectionViewLayout,
             let labelCollectionView = labelCollectionView {
@@ -67,14 +67,14 @@ class IssueViewController: UIViewController {
     
     //TODO: Ask Dido if this can be done in issue didSet
     private func setUpOutlets(to issue: IssueResponse) {
-
+        
         self.title = "\(issue.title)"
         
         // Labels
         self.issueTitle.text = "\(issue.title) #\(issue.number)"
         self.issuePublisher.text = "\(issue.user.login) opened this issue on \(Date.getFormattedDate(date: issue.createdAt))"
         self.issueBody.text = issue.body
-
+        
         // UIImage
         if let url = URL(string: issue.user.avatarUrl),
             let data = try? Data(contentsOf: url) {
@@ -83,7 +83,7 @@ class IssueViewController: UIViewController {
             self.authorImage.image = UIImage(named: "githubLogo")
         }
     }
-
+    
     // Function written for purposes of testing. In future I will implement tap to select issues from collection view.
     private func getLabels(from issue: IssueResponse) -> [String]? {
         var output: [String]?
@@ -94,7 +94,7 @@ class IssueViewController: UIViewController {
         }
         return output
     }
-
+    
     // Function written for purposes of testing. In future I will implement tap to select assignees from collection view.
     private func getAssignees(from issue: IssueResponse) -> [String]? {
         var output: [String]?

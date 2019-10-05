@@ -9,7 +9,7 @@
 import UIKit
 
 struct Alert {
-     static func showBasicAlert(with title: String, message: String, handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController{
+    static func showBasicAlert(with title: String, message: String, handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController{
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: handler))
         return alert

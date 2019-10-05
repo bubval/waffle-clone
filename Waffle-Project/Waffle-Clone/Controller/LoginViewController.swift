@@ -12,7 +12,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginBtn: UIButton!
     let loginManager = LoginManager()
     let authenticationAlert = Alert.showBasicAlert(with: "Error", message: "Authentication failed.")
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         authenticateUser()
@@ -32,7 +32,7 @@ class LoginViewController: UIViewController {
             if success {
                 DispatchQueue.main.async {
                     if let vc = self.storyboard!.instantiateViewController(withIdentifier: "RepoViewController") as? RepositoryViewController {
-                            self.navigationController?.pushViewController(vc, animated: true)
+                        self.navigationController?.pushViewController(vc, animated: true)
                     }
                 }
             } 
