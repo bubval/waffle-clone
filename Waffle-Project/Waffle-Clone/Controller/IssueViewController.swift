@@ -20,15 +20,6 @@ class IssueViewController: UIViewController {
     @IBOutlet weak var labelCollectionViewLayout: UICollectionViewFlowLayout!
     private var issue: IssueResponse!
     
-    // Converts issue creation date to specified date format.
-    private var creation: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        let date = dateFormatter.date(from: issue.createdAt)!
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        let dateString = dateFormatter.string(from: date)
-        return dateString
-    }
     private var textViewIsActive: Bool = false {
         didSet {
             if self.textViewIsActive {
@@ -40,6 +31,7 @@ class IssueViewController: UIViewController {
             }
         }
     }
+    
     lazy private var editBarButton: UIBarButtonItem = { [unowned self] in
         return UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonTapped))
     }()
@@ -80,7 +72,7 @@ class IssueViewController: UIViewController {
         
         // Labels
         self.issueTitle.text = "\(issue.title) #\(issue.number)"
-        self.issuePublisher.text = "\(issue.user.login) opened this issue on \(creation)"
+        self.issuePublisher.text = "\(issue.user.login) opened this issue on \(Date.getFormattedDate(date: issue.createdAt))"
         self.issueBody.text = issue.body
 
         // UIImage
@@ -193,6 +185,24 @@ extension IssueViewController {
             }
         } else {
             completion(nil)
+        }
+    }
+}
+
+// MARK: - Date extension
+
+extension Date {
+    
+    static func getFormattedDate (date: String , from oldFormat: String = "yyyy-MM-dd'T'HH:mm:ssZ", to newFormat: String = "MMM dd, yyyy") -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = oldFormat
+        let date: Date? = dateFormatter.date(from: date)
+        dateFormatter.dateFormat = newFormat
+        
+        if let date = date {
+            return dateFormatter.string(from: date)
+        } else {
+            return "N/A"
         }
     }
 }

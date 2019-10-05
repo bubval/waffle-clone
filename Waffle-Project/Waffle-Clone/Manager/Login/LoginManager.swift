@@ -46,6 +46,8 @@ class LoginManager: GithubManager {
                     completion(false)
                 }
             }
+        } else {
+            completion(false)
         }
     }
     

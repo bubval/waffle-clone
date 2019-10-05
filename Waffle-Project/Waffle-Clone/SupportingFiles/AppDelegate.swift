@@ -13,13 +13,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     let authenticationManager = AuthenticationManager()
-    let loginManager = LoginManager()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         return true
     }
     
-    internal func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         // Accessed from UIApplication.
         // Checks if call is coming from Login View Controller by comparing the redirection url scheme and host (scheme://host).
         if url.scheme == AuthenticationConstants.callbackScheme {
@@ -46,18 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    private func getToken(code: String, completion: @escaping(Bool) -> ()) {
-        authenticationManager.getAccessToken(code: code) { (response, error) in
-            if let response = response {
-                // Saves access token to keychain.
-                print(response.accessToken)
-                AuthenticationManager.accessToken = response.accessToken
-                completion(true)
-            } else {
-                completion(false)
-            }
-        }
-    }
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -79,5 +66,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+}
+
+extension AppDelegate {
+    
+    private func getToken(code: String, completion: @escaping(Bool) -> ()) {
+        authenticationManager.getAccessToken(code: code) { (response, error) in
+            if let response = response {
+                // Saves access token to keychain.
+                print(response.accessToken)
+                AuthenticationManager.accessToken = response.accessToken
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
     }
 }

@@ -13,7 +13,6 @@ class LoginViewController: UIViewController {
     let loginManager = LoginManager()
     let authenticationAlert = Alert.showBasicAlert(with: "Error", message: "Authentication failed.")
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         authenticateUser()
@@ -36,9 +35,7 @@ class LoginViewController: UIViewController {
                             self.navigationController?.pushViewController(vc, animated: true)
                     }
                 }
-            } else {
-                self.present(self.authenticationAlert, animated: true)
-            }
+            } 
         }
     }
 }
