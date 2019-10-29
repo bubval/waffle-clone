@@ -22,7 +22,8 @@ class ProjectViewController: UIViewController {
     }
     private var repository: String!
     // This is just a placeholder variable to control the number and type of project cards
-    private let columns = ["bug", "design", "feature", "networking"]
+    private let labelManager = LabelManager()
+    private let columns = LabelManager.defaultLabels.map{$0.name}
     
     
     // MARK: - App Lifecycle
@@ -31,7 +32,11 @@ class ProjectViewController: UIViewController {
         super.viewWillAppear(animated)
         self.showSpinner(onView: self.view)
         
-        // TODO: Consult Dido about networking in viewWillAppear vs viewDidLoad
+        self.checkIfDefaultLabelsExist()
+        self.issueCategorization()
+        
+        
+        
         getIssues() { (issues) in
             guard issues != nil else {
                 let alert = Alert.showBasicAlert(with: "Error", message: "Issues could not be loaded. You will be redirected to repositories.") { _ in
@@ -85,6 +90,158 @@ class ProjectViewController: UIViewController {
     func setRepository(to repository: String) {
         self.repository = repository
     }
+}
+
+// MARK: - Label Management
+
+extension ProjectViewController {
+    private func getAllRepositoryLabels(completion: @escaping ((_ label: [LabelResponse]?) ->())) {
+        if let username = AuthenticationManager.username {
+            self.labelManager.get(owner: username, repository: self.repository) { (response, error) in
+                guard error == nil else {
+                    return completion(nil)
+                }
+                
+                if let response = response {
+                    completion(response)
+                } else {
+                    completion(nil)
+                }
+            }
+        } else {
+            completion(nil)
+        }
+    }
+    
+    private func createRepositoryLabel(label: LabelResponse, completion: @escaping ((_ label: LabelResponse?) ->())) {
+        if let username = AuthenticationManager.username{
+            self.labelManager.post(owner: username, repository: self.repository, label: label) { (response, error) in
+                guard error == nil else {
+                    return completion(nil)
+                }
+                
+                if let response = response {
+                    completion(response)
+                } else {
+                    completion(nil)
+                }
+            }
+        } else {
+            completion(nil)
+        }
+    }
+    
+    private func checkIfDefaultLabelsExist() {
+        self.getAllRepositoryLabels { (allLabels) in
+            if let allLabels = allLabels {
+                for defaultLabel in LabelManager.defaultLabels {
+                    if !allLabels.contains(where: {$0 == defaultLabel}) {
+                        self.createRepositoryLabel(label: defaultLabel) { (labelResponse) in
+                            if let labelResponse = labelResponse {
+                                print("Label created: \(labelResponse)")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+}
+
+// MARK: - Issue Categorization
+
+extension ProjectViewController {
+    
+    private func issueCategorization() {
+        getIssues { (allIssues) in
+            if let allIssues = allIssues {
+                for issue in allIssues {
+                    let issueNumber = issue.number
+                    print(issueNumber)
+                    let issueLabels = issue.labels
+                    var defaultLabelIsPresent = false
+                    
+                    // Checks if any of the default labels are present
+                    if let issueLabels = issueLabels {
+                        for defaultLabel in LabelManager.defaultLabels {
+                            if issueLabels.contains(where: {$0 == defaultLabel}) {
+                                defaultLabelIsPresent = true
+                            }
+                        }
+                    }
+                    
+                    if !defaultLabelIsPresent {
+                        // Converts issue label names to an array
+                        var issueLabelsStringArray: [String]?
+                        if let issueLabels = issueLabels {
+                            issueLabelsStringArray = issueLabels.map({
+                                (label: LabelResponse) -> String in label.name
+                            })
+                        }
+                        // Converts issue assignees login names to an array
+                        var issueAssigneesStringArray: [String]?
+                        if let issueAssignees = issue.assignees {
+                            issueAssigneesStringArray = issueAssignees.map({
+                                (assignee: IssueUser) -> String in assignee.login
+                            })
+                        }
+                        
+                        // Recreates old issue
+                        let oldIssue = Issue(title: issue.title, body: issue.body, labels: issueLabelsStringArray, assignees: issueAssigneesStringArray)
+                        print(oldIssue)
+                        // Creates new issue appending the first default label
+                        let newIssue = self.addLabel(to: oldIssue, label: LabelManager.defaultLabels[0])
+                        print(newIssue)
+                        
+                        self.updateIssue(id: issueNumber, to: newIssue) { (response) in
+                            print("Usse successfully updated")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private func updateIssue(id: Int, to issue: Issue, completion: @escaping ((_ issue: IssueResponse?) ->())) {
+        if let username = AuthenticationManager.username {
+            IssueManager(owner: username, repository: self.repository).patch(number: id, issue: issue) { (response, error) in
+                guard error == nil else {
+                    print("guard error")
+                    print(error!)
+                    completion(nil)
+                    return
+                }
+                
+                if let response = response {
+                    completion(response)
+                } else {
+                    print("no response")
+                    completion(nil)
+                }
+            }
+        } else {
+            completion(nil)
+        }
+    }
+    
+    private func addLabel(to issue:Issue, label: LabelResponse) -> Issue {
+        let labelName = label.name
+        var newLabels = issue.labels
+        
+        if newLabels == nil {
+            newLabels = [labelName]
+        } else {
+            newLabels!.append(labelName)
+        }
+        
+        // I perform a check, so it's save to force newLabels
+        let newIssue = Issue(title: issue.title, body: issue.body, labels: newLabels!, assignees: issue.assignees)
+        
+        return newIssue
+    }
+    
 }
 
 // MARK: - Networking

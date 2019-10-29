@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct LabelResponse: Codable {
+public struct LabelResponse: Codable, Equatable {
     let name: String
     let description: String?
     let color: String
@@ -19,7 +19,7 @@ public struct LabelResponse: Codable {
         case color
     }
     
-    public init(name: String, description: String, color: String) {
+    public init(name: String, description: String?, color: String) {
         self.name = name
         self.description = description
         self.color = color
