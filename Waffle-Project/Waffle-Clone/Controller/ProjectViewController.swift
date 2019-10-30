@@ -31,13 +31,7 @@ class ProjectViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.showSpinner(onView: self.view)
-        
-        self.checkIfDefaultLabelsExist()
-        self.issueCategorization()
-        
-        
-        
-        getIssues() { (issues) in
+        self.getIssues() { (issues) in
             guard issues != nil else {
                 let alert = Alert.showBasicAlert(with: "Error", message: "Issues could not be loaded. You will be redirected to repositories.") { _ in
                     DispatchQueue.main.async {
@@ -59,11 +53,16 @@ class ProjectViewController: UIViewController {
                 }
             }
         }
+        
+        self.checkIfDefaultLabelsExist()
+        self.issueCategorization()
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Project Cards"
+        
     }
     
     override func viewWillLayoutSubviews() {
@@ -196,7 +195,15 @@ extension ProjectViewController {
                         print(newIssue)
                         
                         self.updateIssue(id: issueNumber, to: newIssue) { (response) in
-                            print("Usse successfully updated")
+                            if let response = response {
+                                print("Usse successfully updated")
+                                if let index = self.issues.firstIndex(where: {$0.id == response.id}) {
+                                    self.issues[index] = response
+                                    DispatchQueue.main.async {
+                                        self.collectionView.reloadData()
+                                    }
+                                }
+                            }
                         }
                     }
                 }
