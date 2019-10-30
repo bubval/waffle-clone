@@ -46,6 +46,8 @@ extension ProjectCardCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectIssueCell") as! ProjectIssueCell
         cell.setIssue(issueArray[indexPath.row])
+        cell.index = indexPath
+        cell.cellDelegate = self
         return cell
     }
     
@@ -57,5 +59,15 @@ extension ProjectCardCell: UITableViewDelegate, UITableViewDataSource {
                 self.tableView.reloadData()
             }
         }
+    }
+}
+
+extension ProjectCardCell: TableViewNew {
+    func onClickCell(index: Int) {
+        print("\(index) clicked")
+        
+    }
+    func onClickCellIssue(issue: IssueResponse) {
+        print("\(issue)")
     }
 }
