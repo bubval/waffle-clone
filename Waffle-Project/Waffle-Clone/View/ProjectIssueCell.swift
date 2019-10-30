@@ -8,23 +8,21 @@
 
 import UIKit
 
-protocol TableViewNew {
-    func onClickCell(index: Int)
-    func onClickCellIssue(issue: IssueResponse)
+protocol projectIssueCell {
+    func onClickCell(index: Int, issue: IssueResponse)
 }
 
 
 class ProjectIssueCell: UITableViewCell {
     
-    var cellDelegate: TableViewNew?
+    var cellDelegate: projectIssueCell?
     var index: IndexPath?
     
     
     @IBOutlet weak var issueTitle: UILabel!
     @IBOutlet weak var button: UIButton!
     @IBAction func buttonClicked(_ sender: UIButton) {
-        cellDelegate?.onClickCell(index: index!.row)
-        cellDelegate?.onClickCellIssue(issue: issue)
+        cellDelegate?.onClickCell(index: index!.row, issue: issue)
     }
     private var issue: IssueResponse! {
         didSet {

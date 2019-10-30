@@ -326,9 +326,7 @@ extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataS
         let safeArea = self.view.safeAreaFrame
         return CGSize(width: safeArea.width, height: safeArea.height)
     }
-    
-    // TODO: Consult Dido about prefetch
-    
+        
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
             getIssues(with: columns[indexPath.row]) { (issues) in

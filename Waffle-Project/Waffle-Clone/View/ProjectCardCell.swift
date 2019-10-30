@@ -62,12 +62,9 @@ extension ProjectCardCell: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension ProjectCardCell: TableViewNew {
-    func onClickCell(index: Int) {
+extension ProjectCardCell: projectIssueCell {
+    func onClickCell(index: Int, issue: IssueResponse) {
         print("\(index) clicked")
-        
-    }
-    func onClickCellIssue(issue: IssueResponse) {
         print("\(issue)")
     }
 }
