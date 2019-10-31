@@ -64,6 +64,8 @@ extension ProjectCardCell: UITableViewDelegate, UITableViewDataSource {
 
 extension ProjectCardCell: ProjectIssueCellDelegate {
     func onClickCell(index: Int, issue: IssueResponse) {
+        let repoVC: RepositoryViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RepoViewController") as! RepositoryViewController
+        repoVC.issueTest = issue
         print("\(index) clicked")
         print("\(issue)")
     }
