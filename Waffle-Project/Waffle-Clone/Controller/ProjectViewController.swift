@@ -15,6 +15,7 @@ class ProjectViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     private var issues: [IssueResponse] = [] {
         didSet {
+            self.categorization()
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
@@ -33,37 +34,12 @@ class ProjectViewController: UIViewController {
         print("VIEW WILL APPEAR")
         
         self.checkIfDefaultLabelsExist()
-        self.issueCategorization()
-
+        //self.issueCategorization()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Project Cards"
-        
-//        self.showSpinner(onView: self.view)
-//        self.getIssues() { (issues) in
-//            guard issues != nil else {
-//                let alert = Alert.showBasicAlert(with: "Error", message: "Issues could not be loaded. You will be redirected to repositories.") { _ in
-//                    DispatchQueue.main.async {
-//                        self.navigationController?.popViewController(animated: true)
-//                    }
-//                }
-//                DispatchQueue.main.async {
-//                    self.removeSpinner()
-//                    self.present(alert, animated: true, completion: nil)
-//                }
-//                return
-//            }
-//
-//            if let issues = issues {
-//                self.issues = issues
-//                DispatchQueue.main.async {
-//                    self.removeSpinner()
-//                    self.collectionView.reloadData()
-//                }
-//            }
-//        }
         
     }
     
@@ -140,10 +116,10 @@ extension ProjectViewController {
         self.getAllRepositoryLabels { (allLabels) in
             if let allLabels = allLabels {
                 for defaultLabel in LabelManager.defaultLabels {
-                    if !allLabels.contains(where: {$0 == defaultLabel}) {
+                    if !allLabels.contains(where: {$0.name == defaultLabel.name}) {
                         self.createRepositoryLabel(label: defaultLabel) { (labelResponse) in
                             if let labelResponse = labelResponse {
-                                print("Label created: \(labelResponse)")
+                                print("Label created: \(labelResponse.name)")
                             }
                         }
                     }
@@ -159,25 +135,82 @@ extension ProjectViewController {
 
 extension ProjectViewController {
     
+    private func categorization() {
+        for issue in self.issues {
+            let issueNumber = issue.number
+            let issueLabels = issue.labels
+            var defaultLabelIsPresent = false
+            
+            if let issueLabels = issueLabels {
+                for defaultLabel in LabelManager.defaultLabels {
+                    if issueLabels.contains(where: {$0.name == defaultLabel.name}) {
+                        print("DEFAULT LABEL FOUND FOR \(issue) AS \(defaultLabel.name)")
+                        defaultLabelIsPresent = true
+                    }
+                }
+            }
+            
+            if !defaultLabelIsPresent {
+                print("DEFAULT LABEL FOR \(issue.title) NOT FOUND")
+                // Converts issue label names to an array
+                var issueLabelsStringArray: [String]?
+                if let issueLabels = issueLabels {
+                    issueLabelsStringArray = issueLabels.map({
+                        (label: LabelResponse) -> String in label.name
+                    })
+                }
+                // Converts issue assignees login names to an array
+                var issueAssigneesStringArray: [String]?
+                if let issueAssignees = issue.assignees {
+                    issueAssigneesStringArray = issueAssignees.map({
+                        (assignee: IssueUser) -> String in assignee.login
+                    })
+                }
+                
+                // Recreates old issue
+                let oldIssue = Issue(title: issue.title, body: issue.body, labels: issueLabelsStringArray, assignees: issueAssigneesStringArray)
+                print(oldIssue)
+                // Creates new issue appending the first default label
+                let newIssue = self.addLabel(to: oldIssue, label: LabelManager.defaultLabels[0])
+                print(newIssue)
+                
+                self.updateIssue(id: issueNumber, to: newIssue) { (response) in
+                    if let response = response {
+                        print("Usse successfully updated")
+                        if let index = self.issues.firstIndex(where: {$0.id == response.id}) {
+                            self.issues[index] = response
+                            DispatchQueue.main.async {
+                                self.collectionView.reloadData()
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+    
+    
     private func issueCategorization() {
         getIssues { (allIssues) in
             if let allIssues = allIssues {
                 for issue in allIssues {
                     let issueNumber = issue.number
-                    print(issueNumber)
                     let issueLabels = issue.labels
                     var defaultLabelIsPresent = false
                     
                     // Checks if any of the default labels are present
                     if let issueLabels = issueLabels {
                         for defaultLabel in LabelManager.defaultLabels {
-                            if issueLabels.contains(where: {$0 == defaultLabel}) {
+                            if issueLabels.contains(where: {$0.name == defaultLabel.name}) {
+                                print("DEFAULT LABEL FOUND FOR \(issue) AS \(defaultLabel.name)")
                                 defaultLabelIsPresent = true
                             }
                         }
                     }
                     
                     if !defaultLabelIsPresent {
+                        print("DEFAULT LABEL FOR \(issue.title) NOT FOUND")
                         // Converts issue label names to an array
                         var issueLabelsStringArray: [String]?
                         if let issueLabels = issueLabels {
