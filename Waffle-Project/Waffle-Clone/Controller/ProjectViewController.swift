@@ -30,6 +30,7 @@ class ProjectViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("VIEW DID LOAD")
         self.showSpinner(onView: self.view)
         self.getIssues() { (issues) in
             guard issues != nil else {
@@ -88,6 +89,10 @@ class ProjectViewController: UIViewController {
     
     func setRepository(to repository: String) {
         self.repository = repository
+    }
+    
+    func setIssues(_ issues: [IssueResponse]) {
+        self.issues = issues
     }
 }
 
@@ -276,7 +281,7 @@ extension ProjectViewController {
             })
         }
         // Converts default label names to an array
-        var defaultLabelsStringArray = defaultLabels.map({
+        let defaultLabelsStringArray = defaultLabels.map({
             (label: LabelResponse) -> String in label.name
         })
         

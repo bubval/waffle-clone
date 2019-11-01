@@ -65,7 +65,6 @@ class IssueViewController: UIViewController {
     
     // MARK: - Private Functions
     
-    //TODO: Ask Dido if this can be done in issue didSet
     private func setUpOutlets(to issue: IssueResponse) {
         
         self.title = "\(issue.title)"

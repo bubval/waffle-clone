@@ -82,6 +82,25 @@ extension RepositoryViewController {
             }
         }
     }
+    
+    private func getIssues(for repositoryName: String, completion: @escaping ((_ issues: [IssueResponse]?) ->())) {
+        if let username = AuthenticationManager.username {
+            IssueManager(owner: username, repository: repositoryName).get { (response, error) in
+                guard error == nil else {
+                    return completion(nil)
+                }
+                
+                if let response = response {
+                    print(response)
+                    completion(response)
+                } else {
+                    completion(nil)
+                }
+            }
+        } else {
+            completion(nil)
+        }
+    }
 }
 
 // MARK: - UITableView
@@ -101,6 +120,13 @@ extension RepositoryViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ProjectViewController") as? ProjectViewController {
             vc.setRepository(to: self.repositories[indexPath.row].name)
+            getIssues(for: self.repositories[indexPath.row].name) { (response) in
+                print("getting issues")
+                if let response = response {
+                    print("setting issues to \(response)")
+                    vc.setIssues(response)
+                }
+            }
             navigationController!.pushViewController(vc, animated: true)
         }
     }
