@@ -30,30 +30,7 @@ class ProjectViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("VIEW DID LOAD")
-        self.showSpinner(onView: self.view)
-        self.getIssues() { (issues) in
-            guard issues != nil else {
-                let alert = Alert.showBasicAlert(with: "Error", message: "Issues could not be loaded. You will be redirected to repositories.") { _ in
-                    DispatchQueue.main.async {
-                        self.navigationController?.popViewController(animated: true)
-                    }
-                }
-                DispatchQueue.main.async {
-                    self.removeSpinner()
-                    self.present(alert, animated: true, completion: nil)
-                }
-                return
-            }
-            
-            if let issues = issues {
-                self.issues = issues
-                DispatchQueue.main.async {
-                    self.removeSpinner()
-                    self.collectionView.reloadData()
-                }
-            }
-        }
+        print("VIEW WILL APPEAR")
         
         self.checkIfDefaultLabelsExist()
         self.issueCategorization()
@@ -63,6 +40,30 @@ class ProjectViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Project Cards"
+        
+//        self.showSpinner(onView: self.view)
+//        self.getIssues() { (issues) in
+//            guard issues != nil else {
+//                let alert = Alert.showBasicAlert(with: "Error", message: "Issues could not be loaded. You will be redirected to repositories.") { _ in
+//                    DispatchQueue.main.async {
+//                        self.navigationController?.popViewController(animated: true)
+//                    }
+//                }
+//                DispatchQueue.main.async {
+//                    self.removeSpinner()
+//                    self.present(alert, animated: true, completion: nil)
+//                }
+//                return
+//            }
+//
+//            if let issues = issues {
+//                self.issues = issues
+//                DispatchQueue.main.async {
+//                    self.removeSpinner()
+//                    self.collectionView.reloadData()
+//                }
+//            }
+//        }
         
     }
     
@@ -378,7 +379,7 @@ extension ProjectViewController {
 
 // MARK: - Collection View
 
-extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDataSourcePrefetching {
+extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return columns.count
@@ -400,15 +401,7 @@ extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataS
         let safeArea = self.view.safeAreaFrame
         return CGSize(width: safeArea.width, height: safeArea.height)
     }
-        
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        for indexPath in indexPaths {
-            getIssues(with: columns[indexPath.row]) { (issues) in
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProjectCardCell", for: indexPath) as! ProjectCardCell
-                cell.setIssues(issuesArray: issues)
-            }
-        }
-    }
+
 }
 
 // MARK: - ProjectCardDelegate

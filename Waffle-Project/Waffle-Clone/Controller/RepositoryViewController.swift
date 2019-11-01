@@ -21,6 +21,7 @@ class RepositoryViewController: UIViewController {
     lazy private var signOutButton: UIBarButtonItem = { [unowned self] in
         return UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signOutButtonTapped))
         }()
+    private var issues: [IssueResponse] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,7 +92,6 @@ extension RepositoryViewController {
                 }
                 
                 if let response = response {
-                    print(response)
                     completion(response)
                 } else {
                     completion(nil)
@@ -99,6 +99,22 @@ extension RepositoryViewController {
             }
         } else {
             completion(nil)
+        }
+    }
+    
+    private func getIssues2(for repositoryName: String, completion: @escaping ((_ issues: [IssueResponse]?)->())) {
+        var responses: [IssueResponse]?
+        getIssues(for: repositoryName) { (firstIssuesResponse) in
+            if let firstIssuesResponse = firstIssuesResponse {
+                for issue in firstIssuesResponse {
+                    IssueManager(owner: "Bubval", repository: repositoryName).get(number: issue.number) { (response, error) in
+                        if let response = response {
+                            responses?.append(response)
+                        }
+                    }
+                }
+                completion(responses)
+            }
         }
     }
 }
@@ -120,14 +136,50 @@ extension RepositoryViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ProjectViewController") as? ProjectViewController {
             vc.setRepository(to: self.repositories[indexPath.row].name)
-            getIssues(for: self.repositories[indexPath.row].name) { (response) in
-                print("getting issues")
-                if let response = response {
-                    print("setting issues to \(response)")
-                    vc.setIssues(response)
+
+            getAllIssues(for: self.repositories[indexPath.row].name) { (allIssues) in
+                if let allIssues = allIssues {
+                    self.issues = allIssues
+                    self.checkIssues(username: AuthenticationManager.username!, repository: self.repositories[indexPath.row].name) { (response) in
+                        
+                        vc.setIssues(response!)
+                    }
                 }
             }
             navigationController!.pushViewController(vc, animated: true)
         }
+    }
+}
+
+extension RepositoryViewController {
+    private func getAllIssues(for repositoryName: String, completion: @escaping ((_ issues: [IssueResponse]?) ->())) {
+           if let username = AuthenticationManager.username {
+               IssueManager(owner: username, repository: repositoryName).get { (response, error) in
+                   guard error == nil else {
+                       return completion(nil)
+                   }
+                   
+                   if let response = response {
+                        completion(response)
+                   } else {
+                       completion(nil)
+                   }
+               }
+           } else {
+               completion(nil)
+           }
+       }
+    
+    private func checkIssues(username: String, repository:String, completion: @escaping ((_ issues: [IssueResponse]?) ->())) {
+        for issue in self.issues {
+            IssueManager(owner: username, repository: repository).get(number: issue.number) { (response, error) in
+                if let response = response {
+                    if let row = self.issues.firstIndex(where: {$0.number == response.number}) {
+                        self.issues[row] = response
+                    }
+                }
+            }
+        }
+        completion(self.issues)
     }
 }
