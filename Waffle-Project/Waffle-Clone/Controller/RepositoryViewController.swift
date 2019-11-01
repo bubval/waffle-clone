@@ -17,12 +17,6 @@ class RepositoryViewController: UIViewController {
             }
         }
     }
-    var issueTest: IssueResponse? {
-        didSet {
-            print("TEST")
-            print(self.issueTest)
-        }
-    }
     @IBOutlet weak var tableView: UITableView!
     lazy private var signOutButton: UIBarButtonItem = { [unowned self] in
         return UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signOutButtonTapped))

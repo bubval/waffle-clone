@@ -20,11 +20,11 @@ class ProjectViewController: UIViewController {
             }
         }
     }
+    weak var delegate: ProjectCardDelegate?
     private var repository: String!
     // This is just a placeholder variable to control the number and type of project cards
     private let labelManager = LabelManager()
     private let columns = LabelManager.defaultLabels.map{$0.name}
-    
     
     // MARK: - App Lifecycle
     
@@ -251,6 +251,75 @@ extension ProjectViewController {
     
 }
 
+// MARK: - Move Issue To Next Column
+
+extension ProjectViewController {
+    
+    private func moveToNextColumn(issue: IssueResponse?) {
+        let defaultLabels = LabelManager.defaultLabels;
+        
+        // Converts issue assignees to an array
+        var issueAssigneesStringArray: [String]?
+        if let issue = issue,
+            let issueAssignees = issue.assignees {
+            issueAssigneesStringArray = issueAssignees.map({
+                (assignee: IssueUser) -> String in assignee.login
+            })
+        }
+        
+        // Converts issue label names to an array
+        var issueLabelsStringArray: [String]?
+        if let issue = issue,
+            let issueLabels = issue.labels {
+            issueLabelsStringArray = issueLabels.map({
+                (label: LabelResponse) -> String in label.name
+            })
+        }
+        // Converts default label names to an array
+        var defaultLabelsStringArray = defaultLabels.map({
+            (label: LabelResponse) -> String in label.name
+        })
+        
+        // Get index of current issue label and default label
+        // Finds which of the labels is overlapping with a default label
+        var issueLabelIndex: Int?
+        var defaultLabelIndex: Int?
+        if let issueLabelsStringArray = issueLabelsStringArray {
+            let overlappingIssues = defaultLabelsStringArray.filter{issueLabelsStringArray.contains($0)}
+            if (overlappingIssues.count == 1) {
+                issueLabelIndex = issueLabelsStringArray.firstIndex(of: overlappingIssues[0])
+                defaultLabelIndex = defaultLabelsStringArray.firstIndex(of: overlappingIssues[0])
+            }
+        }
+        
+        // Change overlapping index to the next default label
+        if let issueLabelIndex = issueLabelIndex,
+            let defaultLabelIndex = defaultLabelIndex {
+            
+            if defaultLabelsStringArray.indices.contains(defaultLabelIndex + 1) {
+                issueLabelsStringArray![issueLabelIndex] = defaultLabelsStringArray[defaultLabelIndex + 1]
+                print(issueLabelsStringArray!)
+            }
+        }
+        
+        
+        if let issue = issue {
+            let newIssue = Issue(title: issue.title, body: issue.body, labels: issueLabelsStringArray, assignees: issueAssigneesStringArray)
+            self.updateIssue(id: issue.number, to: newIssue) { (response) in
+                if let response = response {
+                    if let index = self.issues.firstIndex(where: {$0.id == response.id}) {
+                        self.issues[index] = response
+                        DispatchQueue.main.async {
+                            self.collectionView.reloadData()
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 // MARK: - Networking
 
 extension ProjectViewController {
@@ -340,6 +409,10 @@ extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataS
 // MARK: - ProjectCardDelegate
 
 extension ProjectViewController: ProjectCardDelegate {
+    func returnIssue(_ issue: IssueResponse) {
+        moveToNextColumn(issue: issue)
+    }
+    
     
     func didPressCell(_ issue: IssueResponse) {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "IssueViewController") as? IssueViewController {
