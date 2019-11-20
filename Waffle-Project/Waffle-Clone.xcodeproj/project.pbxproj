@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		155CD6C92344C6D000534583 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155CD6C82344C6D000534583 /* LoginManager.swift */; };
+		15A8639F23859A69003773A0 /* Waffle_CloneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A8639E23859A69003773A0 /* Waffle_CloneTests.swift */; };
+		15A863A723859A87003773A0 /* KeychainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A863A623859A87003773A0 /* KeychainTests.swift */; };
 		8A16A56A22EEE667007AE4EC /* GithubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A56922EEE667007AE4EC /* GithubManager.swift */; };
 		8A16A58122EF19FC007AE4EC /* IssueResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58022EF19FC007AE4EC /* IssueResponse.swift */; };
 		8A16A58322EF1A16007AE4EC /* IssueUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A16A58222EF1A16007AE4EC /* IssueUser.swift */; };
@@ -47,8 +49,22 @@
 		8AF7A35F23059A2C00A0300C /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF7A35E23059A2C00A0300C /* Spinner.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		15A863A123859A69003773A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8ABD12BF22E06ED900C62BB1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8ABD12C622E06ED900C62BB1;
+			remoteInfo = "Waffle-Clone";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		155CD6C82344C6D000534583 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
+		15A8639C23859A69003773A0 /* Waffle-CloneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Waffle-CloneTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		15A8639E23859A69003773A0 /* Waffle_CloneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Waffle_CloneTests.swift; sourceTree = "<group>"; };
+		15A863A023859A69003773A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		15A863A623859A87003773A0 /* KeychainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainTests.swift; sourceTree = "<group>"; };
 		8A16A56922EEE667007AE4EC /* GithubManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubManager.swift; sourceTree = "<group>"; };
 		8A16A58022EF19FC007AE4EC /* IssueResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueResponse.swift; sourceTree = "<group>"; };
 		8A16A58222EF1A16007AE4EC /* IssueUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueUser.swift; sourceTree = "<group>"; };
@@ -91,6 +107,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		15A8639923859A69003773A0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8ABD12C422E06ED900C62BB1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -107,6 +130,15 @@
 				155CD6C82344C6D000534583 /* LoginManager.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		15A8639D23859A69003773A0 /* Waffle-CloneTests */ = {
+			isa = PBXGroup;
+			children = (
+				15A8639E23859A69003773A0 /* Waffle_CloneTests.swift */,
+				15A863A023859A69003773A0 /* Info.plist */,
+			);
+			path = "Waffle-CloneTests";
 			sourceTree = "<group>";
 		};
 		8A16A56822EEE656007AE4EC /* Github */ = {
@@ -217,6 +249,7 @@
 				8A66653922F429DA00626DFF /* Keychain.swift */,
 				8A66653722F4298100626DFF /* KeychainQueryable.swift */,
 				8A66653522F4295B00626DFF /* KeychainError.swift */,
+				15A863A623859A87003773A0 /* KeychainTests.swift */,
 			);
 			path = Keychain;
 			sourceTree = "<group>";
@@ -267,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				8ABD12C922E06ED900C62BB1 /* Waffle-Clone */,
+				15A8639D23859A69003773A0 /* Waffle-CloneTests */,
 				8ABD12C822E06ED900C62BB1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -275,6 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				8ABD12C722E06ED900C62BB1 /* Waffle-Clone.app */,
+				15A8639C23859A69003773A0 /* Waffle-CloneTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -374,6 +409,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		15A8639B23859A69003773A0 /* Waffle-CloneTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 15A863A323859A69003773A0 /* Build configuration list for PBXNativeTarget "Waffle-CloneTests" */;
+			buildPhases = (
+				15A8639823859A69003773A0 /* Sources */,
+				15A8639923859A69003773A0 /* Frameworks */,
+				15A8639A23859A69003773A0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				15A863A223859A69003773A0 /* PBXTargetDependency */,
+			);
+			name = "Waffle-CloneTests";
+			productName = "Waffle-CloneTests";
+			productReference = 15A8639C23859A69003773A0 /* Waffle-CloneTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		8ABD12C622E06ED900C62BB1 /* Waffle-Clone */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8ABD12D922E06EDB00C62BB1 /* Build configuration list for PBXNativeTarget "Waffle-Clone" */;
@@ -397,10 +450,14 @@
 		8ABD12BF22E06ED900C62BB1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1110;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Tumba;
 				TargetAttributes = {
+					15A8639B23859A69003773A0 = {
+						CreatedOnToolsVersion = 11.1;
+						TestTargetID = 8ABD12C622E06ED900C62BB1;
+					};
 					8ABD12C622E06ED900C62BB1 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
@@ -420,11 +477,19 @@
 			projectRoot = "";
 			targets = (
 				8ABD12C622E06ED900C62BB1 /* Waffle-Clone */,
+				15A8639B23859A69003773A0 /* Waffle-CloneTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		15A8639A23859A69003773A0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8ABD12C522E06ED900C62BB1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -438,6 +503,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		15A8639823859A69003773A0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15A8639F23859A69003773A0 /* Waffle_CloneTests.swift in Sources */,
+				15A863A723859A87003773A0 /* KeychainTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8ABD12C322E06ED900C62BB1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -482,6 +556,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		15A863A223859A69003773A0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8ABD12C622E06ED900C62BB1 /* Waffle-Clone */;
+			targetProxy = 15A863A123859A69003773A0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		8ABD12CE22E06ED900C62BB1 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -502,6 +584,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		15A863A423859A69003773A0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Waffle-CloneTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "Tumba.Waffle-CloneTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Waffle-Clone.app/Waffle-Clone";
+			};
+			name = Debug;
+		};
+		15A863A523859A69003773A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Waffle-CloneTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "Tumba.Waffle-CloneTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Waffle-Clone.app/Waffle-Clone";
+			};
+			name = Release;
+		};
 		8ABD12D722E06EDB00C62BB1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -657,6 +779,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		15A863A323859A69003773A0 /* Build configuration list for PBXNativeTarget "Waffle-CloneTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15A863A423859A69003773A0 /* Debug */,
+				15A863A523859A69003773A0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8ABD12C222E06ED900C62BB1 /* Build configuration list for PBXProject "Waffle-Clone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
