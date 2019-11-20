@@ -109,6 +109,8 @@ class IssueViewController: UIViewController {
     
     @objc private func editButtonTapped() {
         self.navigationItem.rightBarButtonItem = saveBarButton
+        print("HERE")
+        self.issueBody.autocorrectionType = UITextAutocorrectionType.no
         self.textViewIsActive = true
     }
     

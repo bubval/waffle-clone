@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0rQ-VS-JJN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0rQ-VS-JJN">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -180,29 +180,41 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="354" height="25"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Issue Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="8ae-L4-V6X">
-                                                                        <rect key="frame" x="5" y="2" width="89.333333333333329" height="21"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kmu-0c-1aQ">
-                                                                        <rect key="frame" x="303" y="-2.6666666666666661" width="46" height="30.333333333333329"/>
-                                                                        <state key="normal" title="Button"/>
+                                                                        <rect key="frame" x="299" y="-2.6666666666666661" width="50" height="30.333333333333329"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="50" id="I8G-1u-WNp"/>
+                                                                        </constraints>
+                                                                        <state key="normal" title="Next&gt;"/>
                                                                         <connections>
                                                                             <action selector="buttonClicked:" destination="pwA-Hg-yWX" eventType="touchUpInside" id="ztV-zD-xDv"/>
                                                                         </connections>
                                                                     </button>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dh-HB-haQ">
+                                                                        <rect key="frame" x="5" y="-2.6666666666666661" width="50" height="30.333333333333329"/>
+                                                                        <state key="normal" title="&lt;Prev"/>
+                                                                    </button>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Issue Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="8ae-L4-V6X">
+                                                                        <rect key="frame" x="60" y="2" width="234" height="21"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
                                                                 </subviews>
                                                                 <constraints>
                                                                     <constraint firstItem="kmu-0c-1aQ" firstAttribute="centerY" secondItem="x6D-En-RCJ" secondAttribute="centerY" id="2ge-U5-PTd"/>
+                                                                    <constraint firstItem="kmu-0c-1aQ" firstAttribute="leading" secondItem="8ae-L4-V6X" secondAttribute="trailing" constant="5" id="IaO-VS-ozs"/>
+                                                                    <constraint firstItem="9dh-HB-haQ" firstAttribute="leading" secondItem="x6D-En-RCJ" secondAttribute="leading" constant="5" id="UVJ-m4-Eek"/>
+                                                                    <constraint firstItem="9dh-HB-haQ" firstAttribute="centerY" secondItem="x6D-En-RCJ" secondAttribute="centerY" id="dLH-jd-TYX"/>
+                                                                    <constraint firstItem="8ae-L4-V6X" firstAttribute="leading" secondItem="9dh-HB-haQ" secondAttribute="trailing" constant="5" id="dXV-V4-KiY"/>
                                                                     <constraint firstAttribute="trailing" secondItem="kmu-0c-1aQ" secondAttribute="trailing" constant="5" id="eTl-Jw-lQN"/>
-                                                                    <constraint firstItem="8ae-L4-V6X" firstAttribute="leading" secondItem="x6D-En-RCJ" secondAttribute="leading" constant="5" id="o7K-vr-AQn"/>
-                                                                    <constraint firstItem="8ae-L4-V6X" firstAttribute="centerY" secondItem="x6D-En-RCJ" secondAttribute="centerY" id="qYW-gm-2Cs"/>
+                                                                    <constraint firstItem="8ae-L4-V6X" firstAttribute="centerY" secondItem="x6D-En-RCJ" secondAttribute="centerY" id="fay-WP-n3f"/>
+                                                                    <constraint firstItem="8ae-L4-V6X" firstAttribute="centerX" secondItem="x6D-En-RCJ" secondAttribute="centerX" id="nUf-aQ-Phh"/>
                                                                 </constraints>
                                                             </tableViewCellContentView>
                                                             <connections>
                                                                 <outlet property="button" destination="kmu-0c-1aQ" id="OEe-Ee-i4I"/>
+                                                                <outlet property="button2" destination="9dh-HB-haQ" id="hCO-oY-Kbv"/>
                                                                 <outlet property="issueTitle" destination="8ae-L4-V6X" id="ksT-9C-QQV"/>
                                                             </connections>
                                                         </tableViewCell>

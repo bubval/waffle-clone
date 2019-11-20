@@ -21,6 +21,7 @@ class ProjectIssueCell: UITableViewCell {
     
     @IBOutlet weak var issueTitle: UILabel!
     @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var button2: UIButton!
     @IBAction func buttonClicked(_ sender: UIButton) {
         delegate?.onClickCell(index: index!.row, issue: issue)
     }
