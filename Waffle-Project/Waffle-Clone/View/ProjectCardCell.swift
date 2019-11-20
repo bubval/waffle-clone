@@ -10,7 +10,7 @@ import UIKit
 
 protocol ProjectCardDelegate: class {
     func didPressCell(_ issue: IssueResponse)
-    func returnIssue(_ issue: IssueResponse)
+    func returnIssue(_ issue: IssueResponse, _ nextCell: Bool)
 }
 
 class ProjectCardCell: UICollectionViewCell {
@@ -64,7 +64,7 @@ extension ProjectCardCell: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension ProjectCardCell: ProjectIssueCellDelegate {
-    func onClickCell(index: Int, issue: IssueResponse) {
-        delegate?.returnIssue(issue)
+    func onClickCell(index: Int, issue: IssueResponse, nextCell: Bool) {
+        delegate?.returnIssue(issue, nextCell)
     }
 }

@@ -193,6 +193,9 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dh-HB-haQ">
                                                                         <rect key="frame" x="5" y="-2.6666666666666661" width="50" height="30.333333333333329"/>
                                                                         <state key="normal" title="&lt;Prev"/>
+                                                                        <connections>
+                                                                            <action selector="buttonClickedPrev:" destination="pwA-Hg-yWX" eventType="touchUpInside" id="yFr-FA-EiW"/>
+                                                                        </connections>
                                                                     </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Issue Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="8ae-L4-V6X">
                                                                         <rect key="frame" x="60" y="2" width="234" height="21"/>

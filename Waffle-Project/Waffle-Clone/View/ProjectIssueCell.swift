@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ProjectIssueCellDelegate {
-    func onClickCell(index: Int, issue: IssueResponse)
+    func onClickCell(index: Int, issue: IssueResponse, nextCell: Bool)
 }
 
 
@@ -23,7 +23,10 @@ class ProjectIssueCell: UITableViewCell {
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var button2: UIButton!
     @IBAction func buttonClicked(_ sender: UIButton) {
-        delegate?.onClickCell(index: index!.row, issue: issue)
+        delegate?.onClickCell(index: index!.row, issue: issue, nextCell: true)
+    }
+    @IBAction func buttonClickedPrev(_ sender: UIButton) {
+        delegate?.onClickCell(index: index!.row, issue: issue, nextCell: false)
     }
     private var issue: IssueResponse! {
         didSet {
