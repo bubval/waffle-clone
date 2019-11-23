@@ -28,7 +28,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="githubLogo" translatesAutoresizingMaskIntoConstraints="NO" id="W59-TH-t7W">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="githubLogoColorful" translatesAutoresizingMaskIntoConstraints="NO" id="W59-TH-t7W">
                                                 <rect key="frame" x="49" y="54.666666666666686" width="140" height="140"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="140" id="6rH-fq-MaY"/>
@@ -52,7 +52,6 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                         <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <size key="titleShadowOffset" width="2" height="2"/>
                                         <state key="normal" title="Login">
                                             <color key="titleShadowColor" white="0.0" alpha="0.1992722602739726" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -64,7 +63,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" spacing="10"/>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                         <constraints>
                             <constraint firstItem="I4e-fW-8zH" firstAttribute="centerX" secondItem="0Z0-Dw-Qa3" secondAttribute="centerX" id="eue-00-JR7"/>
@@ -74,7 +73,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="yzg-Dn-hVh"/>
                     <connections>
+                        <outlet property="descLabel" destination="AY8-8h-2wO" id="3Z3-UY-NGl"/>
                         <outlet property="loginBtn" destination="3Cv-Zp-roU" id="Tig-dV-P5g"/>
+                        <outlet property="titleLabel" destination="u20-9r-Pak" id="VJK-q4-h52"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T1f-9r-zrC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -407,6 +408,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="githubLogo" width="512" height="512"/>
+        <image name="githubLogoColorful" width="200" height="200"/>
     </resources>
 </document>
