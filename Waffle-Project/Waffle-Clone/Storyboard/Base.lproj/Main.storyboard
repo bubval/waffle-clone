@@ -11,6 +11,9 @@
         <array key="Montserrat-Regular.otf">
             <string>Montserrat-Regular</string>
         </array>
+        <array key="OpenSans-Bold.ttf">
+            <string>OpenSans-Bold</string>
+        </array>
         <array key="OpenSans-Regular.ttf">
             <string>OpenSans</string>
         </array>
@@ -187,8 +190,8 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Github Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xhi-Ug-VjB">
-                                                    <rect key="frame" x="0.0" y="9.9999999999999982" width="354" height="26.333333333333329"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                    <rect key="frame" x="0.0" y="9.9999999999999982" width="354" height="23.333333333333329"/>
+                                                    <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -204,25 +207,27 @@
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kmu-0c-1aQ">
-                                                                        <rect key="frame" x="299" y="-2.6666666666666661" width="50" height="30.333333333333329"/>
+                                                                        <rect key="frame" x="299" y="-4" width="50" height="33"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="50" id="I8G-1u-WNp"/>
                                                                         </constraints>
+                                                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
                                                                         <state key="normal" title="Next&gt;"/>
                                                                         <connections>
                                                                             <action selector="buttonClicked:" destination="pwA-Hg-yWX" eventType="touchUpInside" id="ztV-zD-xDv"/>
                                                                         </connections>
                                                                     </button>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dh-HB-haQ">
-                                                                        <rect key="frame" x="5" y="-2.6666666666666661" width="50" height="30.333333333333329"/>
+                                                                        <rect key="frame" x="5" y="-4" width="50" height="33"/>
+                                                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
                                                                         <state key="normal" title="&lt;Prev"/>
                                                                         <connections>
                                                                             <action selector="buttonClickedPrev:" destination="pwA-Hg-yWX" eventType="touchUpInside" id="yFr-FA-EiW"/>
                                                                         </connections>
                                                                     </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Issue Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="8ae-L4-V6X">
-                                                                        <rect key="frame" x="60" y="2.6666666666666661" width="234" height="20"/>
-                                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                                        <rect key="frame" x="60" y="2" width="234" height="21"/>
+                                                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
