@@ -21,6 +21,7 @@ public struct RepositoryResponse: Codable {
     // GET is used for both organizations and users
     let owner: UserResponse?
     let organization: UserResponse?
+    let openIssueCount: Int?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -34,6 +35,7 @@ public struct RepositoryResponse: Codable {
         case isPrivate = "private"
         case owner
         case organization
+        case openIssueCount = "open_issues_count"
     }
     
     public init(from decoder: Decoder) throws {
@@ -49,5 +51,6 @@ public struct RepositoryResponse: Codable {
         isPrivate = try values.decode(Bool.self, forKey: .isPrivate)
         owner = try values.decodeIfPresent(UserResponse.self, forKey: .owner)
         organization = try values.decodeIfPresent(UserResponse.self, forKey: .organization)
+        openIssueCount = try values.decodeIfPresent(Int.self, forKey: .openIssueCount)
     }
 }

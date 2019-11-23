@@ -14,7 +14,7 @@ class RestManager {
     
     var session: URLSession
     
-    init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
+    init(session: URLSession = URLSession(configuration: URLSessionConfiguration.ephemeral)) {
         self.session = session
     }
     

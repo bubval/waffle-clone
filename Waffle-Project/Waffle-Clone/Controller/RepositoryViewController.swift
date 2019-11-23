@@ -22,6 +22,8 @@ class RepositoryViewController: UIViewController {
         return UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signOutButtonTapped))
         }()
     private var issues: [IssueResponse] = []
+    //private var gradientLayer = CAGradientLayer()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +31,7 @@ class RepositoryViewController: UIViewController {
         self.tableView.dataSource = self
         self.title = "Repositories"
         self.navigationItem.leftBarButtonItem = signOutButton
+        self.tableView.backgroundColor = UIColor.white
         
         getRepositories() { (repositories) in
             if let repositories = repositories {
@@ -46,6 +49,29 @@ class RepositoryViewController: UIViewController {
                 }
             }
         }
+    }
+   
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        /*
+        if gradientLayer.superlayer != nil {
+            gradientLayer.removeFromSuperlayer()
+        }
+        let topColor = UIColor.init(hex: "b4edbc")
+        let bottomColor = UIColor.init(hex: "6CAE75")
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
+        gradientLayer.frame = tableView.bounds
+        let backgroundView = UIView(frame: tableView.bounds)
+        backgroundView.layer.insertSublayer(gradientLayer, at: 0)
+        tableView.backgroundView = backgroundView*/
+        
+        let backgroundView = UIView(frame: tableView.bounds)
+        backgroundView.backgroundColor = UIColor.white
+        tableView.backgroundView = backgroundView
+        
     }
     
     @objc private func signOutButtonTapped() {
@@ -147,6 +173,14 @@ extension RepositoryViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             }
             navigationController!.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if let username = AuthenticationManager.username {
+            return "\(username)'s Repositories"
+        } else {
+            return "Your repositories"
         }
     }
 }

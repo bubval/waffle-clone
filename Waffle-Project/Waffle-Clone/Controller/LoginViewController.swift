@@ -31,13 +31,13 @@ class LoginViewController: UIViewController {
         loginBtn.layer.borderWidth = 2.0
         loginBtn.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).cgColor
         loginBtn.layer.cornerRadius = 15.0
-        loginBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        loginBtn.titleLabel?.font = UIFont(name: "OpenSans", size: 24)
         
         let strokeTextAttributes = [
-            NSAttributedString.Key.strokeColor : UIColor.init(hex: "61a170"),
+            NSAttributedString.Key.strokeColor : UIColor.white,
             NSAttributedString.Key.foregroundColor : UIColor.white,
             NSAttributedString.Key.strokeWidth : -4.0,
-            NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 30)]
+            NSAttributedString.Key.font : UIFont(name: "Montserrat-Regular", size: 30)]
             as [NSAttributedString.Key : Any]
         titleLabel.attributedText = NSMutableAttributedString(
             string: "GitHub SCRUM",
@@ -45,7 +45,8 @@ class LoginViewController: UIViewController {
 
         let descriptionString = "Agile Made Easy!"
         let descriptionTextAttribute = [
-            NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 18.0)!
+            NSAttributedString.Key.font : UIFont(name: "OpenSans", size: 24),
+            NSAttributedString.Key.foregroundColor : UIColor.init(hex: "67597A")
         ]
         let descriptionAttrString = NSAttributedString(string: descriptionString, attributes: descriptionTextAttribute)
         descLabel.attributedText = descriptionAttrString

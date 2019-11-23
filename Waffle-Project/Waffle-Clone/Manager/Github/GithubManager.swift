@@ -13,7 +13,7 @@ class GithubManager: RestManager {
     private let baseUrl = "https://api.github.com"
     private var authentication: Authentication!
     
-    public override init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
+    public override init(session: URLSession = URLSession(configuration: URLSessionConfiguration.ephemeral)) {
         super.init(session: session)
         // Sets access token if present in keychain.
         if let accessToken = AuthenticationManager.accessToken {

@@ -7,6 +7,14 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Regular.otf">
+            <string>Montserrat-Regular</string>
+        </array>
+        <array key="OpenSans-Regular.ttf">
+            <string>OpenSans</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Login View Controller-->
         <scene sceneID="STi-Py-12P">
@@ -17,38 +25,38 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="105" translatesAutoresizingMaskIntoConstraints="NO" id="I4e-fW-8zH">
-                                <rect key="frame" x="88" y="272" width="238" height="406"/>
+                                <rect key="frame" x="110.33333333333333" y="285.33333333333337" width="193.33333333333337" height="379.33333333333337"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="1gz-5F-04C">
-                                        <rect key="frame" x="0.0" y="0.0" width="238" height="241"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="193.33333333333334" height="224.33333333333334"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome Stranger!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u20-9r-Pak">
-                                                <rect key="frame" x="0.0" y="0.0" width="238" height="34.666666666666664"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                                <rect key="frame" x="14.333333333333343" y="0.0" width="164.66666666666666" height="21"/>
+                                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="githubLogoColorful" translatesAutoresizingMaskIntoConstraints="NO" id="W59-TH-t7W">
-                                                <rect key="frame" x="49" y="54.666666666666686" width="140" height="140"/>
+                                                <rect key="frame" x="26.666666666666671" y="41" width="140" height="140"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="140" id="6rH-fq-MaY"/>
                                                     <constraint firstAttribute="height" constant="140" id="PIW-9q-Fb3"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please log in to continue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AY8-8h-2wO">
-                                                <rect key="frame" x="4" y="214.66666666666669" width="230" height="26.333333333333343"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                <rect key="frame" x="0.0" y="201" width="193.33333333333334" height="23.333333333333343"/>
+                                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Cv-Zp-roU">
-                                        <rect key="frame" x="44" y="346" width="150" height="60"/>
+                                        <rect key="frame" x="31.666666666666671" y="329.33333333333331" width="130" height="50"/>
                                         <color key="backgroundColor" red="0.0" green="0.71764705882352942" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="150" id="pq0-Op-c11"/>
-                                            <constraint firstAttribute="height" constant="60" id="yZT-6l-Lxu"/>
+                                            <constraint firstAttribute="width" constant="130" id="pq0-Op-c11"/>
+                                            <constraint firstAttribute="height" constant="50" id="yZT-6l-Lxu"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                         <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -93,35 +101,49 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="ton-7U-Jcp">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RepositoryCell" id="Yp0-gG-3gb" customClass="RepositoryCell" customModule="Waffle_Clone" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.333332061767578" width="414" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RepositoryCell" rowHeight="66" id="Yp0-gG-3gb" customClass="RepositoryCell" customModule="Waffle_Clone" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="55.333332061767578" width="414" height="66"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yp0-gG-3gb" id="qoB-6h-gCY">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Repository" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a6c-KJ-ncj">
-                                                    <rect key="frame" x="20" y="11.999999999999998" width="374" height="20.333333333333329"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowshape.turn.up.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="OQw-fS-3Mv">
+                                                    <rect key="frame" x="25" y="17.333333333333329" width="35" height="32"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="35" id="4TH-Ub-LWi"/>
+                                                        <constraint firstAttribute="height" constant="35" id="9wH-J9-IGe"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Repository" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a6c-KJ-ncj">
+                                                    <rect key="frame" x="65" y="23" width="334" height="20"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="a6c-KJ-ncj" firstAttribute="leading" secondItem="qoB-6h-gCY" secondAttribute="leadingMargin" id="FJN-Eo-Pb4"/>
-                                                <constraint firstItem="a6c-KJ-ncj" firstAttribute="centerY" secondItem="qoB-6h-gCY" secondAttribute="centerY" id="bjH-u5-zsq"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="a6c-KJ-ncj" secondAttribute="trailing" id="fgi-Ry-qlS"/>
+                                                <constraint firstItem="OQw-fS-3Mv" firstAttribute="centerY" secondItem="qoB-6h-gCY" secondAttribute="centerY" id="PHH-pI-RBe"/>
+                                                <constraint firstItem="OQw-fS-3Mv" firstAttribute="leading" secondItem="qoB-6h-gCY" secondAttribute="leadingMargin" constant="5" id="SFK-s1-7Rs"/>
+                                                <constraint firstItem="a6c-KJ-ncj" firstAttribute="trailing" secondItem="qoB-6h-gCY" secondAttribute="trailingMargin" constant="5" id="b7r-FO-twt"/>
+                                                <constraint firstItem="a6c-KJ-ncj" firstAttribute="centerY" secondItem="qoB-6h-gCY" secondAttribute="centerY" id="oBJ-MH-GAg"/>
+                                                <constraint firstItem="a6c-KJ-ncj" firstAttribute="leading" secondItem="OQw-fS-3Mv" secondAttribute="trailing" constant="5" id="riy-H2-FHK"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
+                                            <outlet property="repoImg" destination="OQw-fS-3Mv" id="xzC-Zb-KQO"/>
                                             <outlet property="repositoryName" destination="a6c-KJ-ncj" id="syc-4R-icr"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ton-7U-Jcp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="CPJ-1M-zZP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ton-7U-Jcp" secondAttribute="bottom" id="Z8p-eX-Wp1"/>
@@ -198,9 +220,9 @@
                                                                             <action selector="buttonClickedPrev:" destination="pwA-Hg-yWX" eventType="touchUpInside" id="yFr-FA-EiW"/>
                                                                         </connections>
                                                                     </button>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Issue Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="8ae-L4-V6X">
-                                                                        <rect key="frame" x="60" y="2" width="234" height="21"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Issue Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="8ae-L4-V6X">
+                                                                        <rect key="frame" x="60" y="2.6666666666666661" width="234" height="20"/>
+                                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
@@ -408,6 +430,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrowshape.turn.up.right" catalog="system" width="64" height="52"/>
         <image name="githubLogoColorful" width="200" height="200"/>
     </resources>
 </document>
