@@ -504,6 +504,8 @@
 		8AC9017922F85E300084E493 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8A3BAD3122F9A8FF001A7910 /* Alert */,
+				8AF7A35D23059A1E00A0300C /* Spinner */,
 				8AF7A35B230567AF00A0300C /* IssueLabelCell.swift */,
 				8A3BAD4F2300411C001A7910 /* ProjectIssueCell.swift */,
 				8AA11CC42302D35F00B20DB2 /* ProjectCardCell.swift */,
@@ -515,9 +517,7 @@
 		8AC9017A22F85E510084E493 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				8AF7A35D23059A1E00A0300C /* Spinner */,
 				8A66652F22F4280B00626DFF /* Keychain */,
-				8A3BAD3122F9A8FF001A7910 /* Alert */,
 				8ABD12CA22E06ED900C62BB1 /* AppDelegate.swift */,
 				8ABD12D122E06EDB00C62BB1 /* Assets.xcassets */,
 			);

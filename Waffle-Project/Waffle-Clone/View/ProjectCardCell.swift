@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import QuartzCore
 
 protocol ProjectCardDelegate: class {
     func didPressCell(_ issue: IssueResponse)
@@ -19,6 +18,8 @@ class ProjectCardCell: UICollectionViewCell {
     @IBOutlet weak var labelName: UILabel!
     @IBOutlet weak var tableView: UITableView! {
         didSet {
+            self.tableView.backgroundView?.backgroundColor = UIColor.white
+
             DispatchQueue.main.async {
                 self.tableView.dataSource = self
                 self.tableView.delegate = self
@@ -32,19 +33,13 @@ class ProjectCardCell: UICollectionViewCell {
     }
     weak var delegate: ProjectCardDelegate?
     
+    func setIssues(issuesArray:[IssueResponse]) {
+        self.issueArray = issuesArray
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        let labelText = labelName.text
-        let attributedString = NSMutableAttributedString(string: labelText!)
-        attributedString.addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.red, range: NSRange(location: 0, length: labelText!.count))
-        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: labelText!.count))
-        labelName.attributedText = attributedString
-        
-    }
-    
-    func setIssues(issuesArray:[IssueResponse]) {
-        self.issueArray = issuesArray
     }
 }
 
