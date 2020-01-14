@@ -8,22 +8,21 @@
 
 import UIKit
 
-class RepoIssuesViewController: UIViewController {
+class ProjectViewController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     private var issues: [IssueResponse] = [] {
         didSet {
             DispatchQueue.main.async {
-                self.tableView.reloadData()
+                self.collectionView.reloadData()
             }
         }
     }
     private var repository: String!
+    private let columns = ["bug", "design", "feature", "networking"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
         
         getIssues() { (issues) in
             if let issues = issues {
@@ -46,7 +45,7 @@ class RepoIssuesViewController: UIViewController {
     }
 }
 
-extension RepoIssuesViewController {
+extension ProjectViewController {
     
     private func getIssues(completion: @escaping ((_ issue: [IssueResponse]?) ->())) {
         if let username = AuthenticationManager.username {
@@ -65,21 +64,44 @@ extension RepoIssuesViewController {
             completion(nil)
         }
     }
+    
+    private func getIssue(with label: String) -> [IssueResponse] {
+        var outputArray: [IssueResponse] = []
+        for issue in issues where issue.labels != nil{
+            for issueLabel in issue.labels! where issueLabel.name == label {
+                outputArray.append(issue)
+            }
+        }
+        
+        return outputArray
+    }
 }
 
-extension RepoIssuesViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return issues.count
+extension ProjectViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return columns.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "IssueCell") as! IssueTableViewCell
-        cell.setIssue(issues[indexPath.row])
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
+        cell.labelName.text = columns[indexPath.row]
+        cell.delegate = self
+        cell.setIssues(issuesArray: getIssue(with: columns[indexPath.row]))
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(self.issues[indexPath.row].title)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let frame = self.view.safeAreaLayoutGuide.layoutFrame
+        return CGSize(width: frame.width, height: frame.height)
+    }
+    
+}
+
+extension ProjectViewController: CollectionViewCellDelegate {
+    func didPressCell(_ issue: IssueResponse) {
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "IssueViewController") as? IssueViewController {
+            vc.setIssue(to: issue)
+            navigationController!.pushViewController(vc, animated: true)
+        }
     }
 }

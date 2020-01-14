@@ -10,7 +10,7 @@ import Foundation
 
 struct Issue: Codable {
     let title: String
-    let body: String
+    let body: String?
     let labels: [String]?
     let assignees: [String]?
     
@@ -21,7 +21,7 @@ struct Issue: Codable {
         case assignees
     }
     
-    public init(title: String, body: String, labels: [String]?, assignees: [String]?) {
+    public init(title: String, body: String?, labels: [String]?, assignees: [String]?) {
         self.title = title
         self.body = body
         self.labels = labels

@@ -15,47 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let authenticationManager = AuthenticationManager()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Initial root view controller is set to Launch Screen.
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
-        self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "LaunchViewController")
-        self.window?.makeKeyAndVisible()
-        
-        // Root view controller is changed depending on authentication.
-        authenticateUser()
-    
         return true
     }
     
-    /// If keychain contains a valid access token the user is sent to Repository View Controller. Otherwise, user is shown an error and sent to Login View Controller.
-    private func authenticateUser() {
-        authenticationManager.hasValidToken() { (success) in
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            var navigationController = UINavigationController()
-            
-            DispatchQueue.main.async {
-                navigationController = storyboard.instantiateViewController(withIdentifier: "NavigationController") as! UINavigationController
-                self.window?.rootViewController = navigationController
-                self.window?.makeKeyAndVisible()
-            }
-            
-            if success {
-                // Changes root view controller to Repository View Controller.
-                DispatchQueue.main.async {
-                    let repoViewController = storyboard.instantiateViewController(withIdentifier: "RepoViewController") as! RepositoryViewController
-                    navigationController.pushViewController(repoViewController, animated: true)
-                }
-            } else {
-                // Changes root view contoller to Login View Controller.
-                DispatchQueue.main.async {
-                    let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-                    navigationController.pushViewController(loginViewController, animated: true)
-                }
-            }
-        }
-    }
-    
-    internal func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         // Accessed from UIApplication.
         // Checks if call is coming from Login View Controller by comparing the redirection url scheme and host (scheme://host).
         if url.scheme == AuthenticationConstants.callbackScheme {
@@ -66,12 +29,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let queryItems = urlComponents.queryItems,
                     // Specifies user identity
                     let code = queryItems[0].value{
-                    authenticationManager.getAccessToken(code: code) { (response, error) in
-                        if let response = response {
-                            // Saves access token to keychain.
-                            AuthenticationManager.accessToken = response.accessToken
-                            // Checks validity of access token and transfers user to appropriate view controller.
-                            self.authenticateUser()
+                    getToken(code: code) { (success) in
+                        if success {
+                            DispatchQueue.main.async {
+                                let rootViewController = self.window!.rootViewController as! UINavigationController
+                                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                                let vc = mainStoryboard.instantiateViewController(withIdentifier: "RepoViewController") as! RepositoryViewController
+                                rootViewController.pushViewController(vc, animated: true)
+                            }
                         }
                     }
                 }
@@ -79,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return true
     }
+    
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -100,5 +66,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+}
+
+extension AppDelegate {
+    
+    private func getToken(code: String, completion: @escaping(Bool) -> ()) {
+        authenticationManager.getAccessToken(code: code) { (response, error) in
+            if let response = response {
+                // Saves access token to keychain.
+                print(response.accessToken)
+                AuthenticationManager.accessToken = response.accessToken
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
     }
 }

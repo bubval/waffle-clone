@@ -9,7 +9,9 @@
 import UIKit
 
 class RepositoryCell: UITableViewCell {
+    
     @IBOutlet weak var repositoryName: UILabel!
+    @IBOutlet weak var repoImg: UIImageView!
     private var repository: RepositoryResponse! {
         didSet {
             repositoryName.text = repository.name
@@ -18,5 +20,19 @@ class RepositoryCell: UITableViewCell {
     
     func setRepository(_ repo: RepositoryResponse) {
         self.repository = repo
+        if let openIssueCount = repo.openIssueCount {
+            if openIssueCount > 0 {
+                self.repoImg.image = UIImage(named: "greenarrow")
+
+            } else {
+                self.repoImg.image = UIImage(named: "redarrow")
+
+            }
+        }
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
     }
 }
